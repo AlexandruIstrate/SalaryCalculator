@@ -33,44 +33,38 @@ function CountrySelect({ country, onChange }) {
     )
 }
 
-function Footer() {
+function FooterContent() {
     return (
-        <footer id="app-footer" className="page-footer font-small blue bg-light pt-4">
-            <Container className="text-center text-md-left">
-                <div className="row">
-                    <div className="col-md-6 mt-md-0 mt-3">
-                        <h5 className="text-uppercase">Footer Content</h5>
-                        <p>Here you can use rows and columns to organize your footer content.</p>
-                    </div>
-
-                    <hr className="clearfix w-100 d-md-none pb-0" />
-
-                    <div className="col-md-3 mb-md-0 mb-3">
-                        <h5 className="text-uppercase">Links</h5>
-                        <ul className="list-unstyled">
-                            <li><a href="#!">Link 1</a></li>
-                            <li><a href="#!">Link 2</a></li>
-                            <li><a href="#!">Link 3</a></li>
-                            <li><a href="#!">Link 4</a></li>
-                        </ul>
-                    </div>
-
-                    <div className="col-md-3 mb-md-0 mb-3">
-                        <h5 className="text-uppercase">Links</h5>
-                        <ul className="list-unstyled">
-                            <li><a href="#!">Link 1</a></li>
-                            <li><a href="#!">Link 2</a></li>
-                            <li><a href="#!">Link 3</a></li>
-                            <li><a href="#!">Link 4</a></li>
-                        </ul>
-                    </div>
+        <Container className="text-center text-md-left">
+            <div className="row">
+                <div className="col-md-6 mt-md-0 mt-3">
+                    <h5 className="text-uppercase">Footer Content</h5>
+                    <p>Here you can use rows and columns to organize your footer content.</p>
                 </div>
-            </Container>
 
-            <div className="footer-copyright text-center py-3">
-                © {new Date().getFullYear()} Copyright: <a href="https://github.com/AlexandruIstrate">Alex Istrate</a>
+                <hr className="clearfix w-100 d-md-none pb-0" />
+
+                <div className="col-md-3 mb-md-0 mb-3">
+                    <h5 className="text-uppercase">Links</h5>
+                    <ul className="list-unstyled">
+                        <li><a href="#!">Link 1</a></li>
+                        <li><a href="#!">Link 2</a></li>
+                        <li><a href="#!">Link 3</a></li>
+                        <li><a href="#!">Link 4</a></li>
+                    </ul>
+                </div>
+
+                <div className="col-md-3 mb-md-0 mb-3">
+                    <h5 className="text-uppercase">Links</h5>
+                    <ul className="list-unstyled">
+                        <li><a href="#!">Link 1</a></li>
+                        <li><a href="#!">Link 2</a></li>
+                        <li><a href="#!">Link 3</a></li>
+                        <li><a href="#!">Link 4</a></li>
+                    </ul>
+                </div>
             </div>
-        </footer>
+        </Container>
     )
 }
 
@@ -104,10 +98,10 @@ function App() {
     console.log("Staging ENV: " + process.env["STAGING_ENV"])
 
     return (
-        <div className="App">
+        <div className="app">
             {/* Main Content */}
             <main>
-                <Container className="p-3">
+                <Container className="content p-3">
                     <Jumbotron title="PPP Salary Converter" subtitle="Use this converter to check how much money you need in a certain country in order to be able to live as well as you would do in another. Start by selecting the source and destination countries and then input the salary amount in the source currency." />
                     <Container className="mb-5">
                         <Form>
@@ -146,7 +140,15 @@ function App() {
             </main>
 
             {/* Footer */}
-            <Footer />
+            <footer className="footer font-small blue bg-light pt-4">
+                {/* Footer Content */}
+                <FooterContent />
+
+                {/* Copyright */}
+                <div className="footer-copyright text-center py-3">
+                    © {new Date().getFullYear()} Copyright: <a href="https://github.com/AlexandruIstrate">Alex Istrate</a>
+                </div>
+            </footer>
         </div>
     );
 }
