@@ -21,11 +21,17 @@ function Jumbotron({ title, subtitle }) {
 
 function CountrySelect({ country, onChange }) {
     return (
-        <Form.Select value={country} onChange={onChange}>
+        <Form.Select
+            value={country}
+            onChange={onChange}
+        >
             {
                 Object.entries(countries)
                     .map(([code, info]) =>
-                        <option key={code} value={code} selected={code === country}>
+                        <option
+                            key={code}
+                            value={code}
+                        >
                             {info.emoji} {info.name}
                         </option>)
             }
@@ -94,9 +100,6 @@ function App() {
         setDestinationCountry(newValue);
     }
 
-    console.log(process.env);
-    console.log("Staging ENV: " + process.env["STAGING_ENV"])
-
     return (
         <div className="app">
             {/* Main Content */}
@@ -132,7 +135,7 @@ function App() {
                             <Form.Label>Output</Form.Label>
                             <InputGroup className="mb-3">
                                 <Form.Control type="text" value={result.toFixed(2)} readOnly />
-                                <InputGroup.Text>{countries[destinationCountry].currency}</InputGroup.Text>
+                                <InputGroup.Text>{countries[destinationCountry].currency.split(",")[0]}</InputGroup.Text>
                             </InputGroup>
                         </Form>
                     </Container>
