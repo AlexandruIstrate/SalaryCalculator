@@ -80,7 +80,7 @@ function FooterContent() {
                         <li>
                             <NewTabLink
                                 href="https://en.wikipedia.org/wiki/Purchasing_power_parity"
-                                title="What is PPP"
+                                title="What is PPP?"
                             />
                         </li>
                         <li>
