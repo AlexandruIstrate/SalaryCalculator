@@ -32,6 +32,7 @@ function CountrySelect({ country, onChange }) {
                             key={code}
                             value={code}
                         >
+                            {/* Display the flag, together with the country name */}
                             {info.emoji} {info.name}
                         </option>)
             }
