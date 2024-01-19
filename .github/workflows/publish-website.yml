@@ -19,7 +19,7 @@ jobs:
 
             - name: Sanity Check
               run: pwd
-              working-directory: ./salary-calc
+            #   working-directory: ./salary-calc
 
             - name: Setup Node
               uses: actions/setup-node@v4
@@ -30,11 +30,11 @@ jobs:
 
             - name: Install Dependencies
               run: "npm ci"
-              working-directory: ./salary-calc
+            #   working-directory: ./salary-calc
 
             - name: Build Project
               run: npx --no-install npm run build
-              working-directory: ./salary-calc
+            #   working-directory: ./salary-calc
 
             - name: Upload artifact
               uses: actions/upload-pages-artifact@v2
