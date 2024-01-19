@@ -3,13 +3,19 @@ on:
     push:
         branches:
             - master
+
 permissions:
     contents: read
     pages: write
     id-token: write
+
+env:
+    WORKING_DIRECTORY: ./salary-calc
+
 defaults:
     run:
-        working-directory: ./salary-calc
+        working-directory: $WORKING_DIRECTORY
+
 jobs:
     build:
         runs-on: ubuntu-latest
@@ -17,24 +23,21 @@ jobs:
             - name: Checkout Repository
               uses: actions/checkout@v4
 
-            - name: Sanity Check
-              run: pwd
-            #   working-directory: ./salary-calc
+            - name: Print working directory
+              run: echo $WORKING_DIRECTORY/abc
 
             - name: Setup Node
               uses: actions/setup-node@v4
               with:
                 node-version: "20"
                 cache: "npm"
-                cache-dependency-path: ./salary-calc/package-lock.json
+                cache-dependency-path: $WORKING_DIRECTORY/package-lock.json
 
             - name: Install Dependencies
               run: "npm ci"
-            #   working-directory: ./salary-calc
 
             - name: Build Project
               run: npx --no-install npm run build
-            #   working-directory: ./salary-calc
 
             - name: Upload artifact
               uses: actions/upload-pages-artifact@v2
