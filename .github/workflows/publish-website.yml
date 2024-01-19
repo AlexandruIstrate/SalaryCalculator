@@ -12,6 +12,7 @@ jobs:
 
             - name: Sanity Check
               run: pwd
+              working-directory: ./salary-calc
 
             - name: Setup Node
               uses: actions/setup-node@v4
