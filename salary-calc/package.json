@@ -1,5 +1,6 @@
 {
   "name": "salary-calc",
+  "homepage": "https://alexandruistrate.github.io/SalaryCalculator",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
