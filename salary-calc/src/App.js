@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 
+import Navbar from "react-bootstrap/Navbar"
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
@@ -40,6 +41,16 @@ function CountrySelect({ country, onChange }) {
     )
 }
 
+function NavbarContent() {
+    return (
+        <Navbar expand="lg" className="bg-body-tertiary">
+            <Container>
+                <Navbar.Brand href="#!">Salary Converter</Navbar.Brand>
+            </Container>
+        </Navbar>
+    )
+}
+
 function NewTabLink({ href, title }) {
     return (
         <a
@@ -58,7 +69,7 @@ function FooterContent() {
             <div className="row">
                 <div className="col-md-6 mt-md-0 mt-3">
                     <h5 className="text-uppercase">About This App</h5>
-                    <p>This app is an open soruce project. Contributions are welcome.</p>
+                    <p>This app is an open source project. Contributions are welcome.</p>
                 </div>
 
                 <hr className="clearfix w-100 d-md-none pb-0" />
@@ -143,16 +154,30 @@ function App() {
 
     return (
         <div className="app">
+            {/* App Header */}
+            <header>
+                <NavbarContent />
+            </header>
+
             {/* Main Content */}
             <main>
                 <Container className="content p-3">
-                    <Jumbotron title="PPP Salary Converter" subtitle="Use this converter to check how much money you need in a certain country in order to be able to live as well as you would do in another. Start by selecting the source and destination countries and then input the salary amount in the source currency." />
+                    <Jumbotron
+                        title="Calcualte Your Salary"
+                        subtitle="Use this converter to check how much money you need in a certain country in order to be able to live as well as you would do in another. Start by selecting the source and destination countries and then input the salary amount in the source currency."
+                    />
                     <Container className="mb-5">
                         <Form>
                             {/* Source Country */}
-                            <Form.Group className="mb-3" controlId="formSourceCountry">
+                            <Form.Group
+                                className="mb-3"
+                                controlId="formSourceCountry"
+                            >
                                 <Form.Label>Source Country</Form.Label>
-                                <CountrySelect country={sourceCountry} onChange={handleChangeSource} />
+                                <CountrySelect
+                                    country={sourceCountry}
+                                    onChange={handleChangeSource}
+                                />
                             </Form.Group>
 
                             {/* Input Salary */}
@@ -167,15 +192,25 @@ function App() {
                             </InputGroup>
 
                             {/* Destination Country */}
-                            <Form.Group className="mb-3" controlId="formDestinationCountry">
+                            <Form.Group
+                                className="mb-3"
+                                controlId="formDestinationCountry"
+                            >
                                 <Form.Label>Destination Country</Form.Label>
-                                <CountrySelect country={destinationCountry} onChange={handleChangeDestination} />
+                                <CountrySelect
+                                    country={destinationCountry}
+                                    onChange={handleChangeDestination}
+                                />
                             </Form.Group>
 
                             {/* Output Salary */}
                             <Form.Label>Output</Form.Label>
                             <InputGroup className="mb-3">
-                                <Form.Control type="text" value={result.toFixed(2)} readOnly />
+                                <Form.Control
+                                    type="text"
+                                    value={result.toFixed(2)}
+                                    readOnly={true}
+                                />
                                 <InputGroup.Text>{countries[destinationCountry].currency.split(",")[0]}</InputGroup.Text>
                             </InputGroup>
                         </Form>
