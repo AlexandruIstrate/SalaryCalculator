@@ -39,34 +39,74 @@ function CountrySelect({ country, onChange }) {
     )
 }
 
+function NewTabLink({ href, title }) {
+    return (
+        <a
+            href={href}
+            target="_blank"
+            rel="noreferrer noopener"
+        >
+            {title}
+        </a>
+    )
+}
+
 function FooterContent() {
     return (
         <Container className="text-center text-md-left">
             <div className="row">
                 <div className="col-md-6 mt-md-0 mt-3">
-                    <h5 className="text-uppercase">Footer Content</h5>
-                    <p>Here you can use rows and columns to organize your footer content.</p>
+                    <h5 className="text-uppercase">About This App</h5>
+                    <p>This app is an open soruce project. Contributions are welcome.</p>
                 </div>
 
                 <hr className="clearfix w-100 d-md-none pb-0" />
 
                 <div className="col-md-3 mb-md-0 mb-3">
-                    <h5 className="text-uppercase">Links</h5>
+                    <h5 className="text-uppercase">Docs</h5>
                     <ul className="list-unstyled">
-                        <li><a href="#!">Link 1</a></li>
-                        <li><a href="#!">Link 2</a></li>
-                        <li><a href="#!">Link 3</a></li>
-                        <li><a href="#!">Link 4</a></li>
+                        <li>
+                            <NewTabLink
+                                href="https://en.wikipedia.org/wiki/Purchasing_power_parity"
+                                title="What is PPP"
+                            />
+                        </li>
+                        <li>
+                            <NewTabLink
+                                href="https://documents.worldbank.org/en/publication/documents-reports/api"
+                                title="World Bank API"
+                            />
+                        </li>
                     </ul>
                 </div>
 
                 <div className="col-md-3 mb-md-0 mb-3">
-                    <h5 className="text-uppercase">Links</h5>
+                    <h5 className="text-uppercase">Project</h5>
                     <ul className="list-unstyled">
-                        <li><a href="#!">Link 1</a></li>
-                        <li><a href="#!">Link 2</a></li>
-                        <li><a href="#!">Link 3</a></li>
-                        <li><a href="#!">Link 4</a></li>
+                        <li>
+                            <NewTabLink
+                                href="https://github.com/AlexandruIstrate/SalaryCalculator"
+                                title="Project Homepage"
+                            />
+                        </li>
+                        <li>
+                            <NewTabLink
+                                href="https://github.com/AlexandruIstrate/SalaryCalculator/blob/master/README.md"
+                                title="Docs"
+                            />
+                        </li>
+                        <li>
+                            <NewTabLink
+                                href="https://github.com/AlexandruIstrate/SalaryCalculator/issues"
+                                title="Report an Issue"
+                            />
+                        </li>
+                        <li>
+                            <NewTabLink
+                                href="https://github.com/AlexandruIstrate/SalaryCalculator/releases"
+                                title="Previous Releases"
+                            />
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -77,7 +117,7 @@ function FooterContent() {
 function App() {
     const [salary, setSalary] = useState(0);
     const [result, setResult] = useState(0);
-    const [sourceCountry, setSourceCountry] = useState("RO");
+    const [sourceCountry, setSourceCountry] = useState("KR");
     const [destinationCountry, setDestinationCountry] = useState("DE");
 
     function handleChangeSalary(e) {
@@ -149,7 +189,7 @@ function App() {
 
                 {/* Copyright */}
                 <div className="footer-copyright text-center py-3">
-                    © {new Date().getFullYear()} Copyright: <a href="https://github.com/AlexandruIstrate">Alex Istrate</a>
+                    © {new Date().getFullYear()} Copyright: <NewTabLink href="https://github.com/AlexandruIstrate" title="Alex Istrate" />
                 </div>
             </footer>
         </div>
