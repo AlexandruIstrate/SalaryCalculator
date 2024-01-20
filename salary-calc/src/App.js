@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import Navbar from "react-bootstrap/Navbar"
 import Container from "react-bootstrap/Container";
@@ -6,6 +6,8 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 
 import { countries } from "countries-list";
+
+import { WorldBankAPI } from "src/api/WorldBankAPI";
 
 import "./App.css";
 
@@ -127,10 +129,22 @@ function FooterContent() {
 }
 
 function App() {
+    // App State
     const [salary, setSalary] = useState(0);
     const [result, setResult] = useState(0);
-    const [sourceCountry, setSourceCountry] = useState("KR");
-    const [destinationCountry, setDestinationCountry] = useState("DE");
+    const [sourceCountry, setSourceCountry] = useState(process.env.REACT_APP_DEFAULT_SOURCE_COUNTRY_CODE);
+    const [destinationCountry, setDestinationCountry] = useState(process.env.REACT_APP_DEFAULT_DESTINATION_COUNTRY_CODE);
+
+    // Data Loading
+    useEffect(() => {
+        // Call the World Bank API
+        WorldBankAPI
+            .getPPPData()
+            .then((value) => {
+                // Log this
+                console.log("Got World Bank API response:", value);
+            });
+    }, []);
 
     function handleChangeSalary(e) {
         const newValue = e.target.value;
@@ -181,7 +195,7 @@ function App() {
                             </Form.Group>
 
                             {/* Input Salary */}
-                            <Form.Label>Salary in {countries[sourceCountry].name}"s local currency</Form.Label>
+                            <Form.Label>Salary in {countries[sourceCountry].name}'s local currency</Form.Label>
                             <InputGroup className="mb-3">
                                 <Form.Control
                                     type="text"
