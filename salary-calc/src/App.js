@@ -22,21 +22,21 @@ function Jumbotron({ title, subtitle }) {
     )
 }
 
-function CountrySelect({ country, onChange }) {
+function CountrySelect({ country, pppData, onChange }) {
     return (
         <Form.Select
             value={country}
             onChange={onChange}
         >
             {
-                Object.entries(countries)
+                Object.entries(pppData)
                     .map(([code, info]) =>
                         <option
                             key={code}
                             value={code}
                         >
                             {/* Display the flag, together with the country name */}
-                            {info.emoji} {info.name}
+                            {info.emoji} {info.countryName}
                         </option>)
             }
         </Form.Select>
@@ -135,35 +135,102 @@ function App() {
     const [sourceCountry, setSourceCountry] = useState(process.env.REACT_APP_DEFAULT_SOURCE_COUNTRY_CODE);
     const [destinationCountry, setDestinationCountry] = useState(process.env.REACT_APP_DEFAULT_DESTINATION_COUNTRY_CODE);
 
+    const [isLoading, setIsLoading] = useState(true);
+    const [pppData, setPPPData] = useState([]);
+
     // Data Loading
     useEffect(() => {
+        // Get the current year
+        const year = new Date().getFullYear();
+
         // Call the World Bank API
         WorldBankAPI
-            .getPPPData()
+            .getPPPData(year - 5, year)
             .then((value) => {
-                // Log this
-                console.log("Got World Bank API response:", value);
+                // Process the data
+                const processed = value[1]
+                    .filter(x => x.value != null)
+                    .map(x => {
+                        // Get the country object
+                        const country = countries[x.country.id];
+
+                        // Return a nice object with all the important info about a country
+                        return {
+                            countryCode: x.country.id,
+                            countryName: country?.name ?? x.country.value,
+                            currency: country?.currency,
+                            emoji: country?.emoji,
+                            date: x.date,
+                            ppp: x.value
+                        }
+                    })
+                    .reduce((acc, item) => {
+                        const countryCode = item.countryCode;
+                        const currentYear = parseInt(item.date);
+
+                        // Check if the current item has a later year than the stored latest year for the country
+                        if (!acc[countryCode] || currentYear > parseInt(acc[countryCode].date)) {
+                            acc[countryCode] = item;
+                        }
+
+                        return acc;
+                    }, {});
+
+                // Log the processed data
+                console.log("PPP Data:", processed);
+
+                // Store the PPP data
+                setPPPData(processed);
+            })
+            .finally(() => {
+                // Always clear the loading state at the end
+                setIsLoading(false);
             });
     }, []);
 
+    // Event handlers
+
     function handleChangeSalary(e) {
+        // Set the new value
         const newValue = e.target.value;
-        // console.log(newValue);
         setSalary(newValue);
 
-        // Set the output
-        setResult(newValue * Math.random());
+        // Recalculate the new salary
+        calculateSalary();
     }
 
     function handleChangeSource(e) {
+        // Set the new value
         const newValue = e.target.value;
-        // console.log(newValue);
         setSourceCountry(newValue);
+
+        // Recalculate the new salary
+        calculateSalary();
     }
 
     function handleChangeDestination(e) {
+        // Set the new value
         const newValue = e.target.value;
         setDestinationCountry(newValue);
+
+        // Recalculate the new salary
+        calculateSalary();
+    }
+
+    // Utility functions
+
+    function calculateSalary() {
+        // Get PPP data for the selected countries
+        const sourcePPP = pppData[sourceCountry].ppp;
+        const destPPP = pppData[destinationCountry].ppp;
+
+        // Calculate the target amount
+        const targetAmount = salary / sourcePPP * destPPP;
+
+        // Set the value of the resulting amount
+        setResult(targetAmount);
+
+        console.log(typeof salary);
     }
 
     return (
@@ -175,61 +242,66 @@ function App() {
 
             {/* Main Content */}
             <main>
-                <Container className="content p-3">
-                    <Jumbotron
-                        title="Calcualte Your Salary"
-                        subtitle="Use this converter to check how much money you need in a certain country in order to be able to live as well as you would do in another. Start by selecting the source and destination countries and then input the salary amount in the source currency."
-                    />
-                    <Container className="mb-5">
-                        <Form>
-                            {/* Source Country */}
-                            <Form.Group
-                                className="mb-3"
-                                controlId="formSourceCountry"
-                            >
-                                <Form.Label>Source Country</Form.Label>
-                                <CountrySelect
-                                    country={sourceCountry}
-                                    onChange={handleChangeSource}
-                                />
-                            </Form.Group>
+                {/* Only display when not loading */}
+                {!isLoading &&
+                    <Container className="content p-3">
+                        <Jumbotron
+                            title="Calcualte Your Salary"
+                            subtitle="Use this converter to check how much money you need in a certain country in order to be able to live as well as you would do in another. Start by selecting the source and destination countries and then input the salary amount in the source currency."
+                        />
+                        <Container className="mb-5">
+                            <Form>
+                                {/* Source Country */}
+                                <Form.Group
+                                    className="mb-3"
+                                    controlId="formSourceCountry"
+                                >
+                                    <Form.Label>Source Country</Form.Label>
+                                    <CountrySelect
+                                        country={sourceCountry}
+                                        pppData={pppData}
+                                        onChange={handleChangeSource}
+                                    />
+                                </Form.Group>
 
-                            {/* Input Salary */}
-                            <Form.Label>Salary in {countries[sourceCountry].name}'s local currency</Form.Label>
-                            <InputGroup className="mb-3">
-                                <Form.Control
-                                    type="text"
-                                    value={salary}
-                                    onChange={handleChangeSalary}
-                                    placeholder="Enter salary" />
-                                <InputGroup.Text>{countries[sourceCountry].currency}</InputGroup.Text>
-                            </InputGroup>
+                                {/* Input Salary */}
+                                <Form.Label>Salary in {pppData[sourceCountry].countryName}'s local currency</Form.Label>
+                                <InputGroup className="mb-3">
+                                    <Form.Control
+                                        type="text"
+                                        value={salary}
+                                        onChange={handleChangeSalary}
+                                        placeholder="Enter salary" />
+                                    <InputGroup.Text>{pppData[sourceCountry].currency}</InputGroup.Text>
+                                </InputGroup>
 
-                            {/* Destination Country */}
-                            <Form.Group
-                                className="mb-3"
-                                controlId="formDestinationCountry"
-                            >
-                                <Form.Label>Destination Country</Form.Label>
-                                <CountrySelect
-                                    country={destinationCountry}
-                                    onChange={handleChangeDestination}
-                                />
-                            </Form.Group>
+                                {/* Destination Country */}
+                                <Form.Group
+                                    className="mb-3"
+                                    controlId="formDestinationCountry"
+                                >
+                                    <Form.Label>Destination Country</Form.Label>
+                                    <CountrySelect
+                                        country={destinationCountry}
+                                        pppData={pppData}
+                                        onChange={handleChangeDestination}
+                                    />
+                                </Form.Group>
 
-                            {/* Output Salary */}
-                            <Form.Label>Output</Form.Label>
-                            <InputGroup className="mb-3">
-                                <Form.Control
-                                    type="text"
-                                    value={result.toFixed(2)}
-                                    readOnly={true}
-                                />
-                                <InputGroup.Text>{countries[destinationCountry].currency.split(",")[0]}</InputGroup.Text>
-                            </InputGroup>
-                        </Form>
+                                {/* Output Salary */}
+                                <Form.Label>Output</Form.Label>
+                                <InputGroup className="mb-3">
+                                    <Form.Control
+                                        type="text"
+                                        value={result.toFixed(2)}
+                                        readOnly={true}
+                                    />
+                                    <InputGroup.Text>{pppData[destinationCountry].currency.split(",")[0]}</InputGroup.Text>
+                                </InputGroup>
+                            </Form>
+                        </Container>
                     </Container>
-                </Container>
+                }
             </main>
 
             {/* Footer */}
