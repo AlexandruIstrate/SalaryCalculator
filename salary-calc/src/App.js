@@ -177,7 +177,7 @@ function App() {
                     }, {});
 
                 // Log the processed data
-                console.log("PPP Data:", processed);
+                // console.log("PPP Data:", processed);
 
                 // Store the PPP data
                 setPPPData(processed);
@@ -196,7 +196,7 @@ function App() {
         setSalary(newValue);
 
         // Recalculate the new salary
-        calculateSalary();
+        calculateSalary(newValue);
     }
 
     function handleChangeSource(e) {
@@ -205,7 +205,7 @@ function App() {
         setSourceCountry(newValue);
 
         // Recalculate the new salary
-        calculateSalary();
+        calculateSalary(salary);
     }
 
     function handleChangeDestination(e) {
@@ -214,23 +214,21 @@ function App() {
         setDestinationCountry(newValue);
 
         // Recalculate the new salary
-        calculateSalary();
+        calculateSalary(salary);
     }
 
     // Utility functions
 
-    function calculateSalary() {
+    function calculateSalary(salary) {
         // Get PPP data for the selected countries
         const sourcePPP = pppData[sourceCountry].ppp;
         const destPPP = pppData[destinationCountry].ppp;
 
         // Calculate the target amount
-        const targetAmount = salary / sourcePPP * destPPP;
+        const targetAmount = parseInt(salary) / sourcePPP * destPPP;
 
         // Set the value of the resulting amount
         setResult(targetAmount);
-
-        console.log(typeof salary);
     }
 
     return (
