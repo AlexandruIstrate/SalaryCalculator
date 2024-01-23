@@ -43,10 +43,10 @@ jobs:
               uses: actions/upload-pages-artifact@v2
               with:
                 path: ./salary-calc/build
-        # env:
-        #   REACT_APP_WORLD_BANK_API_URL: ${{ vars.REACT_APP_WORLD_BANK_API_URL }}
-        #   REACT_APP_DEFAULT_SOURCE_COUNTRY_CODE: ${{ vars.REACT_APP_DEFAULT_SOURCE_COUNTRY_CODE }}
-        #   REACT_APP_DEFAULT_DESTINATION_COUNTRY_CODE: ${{ vars.REACT_APP_DEFAULT_DESTINATION_COUNTRY_CODE }}
+        env:
+          REACT_APP_WORLD_BANK_API_URL: ${{ vars.REACT_APP_WORLD_BANK_API_URL }}
+          REACT_APP_DEFAULT_SOURCE_COUNTRY_CODE: ${{ vars.REACT_APP_DEFAULT_SOURCE_COUNTRY_CODE }}
+          REACT_APP_DEFAULT_DESTINATION_COUNTRY_CODE: ${{ vars.REACT_APP_DEFAULT_DESTINATION_COUNTRY_CODE }}
 
     deploy:
         environment:
