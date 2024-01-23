@@ -49,6 +49,23 @@ function CountrySelect({ country, pppData, onChange }) {
     )
 }
 
+function HistoryContent({ historyItems }) {
+    // Check if we have no data
+    if (!historyItems || historyItems.length === 0) {
+        // Return a no data message
+        return (
+            <ListGroup.Item>None</ListGroup.Item>
+        );
+    } else {
+        // Return normal content
+        return historyItems.map(({ source, destination }, index) =>
+            <ListGroup.Item key={index}>
+                {`${source.emoji} ${source.currency}`} to {`${destination.emoji} ${destination.currency}`}
+            </ListGroup.Item>
+        );
+    }
+}
+
 function NavbarContent() {
     return (
         <Navbar expand="lg" className="bg-body-tertiary">
@@ -223,12 +240,20 @@ function App() {
 
                 // Store the PPP data
                 setPPPData(processed);
+
+                // Set the initial history item
+                historyDispatch({
+                    newItem: {
+                        source: processed[sourceCountry],
+                        destination: processed[destinationCountry]
+                    }
+                });
             })
             .finally(() => {
                 // Always clear the loading state at the end
                 setIsLoading(false);
             });
-    }, []);
+    }, [pppData, sourceCountry, destinationCountry]);
 
     // UI Rendering Functions
 
@@ -298,6 +323,7 @@ function App() {
                                 <Button
                                     variant="outline-primary"
                                     onClick={handleReverseCountries}
+                                    className="mb-3"
                                 >
                                     Reverse Countries
                                 </Button>
@@ -309,13 +335,7 @@ function App() {
                             <Card>
                                 <Card.Header>Recent Conversions</Card.Header>
                                 <ListGroup variant="flush">
-                                    {
-                                        history.historyItems.map(({ source, destination }, index) =>
-                                            <ListGroup.Item key={index}>
-                                                {`${source.emoji} ${source.currency}`} to {`${destination.emoji} ${destination.currency}`}
-                                            </ListGroup.Item>
-                                        )
-                                    }
+                                    <HistoryContent historyItems={history.historyItems} />
                                 </ListGroup>
                             </Card>
                         </Col>
