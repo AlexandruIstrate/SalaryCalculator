@@ -245,7 +245,7 @@ function App() {
                 <Container>
                     <Row>
                         {/* Calculator Column */}
-                        <Col>
+                        <Col xs={12} md={8} lg={9}>
                             <Form>
                                 {/* Source Country */}
                                 <Form.Group
@@ -305,7 +305,7 @@ function App() {
                         </Col>
 
                         {/* History Column */}
-                        <Col xs={4}>
+                        <Col xs={12} md={4} lg={3}>
                             <Card>
                                 <Card.Header>Recent Conversions</Card.Header>
                                 <ListGroup variant="flush">
