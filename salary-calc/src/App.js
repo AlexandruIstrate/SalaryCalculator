@@ -4,6 +4,7 @@ import Navbar from "react-bootstrap/Navbar"
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
+import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
 
 import { countries } from "countries-list";
@@ -250,6 +251,13 @@ function App() {
                         />
                         <InputGroup.Text>{pppData[destinationCountry].currency.split(",")[0]}</InputGroup.Text>
                     </InputGroup>
+
+                    <Button
+                        variant="outline-primary"
+                        onClick={handleReverseCountries}
+                    >
+                        Reverse Countries
+                    </Button>
                 </Form>
             )
         }
@@ -282,6 +290,13 @@ function App() {
 
         // Recalculate the new salary
         calculateSalary(salary);
+    }
+
+    const handleReverseCountries = (e) => {
+        // Swap the values
+        const temp = destinationCountry;
+        setDestinationCountry(sourceCountry);
+        setSourceCountry(temp);
     }
 
     // Utility Functions
