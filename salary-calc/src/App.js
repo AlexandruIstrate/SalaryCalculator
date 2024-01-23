@@ -1,17 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useReducer } from "react";
 
 import Navbar from "react-bootstrap/Navbar"
 import Container from "react-bootstrap/Container";
+import Card from "react-bootstrap/Card";
+import ListGroup from "react-bootstrap/ListGroup";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
 
 import { countries } from "countries-list";
+import { isEqual } from "lodash";
 
 import { WorldBankAPI } from "src/api/WorldBankAPI";
 
 import "./App.css";
+import { Col, Row } from "react-bootstrap";
 
 function Jumbotron({ title, subtitle }) {
     return (
@@ -140,6 +144,41 @@ function App() {
     const [isLoading, setIsLoading] = useState(true);
     const [pppData, setPPPData] = useState([]);
 
+    // History Reducer
+    const historyReducer = (state, action) => {
+        // Get the relevant data
+        const newItem = action.newItem;
+        const history = state.historyItems;
+
+        // Check that we got a new item for this action
+        if (newItem) {
+            // Check whether the item alreay exists
+            if (history.some(item => isEqual(item, newItem))) {
+
+                // Get the index of the item
+                const itemIndex = history.findIndex(el => isEqual(el, newItem));
+
+                // Shift the new item to the top
+                history.splice(itemIndex, 1);
+                history.unshift(newItem);
+
+                // Return the newly ordered array
+                return {
+                    historyItems: history
+                };
+            }
+
+            // Merge the existing array with the new item
+            return {
+                historyItems: history.concat([newItem])
+            };
+        }
+
+        throw Error("No new value provided for history");
+    }
+
+    const [history, historyDispatch] = useReducer(historyReducer, { historyItems: [] });
+
     // Data Loading
 
     useEffect(() => {
@@ -203,62 +242,85 @@ function App() {
             );
         } else {
             return (
-                <Form>
-                    {/* Source Country */}
-                    <Form.Group
-                        className="mb-3"
-                        controlId="formSourceCountry"
-                    >
-                        <Form.Label>Source Country</Form.Label>
-                        <CountrySelect
-                            country={sourceCountry}
-                            pppData={pppData}
-                            onChange={handleChangeSource}
-                        />
-                    </Form.Group>
+                <Container>
+                    <Row>
+                        {/* Calculator Column */}
+                        <Col>
+                            <Form>
+                                {/* Source Country */}
+                                <Form.Group
+                                    className="mb-3"
+                                    controlId="formSourceCountry"
+                                >
+                                    <Form.Label>Source Country</Form.Label>
+                                    <CountrySelect
+                                        country={sourceCountry}
+                                        pppData={pppData}
+                                        onChange={handleChangeSource}
+                                    />
+                                </Form.Group>
 
-                    {/* Input Salary */}
-                    <Form.Label>Salary in {pppData[sourceCountry].countryName}'s local currency</Form.Label>
-                    <InputGroup className="mb-3">
-                        <Form.Control
-                            type="text"
-                            value={salary}
-                            onChange={handleChangeSalary}
-                            placeholder="Enter salary" />
-                        <InputGroup.Text>{pppData[sourceCountry].currency}</InputGroup.Text>
-                    </InputGroup>
+                                {/* Input Salary */}
+                                <Form.Label>Salary in {pppData[sourceCountry].countryName}'s local currency</Form.Label>
+                                <InputGroup className="mb-3">
+                                    <Form.Control
+                                        type="text"
+                                        value={salary}
+                                        onChange={handleChangeSalary}
+                                        placeholder="Enter salary" />
+                                    <InputGroup.Text>{pppData[sourceCountry].currency.split(",")[0]}</InputGroup.Text>
+                                </InputGroup>
 
-                    {/* Destination Country */}
-                    <Form.Group
-                        className="mb-3"
-                        controlId="formDestinationCountry"
-                    >
-                        <Form.Label>Destination Country</Form.Label>
-                        <CountrySelect
-                            country={destinationCountry}
-                            pppData={pppData}
-                            onChange={handleChangeDestination}
-                        />
-                    </Form.Group>
+                                {/* Destination Country */}
+                                <Form.Group
+                                    className="mb-3"
+                                    controlId="formDestinationCountry"
+                                >
+                                    <Form.Label>Destination Country</Form.Label>
+                                    <CountrySelect
+                                        country={destinationCountry}
+                                        pppData={pppData}
+                                        onChange={handleChangeDestination}
+                                    />
+                                </Form.Group>
 
-                    {/* Output Salary */}
-                    <Form.Label>Output</Form.Label>
-                    <InputGroup className="mb-3">
-                        <Form.Control
-                            type="text"
-                            value={result.toFixed(2)}
-                            readOnly={true}
-                        />
-                        <InputGroup.Text>{pppData[destinationCountry].currency.split(",")[0]}</InputGroup.Text>
-                    </InputGroup>
+                                {/* Output Salary */}
+                                <Form.Label>Output</Form.Label>
+                                <InputGroup className="mb-3">
+                                    <Form.Control
+                                        type="text"
+                                        value={result.toFixed(2)}
+                                        readOnly={true}
+                                    />
+                                    <InputGroup.Text>{pppData[destinationCountry].currency.split(",")[0]}</InputGroup.Text>
+                                </InputGroup>
 
-                    <Button
-                        variant="outline-primary"
-                        onClick={handleReverseCountries}
-                    >
-                        Reverse Countries
-                    </Button>
-                </Form>
+                                <Button
+                                    variant="outline-primary"
+                                    onClick={handleReverseCountries}
+                                >
+                                    Reverse Countries
+                                </Button>
+                            </Form>
+                        </Col>
+
+                        {/* History Column */}
+                        <Col xs={4}>
+                            <Card>
+                                <Card.Header>Recent Conversions</Card.Header>
+                                <ListGroup variant="flush">
+                                    {
+                                        history.historyItems.map(({ source, destination }, index) =>
+                                            <ListGroup.Item key={index}>
+                                                {`${source.emoji} ${source.currency}`} to {`${destination.emoji} ${destination.currency}`}
+                                            </ListGroup.Item>
+                                        )
+                                    }
+                                </ListGroup>
+                            </Card>
+                        </Col>
+                    </Row>
+                </Container>
             )
         }
     }
@@ -303,14 +365,22 @@ function App() {
 
     const calculateSalary = (salary) => {
         // Get PPP data for the selected countries
-        const sourcePPP = pppData[sourceCountry].ppp;
-        const destPPP = pppData[destinationCountry].ppp;
+        const source = pppData[sourceCountry];
+        const dest = pppData[destinationCountry];
 
         // Calculate the target amount
-        const targetAmount = parseInt(salary) / sourcePPP * destPPP;
+        const targetAmount = parseInt(salary) / source.ppp * dest.ppp;
 
         // Set the value of the resulting amount
         setResult(targetAmount);
+
+        // Also remember this conversion in the history
+        historyDispatch({
+            newItem: {
+                source: source,
+                destination: dest
+            }
+        });
     }
 
     return (
