@@ -4,6 +4,7 @@ import Navbar from "react-bootstrap/Navbar"
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
+import Spinner from "react-bootstrap/Spinner";
 
 import { countries } from "countries-list";
 
@@ -139,6 +140,7 @@ function App() {
     const [pppData, setPPPData] = useState([]);
 
     // Data Loading
+
     useEffect(() => {
         // Get the current year
         const year = new Date().getFullYear();
@@ -188,9 +190,74 @@ function App() {
             });
     }, []);
 
-    // Event handlers
+    // UI Rendering Functions
 
-    function handleChangeSalary(e) {
+    const renderCalculatorArea = () => {
+        // Check if we are in the loading state
+        if (isLoading) {
+            return (
+                <Container className="text-center p-5">
+                    <Spinner animation="border" />
+                </Container>
+            );
+        } else {
+            return (
+                <Form>
+                    {/* Source Country */}
+                    <Form.Group
+                        className="mb-3"
+                        controlId="formSourceCountry"
+                    >
+                        <Form.Label>Source Country</Form.Label>
+                        <CountrySelect
+                            country={sourceCountry}
+                            pppData={pppData}
+                            onChange={handleChangeSource}
+                        />
+                    </Form.Group>
+
+                    {/* Input Salary */}
+                    <Form.Label>Salary in {pppData[sourceCountry].countryName}'s local currency</Form.Label>
+                    <InputGroup className="mb-3">
+                        <Form.Control
+                            type="text"
+                            value={salary}
+                            onChange={handleChangeSalary}
+                            placeholder="Enter salary" />
+                        <InputGroup.Text>{pppData[sourceCountry].currency}</InputGroup.Text>
+                    </InputGroup>
+
+                    {/* Destination Country */}
+                    <Form.Group
+                        className="mb-3"
+                        controlId="formDestinationCountry"
+                    >
+                        <Form.Label>Destination Country</Form.Label>
+                        <CountrySelect
+                            country={destinationCountry}
+                            pppData={pppData}
+                            onChange={handleChangeDestination}
+                        />
+                    </Form.Group>
+
+                    {/* Output Salary */}
+                    <Form.Label>Output</Form.Label>
+                    <InputGroup className="mb-3">
+                        <Form.Control
+                            type="text"
+                            value={result.toFixed(2)}
+                            readOnly={true}
+                        />
+                        <InputGroup.Text>{pppData[destinationCountry].currency.split(",")[0]}</InputGroup.Text>
+                    </InputGroup>
+                </Form>
+            )
+        }
+    }
+
+    // Event Handlers
+
+    const handleChangeSalary = (e) => {
         // Set the new value
         const newValue = e.target.value;
         setSalary(newValue);
@@ -199,7 +266,7 @@ function App() {
         calculateSalary(newValue);
     }
 
-    function handleChangeSource(e) {
+    const handleChangeSource = (e) => {
         // Set the new value
         const newValue = e.target.value;
         setSourceCountry(newValue);
@@ -208,7 +275,7 @@ function App() {
         calculateSalary(salary);
     }
 
-    function handleChangeDestination(e) {
+    const handleChangeDestination = (e) => {
         // Set the new value
         const newValue = e.target.value;
         setDestinationCountry(newValue);
@@ -217,9 +284,9 @@ function App() {
         calculateSalary(salary);
     }
 
-    // Utility functions
+    // Utility Functions
 
-    function calculateSalary(salary) {
+    const calculateSalary = (salary) => {
         // Get PPP data for the selected countries
         const sourcePPP = pppData[sourceCountry].ppp;
         const destPPP = pppData[destinationCountry].ppp;
@@ -240,66 +307,15 @@ function App() {
 
             {/* Main Content */}
             <main>
-                {/* Only display when not loading */}
-                {!isLoading &&
-                    <Container className="content p-3">
-                        <Jumbotron
-                            title="Calcualte Your Salary"
-                            subtitle="Use this converter to check how much money you need in a certain country in order to be able to live as well as you would do in another. Start by selecting the source and destination countries and then input the salary amount in the source currency."
-                        />
-                        <Container className="mb-5">
-                            <Form>
-                                {/* Source Country */}
-                                <Form.Group
-                                    className="mb-3"
-                                    controlId="formSourceCountry"
-                                >
-                                    <Form.Label>Source Country</Form.Label>
-                                    <CountrySelect
-                                        country={sourceCountry}
-                                        pppData={pppData}
-                                        onChange={handleChangeSource}
-                                    />
-                                </Form.Group>
-
-                                {/* Input Salary */}
-                                <Form.Label>Salary in {pppData[sourceCountry].countryName}'s local currency</Form.Label>
-                                <InputGroup className="mb-3">
-                                    <Form.Control
-                                        type="text"
-                                        value={salary}
-                                        onChange={handleChangeSalary}
-                                        placeholder="Enter salary" />
-                                    <InputGroup.Text>{pppData[sourceCountry].currency}</InputGroup.Text>
-                                </InputGroup>
-
-                                {/* Destination Country */}
-                                <Form.Group
-                                    className="mb-3"
-                                    controlId="formDestinationCountry"
-                                >
-                                    <Form.Label>Destination Country</Form.Label>
-                                    <CountrySelect
-                                        country={destinationCountry}
-                                        pppData={pppData}
-                                        onChange={handleChangeDestination}
-                                    />
-                                </Form.Group>
-
-                                {/* Output Salary */}
-                                <Form.Label>Output</Form.Label>
-                                <InputGroup className="mb-3">
-                                    <Form.Control
-                                        type="text"
-                                        value={result.toFixed(2)}
-                                        readOnly={true}
-                                    />
-                                    <InputGroup.Text>{pppData[destinationCountry].currency.split(",")[0]}</InputGroup.Text>
-                                </InputGroup>
-                            </Form>
-                        </Container>
+                <Container className="content p-3">
+                    <Jumbotron
+                        title="Calcualte Your Salary"
+                        subtitle="Use this converter to check how much money you need in a certain country in order to be able to live as well as you would do in another. Start by selecting the source and destination countries and then input the salary amount in the source currency."
+                    />
+                    <Container className="mb-5">
+                        {renderCalculatorArea()}
                     </Container>
-                }
+                </Container>
             </main>
 
             {/* Footer */}
