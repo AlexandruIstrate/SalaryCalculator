@@ -295,8 +295,9 @@ function App() {
                                 <Form.Label>Salary in {pppData[sourceCountry].countryName}'s local currency</Form.Label>
                                 <InputGroup className="mb-3">
                                     <Form.Control
-                                        type="text"
+                                        type="number"
                                         value={salary}
+                                        min={0}
                                         placeholder="Enter salary"
                                         onChange={handleChangeSalary}
                                         disabled={isLoading}
@@ -322,8 +323,9 @@ function App() {
                                 <Form.Label>Output</Form.Label>
                                 <InputGroup className="mb-3">
                                     <Form.Control
-                                        type="text"
+                                        type="number"
                                         value={calculateSalary().toFixed(2)}
+                                        placeholder="Resulting salary"
                                         readOnly={true}
                                     />
                                     <InputGroup.Text>{pppData[destinationCountry].currency.split(",")[0]}</InputGroup.Text>
