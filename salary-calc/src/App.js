@@ -262,6 +262,7 @@ function App() {
                 // Always clear the loading state at the end
                 setIsLoading(false);
             });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     // UI Rendering Functions
