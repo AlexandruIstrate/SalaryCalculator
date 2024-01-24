@@ -31,7 +31,7 @@ function Jumbotron({ title, subtitle }) {
     )
 }
 
-function CountrySelect({ country, pppData, onChange, isLoading=false }) {
+function CountrySelect({ country, pppData, onChange, isLoading = false }) {
     return (
         <Select
             options={Object.values(pppData)}
@@ -443,6 +443,15 @@ function App() {
 
     return (
         <div className="app">
+            {/* Development Build Banner */}
+            {process.env.NODE_ENV === "development" ? (
+                <div className="banner-dev-env text-center bg-warning p-2">
+                    <b>Development Build</b>
+                </div>
+            ) : (
+                null
+            )}
+
             {/* App Header */}
             <header>
                 <NavbarContent />
