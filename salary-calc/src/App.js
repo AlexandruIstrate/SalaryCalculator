@@ -160,17 +160,19 @@ function App() {
     const [isLoading, setIsLoading] = useState(true);
     const [pppData, setPPPData] = useState([]);
 
-    // Reducers
+    // History Reducer
     const historyReducer = (state, action) => {
         // Get the relevant data
         const newItem = action.newItem;
         const history = state.historyItems;
 
+        console.log(history.length, process.env.REACT_APP_CONVERSION_HISTORY_LIMIT, 
+            (history.length === process.env.REACT_APP_CONVERSION_HISTORY_LIMIT));
+
         // Check that we got a new item for this action
         if (newItem) {
             // Check whether the item alreay exists
             if (history.some(item => isEqual(item, newItem))) {
-
                 // Get the index of the item
                 const itemIndex = history.findIndex(el => isEqual(el, newItem));
 
@@ -183,42 +185,23 @@ function App() {
                     historyItems: history
                 };
             }
+            
+            // Check whether we have reached the history limit
+            if (history.length === parseInt(process.env.REACT_APP_CONVERSION_HISTORY_LIMIT)) {
+                // Simply return the old state of items without any changes
+                return state;
+            }
 
             // Merge the existing array with the new item
             return {
-                historyItems: history.concat([newItem])
+                historyItems: [newItem].concat(history)
             };
         }
 
         throw Error("No new value provided for history");
     }
 
-    const resultReducer = (state, action) => {
-        // Get PPP data for the selected countries
-        const source = action.sourceCountry;
-        const dest = action.destinationCountry;
-
-        // Calculate the target amount
-        const targetAmount = parseInt(action.salary) / source.ppp * dest.ppp;
-
-        // Also remember this conversion in the history
-        historyDispatch({
-            newItem: {
-                source: source,
-                destination: dest
-            }
-        });
-
-        console.log(targetAmount);
-
-        // Return the resulting value
-        return {
-            resultSalary: targetAmount
-        }
-    }
-
     const [history, historyDispatch] = useReducer(historyReducer, { historyItems: [] });
-    const [result, resultDispatch] = useReducer(resultReducer, { resultSalary: 0 });
 
     // Data Loading
 
@@ -259,9 +242,6 @@ function App() {
                         return acc;
                     }, {});
 
-                // Log the processed data
-                // console.log("PPP Data:", processed);
-
                 // Store the PPP data
                 setPPPData(processed);
 
@@ -277,7 +257,7 @@ function App() {
                 // Always clear the loading state at the end
                 setIsLoading(false);
             });
-    }, [pppData, sourceCountry, destinationCountry]);
+    }, []);
 
     // UI Rendering Functions
 
@@ -338,7 +318,7 @@ function App() {
                                 <InputGroup className="mb-3">
                                     <Form.Control
                                         type="text"
-                                        value={result.resultSalary.toFixed(2)}
+                                        value={calculateSalary().toFixed(2)}
                                         readOnly={true}
                                     />
                                     <InputGroup.Text>{pppData[destinationCountry].currency.split(",")[0]}</InputGroup.Text>
@@ -375,53 +355,69 @@ function App() {
         // Set the new value
         const newValue = e.target.value;
         setSalary(newValue);
-
-        // Recalculate the new salary
-        resultDispatch({
-            salary: newValue,
-            sourceCountry: pppData[sourceCountry],
-            destinationCountry: pppData[destinationCountry]
-        });
     }
 
     const handleChangeSource = (e) => {
-        // Set the new value
+        // Get the new value
         const newValue = e.target.value;
-        setSourceCountry(newValue);
-
-        // Recalculate the new salary
-        resultDispatch({
-            salary: salary,
-            sourceCountry: pppData[newValue],
-            destinationCountry: pppData[destinationCountry]
+        
+        // First, remember this conversion in the history
+        historyDispatch({
+            newItem: {
+                source: pppData[newValue],
+                destination: pppData[destinationCountry]
+            }
         });
+        
+        // Set the new value
+        setSourceCountry(newValue);
     }
 
     const handleChangeDestination = (e) => {
-        // Set the new value
+        // Get the new value
         const newValue = e.target.value;
-        setDestinationCountry(newValue);
 
-        // Recalculate the new salary
-        resultDispatch({
-            salary: salary,
-            sourceCountry: pppData[sourceCountry],
-            destinationCountry: pppData[newValue]
+        // First, remember this conversion in the history
+        historyDispatch({
+            newItem: {
+                source: pppData[sourceCountry],
+                destination: pppData[newValue]
+            }
         });
+
+        // Set the new value
+        setDestinationCountry(newValue);
     }
 
     const handleReverseCountries = (e) => {
-        // Swap the values
+        // Get the new value
         const temp = destinationCountry;
+
+        // First, remember this conversion in the history
+        historyDispatch({
+            newItem: {
+                source: pppData[destinationCountry],
+                destination: pppData[sourceCountry]
+            }
+        });
+
+        // Swap the values
         setDestinationCountry(sourceCountry);
         setSourceCountry(temp);
+    }
 
-        // Run the calculation again with the reversed values
-        resultDispatch({
-            salary: salary,
-            sourceCountry: pppData[destinationCountry],
-            destinationCountry: pppData[sourceCountry]
-        });
+    // Utility functions
+
+    const calculateSalary = () => {
+        // Get PPP data for the selected countries
+        const source = pppData[sourceCountry];
+        const dest = pppData[destinationCountry];
+
+        // Calculate the target amount
+        const targetAmount = parseInt(salary) / source.ppp * dest.ppp;
+
+        // Return the resulting value
+        return targetAmount;
     }
 
     return (
