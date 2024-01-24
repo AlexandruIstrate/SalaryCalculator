@@ -166,9 +166,6 @@ function App() {
         const newItem = action.newItem;
         const history = state.historyItems;
 
-        console.log(history.length, process.env.REACT_APP_CONVERSION_HISTORY_LIMIT, 
-            (history.length === process.env.REACT_APP_CONVERSION_HISTORY_LIMIT));
-
         // Check that we got a new item for this action
         if (newItem) {
             // Check whether the item alreay exists
@@ -188,8 +185,16 @@ function App() {
             
             // Check whether we have reached the history limit
             if (history.length === parseInt(process.env.REACT_APP_CONVERSION_HISTORY_LIMIT)) {
-                // Simply return the old state of items without any changes
-                return state;
+                // Add the history item at the top again
+                const withTop = [newItem].concat(history);
+
+                // Remove the last item
+                withTop.pop();
+
+                // Return the new array
+                return {
+                    historyItems: withTop
+                };
             }
 
             // Merge the existing array with the new item
