@@ -2,6 +2,8 @@ import React, { useState, useEffect, useReducer } from "react";
 
 import Navbar from "react-bootstrap/Navbar"
 import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
 import Form from "react-bootstrap/Form";
@@ -9,13 +11,14 @@ import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
 
+import Select from "react-select";
+
 import { countries } from "countries-list";
 import { isEqual } from "lodash";
 
 import { WorldBankAPI } from "src/api/WorldBankAPI";
 
 import "./App.css";
-import { Col, Row } from "react-bootstrap";
 
 function Jumbotron({ title, subtitle }) {
     return (
@@ -28,24 +31,16 @@ function Jumbotron({ title, subtitle }) {
     )
 }
 
-function CountrySelect({ country, pppData, onChange }) {
+function CountrySelect({ country, pppData, onChange, isLoading=false }) {
     return (
-        <Form.Select
-            value={country}
+        <Select
+            options={Object.values(pppData)}
+            value={pppData[country]}
             onChange={onChange}
-        >
-            {
-                Object.entries(pppData)
-                    .map(([code, info]) =>
-                        <option
-                            key={code}
-                            value={code}
-                        >
-                            {/* Display the flag, together with the country name */}
-                            {info.emoji} {info.countryName}
-                        </option>)
-            }
-        </Form.Select>
+            isLoading={isLoading}
+            getOptionValue={op => op.countryCode}
+            getOptionLabel={op => `${op.emoji} ${op.countryName}`}
+        />
     )
 }
 
@@ -182,7 +177,7 @@ function App() {
                     historyItems: history
                 };
             }
-            
+
             // Check whether we have reached the history limit
             if (history.length === parseInt(process.env.REACT_APP_CONVERSION_HISTORY_LIMIT)) {
                 // Add the history item at the top again
@@ -262,7 +257,7 @@ function App() {
                 // Always clear the loading state at the end
                 setIsLoading(false);
             });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     // UI Rendering Functions
@@ -292,6 +287,7 @@ function App() {
                                         country={sourceCountry}
                                         pppData={pppData}
                                         onChange={handleChangeSource}
+                                        isLoading={isLoading}
                                     />
                                 </Form.Group>
 
@@ -301,8 +297,10 @@ function App() {
                                     <Form.Control
                                         type="text"
                                         value={salary}
+                                        placeholder="Enter salary"
                                         onChange={handleChangeSalary}
-                                        placeholder="Enter salary" />
+                                        disabled={isLoading}
+                                    />
                                     <InputGroup.Text>{pppData[sourceCountry].currency.split(",")[0]}</InputGroup.Text>
                                 </InputGroup>
 
@@ -316,6 +314,7 @@ function App() {
                                         country={destinationCountry}
                                         pppData={pppData}
                                         onChange={handleChangeDestination}
+                                        isLoading={isLoading}
                                     />
                                 </Form.Group>
 
@@ -332,8 +331,9 @@ function App() {
 
                                 <Button
                                     variant="outline-primary"
-                                    onClick={handleReverseCountries}
                                     className="mb-3"
+                                    onClick={handleReverseCountries}
+                                    disabled={isLoading}
                                 >
                                     Reverse Countries
                                 </Button>
@@ -365,8 +365,8 @@ function App() {
 
     const handleChangeSource = (e) => {
         // Get the new value
-        const newValue = e.target.value;
-        
+        const newValue = e.countryCode;
+
         // First, remember this conversion in the history
         historyDispatch({
             newItem: {
@@ -374,14 +374,14 @@ function App() {
                 destination: pppData[destinationCountry]
             }
         });
-        
+
         // Set the new value
         setSourceCountry(newValue);
     }
 
     const handleChangeDestination = (e) => {
         // Get the new value
-        const newValue = e.target.value;
+        const newValue = e.countryCode;
 
         // First, remember this conversion in the history
         historyDispatch({
