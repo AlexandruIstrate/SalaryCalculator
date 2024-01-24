@@ -44,17 +44,21 @@ function CountrySelect({ country, pppData, onChange, isLoading=false }) {
     )
 }
 
-function HistoryContent({ historyItems }) {
+function HistoryContent({ historyItems, onClick }) {
     // Check if we have no data
     if (!historyItems || historyItems.length === 0) {
-        // Return a no data message
+        // Return a no-data message
         return (
-            <ListGroup.Item>None</ListGroup.Item>
+            <ListGroup.Item>You'll see your history here after you make a conversion</ListGroup.Item>
         );
     } else {
         // Return normal content
         return historyItems.map(({ source, destination }, index) =>
-            <ListGroup.Item key={index}>
+            <ListGroup.Item
+                key={index}
+                action={true}
+                onClick={() => onClick({ source, destination })}
+            >
                 {`${source.emoji} ${source.currency}`} to {`${destination.emoji} ${destination.currency}`}
             </ListGroup.Item>
         );
@@ -347,7 +351,10 @@ function App() {
                             <Card>
                                 <Card.Header>Recent Conversions</Card.Header>
                                 <ListGroup variant="flush">
-                                    <HistoryContent historyItems={history.historyItems} />
+                                    <HistoryContent
+                                        historyItems={history.historyItems}
+                                        onClick={handleHistoryItemClicked}
+                                    />
                                 </ListGroup>
                             </Card>
                         </Col>
@@ -412,6 +419,12 @@ function App() {
         // Swap the values
         setDestinationCountry(sourceCountry);
         setSourceCountry(temp);
+    }
+
+    const handleHistoryItemClicked = (e) => {
+        // Set the source and destionation using the given data
+        setSourceCountry(e.source.countryCode);
+        setDestinationCountry(e.destination.countryCode);
     }
 
     // Utility functions
