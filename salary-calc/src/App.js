@@ -271,7 +271,13 @@ function App() {
         if (isLoading) {
             return (
                 <Container className="text-center p-5">
-                    <Spinner animation="border" />
+                    <Spinner
+                        animation="grow"
+                        variant="primary"
+                        role="status"
+                    >
+                        <span className="visually-hidden">Loading...</span>
+                    </Spinner>
                 </Container>
             );
         } else {
