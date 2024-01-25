@@ -300,6 +300,7 @@ function App() {
                                 <InputGroup className="mb-3">
                                     <Form.Control
                                         type="number"
+                                        inputMode="decimal"
                                         value={salary}
                                         min={0}
                                         placeholder="Enter salary"
@@ -328,6 +329,7 @@ function App() {
                                 <InputGroup className="mb-3">
                                     <Form.Control
                                         type="number"
+                                        inputMode="decimal"
                                         value={calculateSalary().toFixed(2)}
                                         placeholder="Resulting salary"
                                         readOnly={true}
