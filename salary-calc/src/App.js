@@ -15,6 +15,7 @@ import Select from "react-select";
 
 import { countries } from "countries-list";
 import { isEqual } from "lodash";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import { WorldBankAPI } from "src/api/WorldBankAPI";
 
@@ -159,6 +160,10 @@ function App() {
     const [isLoading, setIsLoading] = useState(true);
     const [pppData, setPPPData] = useState([]);
 
+    // Navigation
+    const location = useLocation();
+    const navigate = useNavigate();
+
     // History Reducer
     const historyReducer = (state, action) => {
         // Get the relevant data
@@ -207,8 +212,7 @@ function App() {
 
     const [history, historyDispatch] = useReducer(historyReducer, { historyItems: [] });
 
-    // Data Loading
-
+    // Load World Bank Data
     useEffect(() => {
         // Get the current year
         const year = new Date().getFullYear();
@@ -263,6 +267,16 @@ function App() {
             });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    // Update state based on URL on mount
+    useEffect(() => {
+        updateStateAndURL();
+    }, []);
+
+    // Update state on URL change
+    useEffect(() => {
+        updateStateAndURL();
+    }, [location.search])
 
     // UI Rendering Functions
 
@@ -427,12 +441,18 @@ function App() {
         // Swap the values
         setDestinationCountry(sourceCountry);
         setSourceCountry(temp);
+
+        // Update the URL
+        updateURLFromState();
     }
 
     const handleHistoryItemClicked = (e) => {
         // Set the source and destionation using the given data
         setSourceCountry(e.source.countryCode);
         setDestinationCountry(e.destination.countryCode);
+
+        // Update the URL
+        updateURLFromState(e.source.countryCode, e.destination.countryCode, salary);
     }
 
     // Utility functions
@@ -447,6 +467,27 @@ function App() {
 
         // Return the resulting value
         return targetAmount;
+    }
+
+    const updateStateAndURL = () => {
+        // Get the search parameters
+        const queryParams = new URLSearchParams(location.search);
+
+        // Update state based on URL parameters
+        setSourceCountry(queryParams.get("source") || process.env.REACT_APP_DEFAULT_SOURCE_COUNTRY_CODE);
+        setDestinationCountry(queryParams.get("dest") || process.env.REACT_APP_DEFAULT_DESTINATION_COUNTRY_CODE);
+        setSalary(queryParams.get("salary") || 0);
+    }
+
+    const updateURLFromState = (source = null, dest = null, newSalary = null) => {
+        // Update the URL parameters
+        const queryParams = new URLSearchParams();
+        queryParams.set("source", source ?? sourceCountry);
+        queryParams.set("dest", dest ?? destinationCountry);
+        queryParams.set("salary", newSalary ?? salary);
+
+        // Update URL without refreshing the page
+        navigate(`?${queryParams.toString()}`);
     }
 
     return (
