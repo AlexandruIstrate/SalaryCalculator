@@ -481,6 +481,9 @@ function App() {
     }
 
     const updateStateAndURL = () => {
+        // Do some logging
+        console.log(location);
+
         // Get the search parameters
         const queryParams = new URLSearchParams(location.search);
 
