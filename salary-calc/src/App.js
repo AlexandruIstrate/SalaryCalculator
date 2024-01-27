@@ -394,6 +394,9 @@ function App() {
         // Set the new value
         const newValue = e.target.value;
         setSalary(newValue);
+
+        // Update the URL
+        updateURLFromState(sourceCountry, destinationCountry, newValue);
     }
 
     const handleChangeSource = (e) => {
@@ -410,6 +413,9 @@ function App() {
 
         // Set the new value
         setSourceCountry(newValue);
+
+        // Update the URL
+        updateURLFromState(newValue, destinationCountry, salary);
     }
 
     const handleChangeDestination = (e) => {
@@ -426,6 +432,9 @@ function App() {
 
         // Set the new value
         setDestinationCountry(newValue);
+
+        // Update the URL
+        updateURLFromState(sourceCountry, newValue, salary);
     }
 
     const handleReverseCountries = (e) => {
@@ -445,7 +454,7 @@ function App() {
         setSourceCountry(temp);
 
         // Update the URL
-        updateURLFromState();
+        updateURLFromState(destinationCountry, sourceCountry, salary);
     }
 
     const handleHistoryItemClicked = (e) => {
