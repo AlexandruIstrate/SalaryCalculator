@@ -271,11 +271,13 @@ function App() {
     // Update state based on URL on mount
     useEffect(() => {
         updateStateAndURL();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     // Update state on URL change
     useEffect(() => {
         updateStateAndURL();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location.search])
 
     // UI Rendering Functions
