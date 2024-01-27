@@ -12,7 +12,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 // Create and configure the router
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/SalaryCalculator",
     element: <App />
   }
 ]);
