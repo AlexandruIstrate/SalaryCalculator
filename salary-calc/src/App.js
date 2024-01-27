@@ -348,7 +348,7 @@ function App() {
 
                                 {/* Output Salary */}
                                 <Form.Label>Output</Form.Label>
-                                <InputGroup className="mb-3">
+                                <InputGroup>
                                     <Form.Control
                                         type="number"
                                         inputMode="decimal"
@@ -359,6 +359,14 @@ function App() {
                                     <InputGroup.Text>{pppData[destinationCountry].currency.split(",")[0]}</InputGroup.Text>
                                 </InputGroup>
 
+                                {/* Data Source Info */}
+                                <div className="mb-3">
+                                    <Form.Text muted>
+                                        Based on the latest data provided by The World Bank which is from the year {pppData[destinationCountry].date}.
+                                    </Form.Text>
+                                </div>
+
+                                {/* Reverse Countries Button */}
                                 <Button
                                     variant="outline-primary"
                                     className="mb-3"
@@ -481,16 +489,31 @@ function App() {
     }
 
     const updateStateAndURL = () => {
-        // Do some logging
-        console.log(location);
-
         // Get the search parameters
         const queryParams = new URLSearchParams(location.search);
 
+        // Store the values here
+        var newSource = queryParams.get("source");
+        var newDest = queryParams.get("dest");
+        var newSalary = queryParams.get("salary");
+
+        // Make sure the values are all OK
+        if (!newSource || !pppData[newSource]) {
+            newSource = process.env.REACT_APP_DEFAULT_SOURCE_COUNTRY_CODE;
+        }
+
+        if (!newDest || !pppData[newDest]) {
+            newDest = process.env.REACT_APP_DEFAULT_DESTINATION_COUNTRY_CODE;
+        }
+
+        if (!newSalary || isNaN(newSalary)) {
+            newSalary = 0;
+        }
+
         // Update state based on URL parameters
-        setSourceCountry(queryParams.get("source") || process.env.REACT_APP_DEFAULT_SOURCE_COUNTRY_CODE);
-        setDestinationCountry(queryParams.get("dest") || process.env.REACT_APP_DEFAULT_DESTINATION_COUNTRY_CODE);
-        setSalary(queryParams.get("salary") || 0);
+        setSourceCountry(newSource);
+        setDestinationCountry(newDest);
+        setSalary(newSalary);
     }
 
     const updateURLFromState = (source = null, dest = null, newSalary = null) => {

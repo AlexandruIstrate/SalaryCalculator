@@ -4,24 +4,14 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
-// import { createBrowserRouter, RouterProvider, HashRouter } from "react-router-dom";
 import { HashRouter } from "react-router-dom";
 
 // Add Bootstrap to the app
 import "bootstrap/dist/css/bootstrap.min.css";
 
-// Create and configure the router
-// const router = createBrowserRouter([
-//   {
-//     path: "/SalaryCalculator",
-//     element: <App />
-//   }
-// ]);
-
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    {/* <RouterProvider router={router} /> */}
     <HashRouter>
       <App />
     </HashRouter>
