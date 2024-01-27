@@ -21,7 +21,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     {/* <RouterProvider router={router} /> */}
-    <HashRouter basename="/SalaryCalculator">
+    <HashRouter>
       <App />
     </HashRouter>
   </React.StrictMode>
