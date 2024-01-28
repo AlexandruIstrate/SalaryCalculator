@@ -158,7 +158,7 @@ function App() {
     const [destinationCountry, setDestinationCountry] = useState(process.env.REACT_APP_DEFAULT_DESTINATION_COUNTRY_CODE);
 
     const [isLoading, setIsLoading] = useState(true);
-    const [pppData, setPPPData] = useState([]);
+    const [pppData, setPPPData] = useState(null);
 
     // Navigation
     const location = useLocation();
@@ -252,14 +252,6 @@ function App() {
 
                 // Store the PPP data
                 setPPPData(processed);
-
-                // Set the initial history item
-                historyDispatch({
-                    newItem: {
-                        source: processed[sourceCountry],
-                        destination: processed[destinationCountry]
-                    }
-                });
             })
             .finally(() => {
                 // Always clear the loading state at the end
@@ -279,6 +271,27 @@ function App() {
         updateStateAndURL();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location.search])
+
+    // Update URL on state change
+    useEffect(() => {
+        // Update the URL
+        updateURLFromState(sourceCountry, destinationCountry, salary);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [sourceCountry, destinationCountry, salary])
+
+    // Add to history on change of source or destination
+    useEffect(() => {
+        // Make sure we have loaded the PPP data
+        if (pppData) {
+            // Remember this conversion in the history
+            historyDispatch({
+                newItem: {
+                    source: pppData[sourceCountry],
+                    destination: pppData[destinationCountry]
+                }
+            });
+        }
+    }, [sourceCountry, destinationCountry, pppData])
 
     // UI Rendering Functions
 
@@ -402,76 +415,37 @@ function App() {
         // Set the new value
         const newValue = e.target.value;
         setSalary(newValue);
-
-        // Update the URL
-        updateURLFromState(sourceCountry, destinationCountry, newValue);
     }
 
     const handleChangeSource = (e) => {
         // Get the new value
         const newValue = e.countryCode;
 
-        // First, remember this conversion in the history
-        historyDispatch({
-            newItem: {
-                source: pppData[newValue],
-                destination: pppData[destinationCountry]
-            }
-        });
-
         // Set the new value
         setSourceCountry(newValue);
-
-        // Update the URL
-        updateURLFromState(newValue, destinationCountry, salary);
     }
 
     const handleChangeDestination = (e) => {
         // Get the new value
         const newValue = e.countryCode;
 
-        // First, remember this conversion in the history
-        historyDispatch({
-            newItem: {
-                source: pppData[sourceCountry],
-                destination: pppData[newValue]
-            }
-        });
-
         // Set the new value
         setDestinationCountry(newValue);
-
-        // Update the URL
-        updateURLFromState(sourceCountry, newValue, salary);
     }
 
     const handleReverseCountries = (e) => {
         // Get the new value
         const temp = destinationCountry;
 
-        // First, remember this conversion in the history
-        historyDispatch({
-            newItem: {
-                source: pppData[destinationCountry],
-                destination: pppData[sourceCountry]
-            }
-        });
-
         // Swap the values
         setDestinationCountry(sourceCountry);
         setSourceCountry(temp);
-
-        // Update the URL
-        updateURLFromState(destinationCountry, sourceCountry, salary);
     }
 
     const handleHistoryItemClicked = (e) => {
         // Set the source and destionation using the given data
         setSourceCountry(e.source.countryCode);
         setDestinationCountry(e.destination.countryCode);
-
-        // Update the URL
-        updateURLFromState(e.source.countryCode, e.destination.countryCode, salary);
     }
 
     // Utility functions
@@ -489,31 +463,34 @@ function App() {
     }
 
     const updateStateAndURL = () => {
-        // Get the search parameters
-        const queryParams = new URLSearchParams(location.search);
+        // Check that we have loaded the PPP data
+        if (pppData) {
+            // Get the search parameters
+            const queryParams = new URLSearchParams(location.search);
 
-        // Store the values here
-        var newSource = queryParams.get("source");
-        var newDest = queryParams.get("dest");
-        var newSalary = queryParams.get("salary");
+            // Store the values here
+            var newSource = queryParams.get("source");
+            var newDest = queryParams.get("dest");
+            var newSalary = queryParams.get("salary");
 
-        // Make sure the values are all OK
-        if (!newSource || !pppData[newSource]) {
-            newSource = process.env.REACT_APP_DEFAULT_SOURCE_COUNTRY_CODE;
+            // Make sure the values are all OK
+            if (!newSource || !pppData[newSource]) {
+                newSource = process.env.REACT_APP_DEFAULT_SOURCE_COUNTRY_CODE;
+            }
+
+            if (!newDest || !pppData[newDest]) {
+                newDest = process.env.REACT_APP_DEFAULT_DESTINATION_COUNTRY_CODE;
+            }
+
+            if (!newSalary || isNaN(newSalary)) {
+                newSalary = 0;
+            }
+
+            // Update state based on URL parameters
+            setSourceCountry(newSource);
+            setDestinationCountry(newDest);
+            setSalary(newSalary);
         }
-
-        if (!newDest || !pppData[newDest]) {
-            newDest = process.env.REACT_APP_DEFAULT_DESTINATION_COUNTRY_CODE;
-        }
-
-        if (!newSalary || isNaN(newSalary)) {
-            newSalary = 0;
-        }
-
-        // Update state based on URL parameters
-        setSourceCountry(newSource);
-        setDestinationCountry(newDest);
-        setSalary(newSalary);
     }
 
     const updateURLFromState = (source = null, dest = null, newSalary = null) => {
