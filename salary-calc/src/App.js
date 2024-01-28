@@ -482,10 +482,6 @@ function App() {
                 newDest = process.env.REACT_APP_DEFAULT_DESTINATION_COUNTRY_CODE;
             }
 
-            if (!newSalary || isNaN(newSalary)) {
-                newSalary = 0;
-            }
-
             // Update state based on URL parameters
             setSourceCountry(newSource);
             setDestinationCountry(newDest);
