@@ -1,4 +1,5 @@
 import axios from "axios"
+import { setupCache, buildWebStorage } from "axios-cache-interceptor";
 
 // Check that environment variables have been set
 if (!process.env.REACT_APP_WORLD_BANK_API_URL) {
@@ -6,9 +7,14 @@ if (!process.env.REACT_APP_WORLD_BANK_API_URL) {
 }
 
 // Create the API object
-export const api = axios.create({
+const instance = axios.create({
     withCredentials: false,
     baseURL: process.env.REACT_APP_WORLD_BANK_API_URL
+});
+
+export const api = setupCache(instance, {
+    cacheTakeover: false,
+    storage: buildWebStorage(localStorage, "axios-cache:")
 });
 
 // Define custom error handlers fot the API

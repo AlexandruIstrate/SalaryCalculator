@@ -275,13 +275,6 @@ function App() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location.search]);
 
-    // Update URL on state change
-    // useEffect(() => {
-    //     // Update the URL
-    //     updateURLFromState(sourceCountry, destinationCountry, salary);
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [sourceCountry, destinationCountry, salary]);
-
     // Add to history on change of source or destination
     useEffect(() => {
         // Make sure we have loaded the PPP data
