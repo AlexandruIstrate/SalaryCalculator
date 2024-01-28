@@ -276,11 +276,11 @@ function App() {
     }, [location.search]);
 
     // Update URL on state change
-    useEffect(() => {
-        // Update the URL
-        updateURLFromState(sourceCountry, destinationCountry, salary);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [sourceCountry, destinationCountry, salary]);
+    // useEffect(() => {
+    //     // Update the URL
+    //     updateURLFromState(sourceCountry, destinationCountry, salary);
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [sourceCountry, destinationCountry, salary]);
 
     // Add to history on change of source or destination
     useEffect(() => {
@@ -426,7 +426,12 @@ function App() {
     const handleChangeSalary = (e) => {
         // Set the new value
         const newValue = e.target.value;
+
+        // Set the new value
         setSalary(newValue);
+
+        // Update the URL
+        updateURLFromState(sourceCountry, destinationCountry, newValue);
     }
 
     const handleChangeSource = (e) => {
@@ -435,6 +440,9 @@ function App() {
 
         // Set the new value
         setSourceCountry(newValue);
+
+        // Update the URL
+        updateURLFromState(newValue, destinationCountry, salary);
     }
 
     const handleChangeDestination = (e) => {
@@ -443,6 +451,9 @@ function App() {
 
         // Set the new value
         setDestinationCountry(newValue);
+
+        // Update the URL
+        updateURLFromState(sourceCountry, newValue, salary);
     }
 
     const handleReverseCountries = (e) => {
@@ -452,12 +463,18 @@ function App() {
         // Swap the values
         setDestinationCountry(sourceCountry);
         setSourceCountry(temp);
+
+        // Update the URL
+        updateURLFromState(destinationCountry, sourceCountry, salary);
     }
 
     const handleHistoryItemClicked = (e) => {
         // Set the source and destionation using the given data
         setSourceCountry(e.source.countryCode);
         setDestinationCountry(e.destination.countryCode);
+
+        // Update the URL
+        updateURLFromState(e.source.countryCode, e.destination.countryCode, salary);
     }
 
     // Utility functions
@@ -475,28 +492,24 @@ function App() {
     }
 
     const updateStateAndURL = () => {
-        // Check that we have loaded the PPP data
-        if (pppData) {
-            // Get the search parameters
-            const queryParams = new URLSearchParams(location.search);
+        // Get the search parameters
+        const queryParams = new URLSearchParams(location.search);
 
-            // Store the values here
-            var newSource = queryParams.get("source");
-            var newDest = queryParams.get("dest");
-            var newSalary = queryParams.get("salary");
+        // Store the values here
+        var newSource = queryParams.get("source");
+        var newDest = queryParams.get("dest");
+        var newSalary = queryParams.get("salary");
 
-            // Make sure the values are all OK
-            if (!newSource || !pppData[newSource]) {
-                newSource = process.env.REACT_APP_DEFAULT_SOURCE_COUNTRY_CODE;
-            }
-
-            if (!newDest || !pppData[newDest]) {
-                newDest = process.env.REACT_APP_DEFAULT_DESTINATION_COUNTRY_CODE;
-            }
-
-            // Update state based on URL parameters
+        // Update state based on URL parameters if we have them
+        if (newSource) {
             setSourceCountry(newSource);
+        }
+
+        if (newDest) {
             setDestinationCountry(newDest);
+        }
+
+        if (newSalary) {
             setSalary(newSalary);
         }
     }
