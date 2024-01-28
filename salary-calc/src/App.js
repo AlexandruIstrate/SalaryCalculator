@@ -18,6 +18,7 @@ import { isEqual } from "lodash";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { WorldBankAPI } from "src/api/WorldBankAPI";
+import { LocalStorage } from "src/utils/LocalStorage";
 
 import "./App.css";
 
@@ -153,9 +154,11 @@ function FooterContent() {
 
 function App() {
     // App State
-    const [salary, setSalary] = useState(0);
-    const [sourceCountry, setSourceCountry] = useState(process.env.REACT_APP_DEFAULT_SOURCE_COUNTRY_CODE);
-    const [destinationCountry, setDestinationCountry] = useState(process.env.REACT_APP_DEFAULT_DESTINATION_COUNTRY_CODE);
+    const [salary, setSalary] = useState(LocalStorage.salary ?? 0);
+    const [sourceCountry, setSourceCountry] = useState(
+        LocalStorage.sourceCountry ?? process.env.REACT_APP_DEFAULT_SOURCE_COUNTRY_CODE);
+    const [destinationCountry, setDestinationCountry] = useState(
+        LocalStorage.destinationCountry ?? process.env.REACT_APP_DEFAULT_DESTINATION_COUNTRY_CODE);
 
     const [isLoading, setIsLoading] = useState(true);
     const [pppData, setPPPData] = useState(null);
@@ -208,9 +211,9 @@ function App() {
         }
 
         throw Error("No new value provided for history");
-    }
+    };
 
-    const [history, historyDispatch] = useReducer(historyReducer, { historyItems: [] });
+    const [history, historyDispatch] = useReducer(historyReducer, LocalStorage.history ?? { historyItems: [] });
 
     // Load World Bank Data
     useEffect(() => {
@@ -270,14 +273,14 @@ function App() {
     useEffect(() => {
         updateStateAndURL();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [location.search])
+    }, [location.search]);
 
     // Update URL on state change
     useEffect(() => {
         // Update the URL
         updateURLFromState(sourceCountry, destinationCountry, salary);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [sourceCountry, destinationCountry, salary])
+    }, [sourceCountry, destinationCountry, salary]);
 
     // Add to history on change of source or destination
     useEffect(() => {
@@ -291,7 +294,16 @@ function App() {
                 }
             });
         }
-    }, [sourceCountry, destinationCountry, pppData])
+    }, [sourceCountry, destinationCountry, pppData]);
+
+    // Save form state to local storage
+    useEffect(() => {
+        // Store all the form variables
+        LocalStorage.sourceCountry = sourceCountry;
+        LocalStorage.destinationCountry = destinationCountry;
+        LocalStorage.salary = salary;
+        LocalStorage.history = history;
+    }, [sourceCountry, destinationCountry, salary, history])
 
     // UI Rendering Functions
 
