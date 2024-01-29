@@ -61,7 +61,7 @@ function HistoryContent({ historyItems, onClick }) {
                 action={true}
                 onClick={() => onClick({ source, destination })}
             >
-                {`${source.emoji} ${source.currency}`} to {`${destination.emoji} ${destination.currency}`}
+                {`${source.emoji} ${source.currency.split(",")[0]}`} to {`${destination.emoji} ${destination.currency.split(",")[0]}`}
             </ListGroup.Item>
         );
     }
