@@ -33,7 +33,7 @@ function Jumbotron({ title, subtitle }) {
     )
 }
 
-function CountrySelect({ country, pppData, onChange, isLoading = false }) {
+function CountrySelect({ country, pppData, onChange, isLoading = false, dontShowOption = null }) {
     return (
         <Select
             options={Object.values(pppData)}
@@ -42,8 +42,9 @@ function CountrySelect({ country, pppData, onChange, isLoading = false }) {
             isLoading={isLoading}
             getOptionValue={op => op.countryCode}
             getOptionLabel={op => `${op.emoji} ${op.countryName}`}
+            isOptionDisabled={op => op.countryCode === dontShowOption}
         />
-    )
+    );
 }
 
 function HistoryContent({ historyItems, onClick }) {
@@ -332,6 +333,7 @@ function App() {
                                         pppData={pppData}
                                         onChange={handleChangeSource}
                                         isLoading={isLoading}
+                                        dontShowOption={destinationCountry}
                                     />
                                 </Form.Group>
 
@@ -361,6 +363,7 @@ function App() {
                                         pppData={pppData}
                                         onChange={handleChangeDestination}
                                         isLoading={isLoading}
+                                        dontShowOption={sourceCountry}
                                     />
                                 </Form.Group>
 
@@ -374,7 +377,9 @@ function App() {
                                         placeholder="Resulting salary"
                                         readOnly={true}
                                     />
-                                    <InputGroup.Text>{pppData[destinationCountry].currency.split(",")[0]}</InputGroup.Text>
+                                    <InputGroup.Text>
+                                        {pppData[destinationCountry].currency.split(",")[0]}
+                                    </InputGroup.Text>
                                 </InputGroup>
 
                                 {/* Data Source Info */}
@@ -407,6 +412,13 @@ function App() {
                                     />
                                 </ListGroup>
                             </Card>
+
+                            {/* Additional History Info */}
+                            <div className="mb-3">
+                                <Form.Text muted>
+                                    <strong>TIP: </strong>You can view a conversion again by clicking on it.
+                                </Form.Text>
+                            </div>
                         </Col>
                     </Row>
                 </Container>
