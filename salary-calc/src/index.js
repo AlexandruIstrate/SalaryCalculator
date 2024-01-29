@@ -9,6 +9,9 @@ import { HashRouter } from "react-router-dom";
 // Add Bootstrap to the app
 import "bootstrap/dist/css/bootstrap.min.css";
 
+// Add i18n to the app
+import "./i18n";
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>

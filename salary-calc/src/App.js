@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useReducer } from "react";
 
 import Navbar from "react-bootstrap/Navbar"
+import NavDropdown from "react-bootstrap/NavDropdown";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -16,6 +17,7 @@ import Select from "react-select";
 import { countries } from "countries-list";
 import { isEqual } from "lodash";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useTranslation, withTranslation, Trans } from "react-i18next";
 
 import { WorldBankAPI } from "src/api/WorldBankAPI";
 import { LocalStorage } from "src/utils/LocalStorage";
@@ -68,11 +70,26 @@ function HistoryContent({ historyItems, onClick }) {
     }
 }
 
-function NavbarContent() {
+function NavbarContent({ i18n }) {
     return (
-        <Navbar expand="lg" className="bg-body-tertiary">
+        <Navbar className="bg-body-tertiary">
             <Container>
-                <Navbar.Brand href="#!">Salary Converter</Navbar.Brand>
+                <Navbar.Brand href="#!">
+                    <Trans key="nav.title">
+                        Salary Converter
+                    </Trans>
+                </Navbar.Brand>
+                <Navbar.Collapse className="justify-content-end">
+                    <NavDropdown title="Language">
+                        <NavDropdown.Item>English</NavDropdown.Item>
+                        <NavDropdown.Item>German</NavDropdown.Item>
+                        {
+                            i18n.languages.map(lang => {
+                                <NavDropdown.Item>{lang}</NavDropdown.Item>
+                            })
+                        }
+                    </NavDropdown>
+                </Navbar.Collapse>
             </Container>
         </Navbar>
     )
@@ -167,6 +184,9 @@ function App() {
     // Navigation
     const location = useLocation();
     const navigate = useNavigate();
+
+    // Translation
+    const { t } = useTranslation();
 
     // History Reducer
     const historyReducer = (state, action) => {
@@ -530,12 +550,20 @@ function App() {
         navigate(`?${queryParams.toString()}`);
     }
 
+    // Translated components
+    const NavbarContentWrapped = withTranslation()(NavbarContent);
+    const FooterContentWrapped = withTranslation()(FooterContent);
+
     return (
         <div className="app">
             {/* Development Build Banner */}
             {process.env.NODE_ENV === "development" ? (
                 <div className="banner-dev-env text-center bg-warning p-2">
-                    <b>Development Build</b>
+                    <b>
+                        <Trans key="banner">
+                            Development Build
+                        </Trans>
+                    </b>
                 </div>
             ) : (
                 null
@@ -543,15 +571,15 @@ function App() {
 
             {/* App Header */}
             <header>
-                <NavbarContent />
+                <NavbarContentWrapped />
             </header>
 
             {/* Main Content */}
             <main>
                 <Container className="content p-3">
                     <Jumbotron
-                        title="Calcualte Your Salary"
-                        subtitle="Use this converter to check how much money you need in a certain country in order to be able to live as well as you would do in another. Start by selecting the source and destination countries and then input the salary amount in the source currency."
+                        title={t("jumbotron.title")}
+                        subtitle={t("jumbotron.subtitle")}
                     />
                     <Container className="mb-5">
                         {renderCalculatorArea()}
@@ -562,7 +590,7 @@ function App() {
             {/* Footer */}
             <footer className="footer font-small blue bg-light pt-4">
                 {/* Footer Content */}
-                <FooterContent />
+                <FooterContentWrapped />
 
                 {/* Copyright */}
                 <div className="footer-copyright text-center py-3">
