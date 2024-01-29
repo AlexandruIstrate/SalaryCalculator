@@ -3,6 +3,19 @@ import Backend from "i18next-http-backend";
 import LanguageDetector from "i18next-browser-languagedetector";
 import { initReactI18next } from "react-i18next";
 
+// Set supported languages
+export const supportedLngs = {
+    en: {
+        code: "en",
+        flagCountryCode: "US"
+    },
+    ro: {
+        code: "ro",
+        flagCountryCode: "RO"
+    }
+};
+
+// Configure i18n
 i18n
     // Load translations from backend
     .use(Backend)
@@ -14,6 +27,8 @@ i18n
     .init({
         debug: (process.env.NODE_ENV === "development"),
         fallbackLng: "en",
+        supportedLngs: Object.keys(supportedLngs),
+        load: "languageOnly",
         interpolation: {
             escapeValue: false // Not needed for react as it escapes by default
         },

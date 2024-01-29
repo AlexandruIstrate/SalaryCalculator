@@ -14,13 +14,14 @@ import Spinner from "react-bootstrap/Spinner";
 
 import Select from "react-select";
 
-import { countries } from "countries-list";
+import { countries, languages } from "countries-list";
 import { isEqual } from "lodash";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useTranslation, withTranslation, Trans } from "react-i18next";
+import { useTranslation, withTranslation } from "react-i18next";
 
 import { WorldBankAPI } from "src/api/WorldBankAPI";
 import { LocalStorage } from "src/utils/LocalStorage";
+import { supportedLngs } from "src/i18n";
 
 import "./App.css";
 
@@ -70,23 +71,35 @@ function HistoryContent({ historyItems, onClick }) {
     }
 }
 
-function NavbarContent({ i18n }) {
+function NavbarContent({ t, i18n }) {
     return (
         <Navbar className="bg-body-tertiary">
             <Container>
                 <Navbar.Brand href="#!">
-                    <Trans key="nav.title">
-                        Salary Converter
-                    </Trans>
+                    {t("nav.title")}
                 </Navbar.Brand>
                 <Navbar.Collapse className="justify-content-end">
-                    <NavDropdown title="Language">
-                        <NavDropdown.Item>English</NavDropdown.Item>
-                        <NavDropdown.Item>German</NavDropdown.Item>
+                    <NavDropdown title={languages[i18n.resolvedLanguage].native}>
                         {
-                            i18n.languages.map(lang => {
-                                <NavDropdown.Item>{lang}</NavDropdown.Item>
-                            })
+                            Object.entries(supportedLngs)
+                                .map(([code, language]) => {
+                                    return {
+                                        code: code,
+                                        flagEmoji: countries[language.flagCountryCode].emoji,
+                                        ...languages[code]
+                                    }
+                                })
+                                .map((lang, index) => {
+                                    return (
+                                        <NavDropdown.Item
+                                            key={index}
+                                            disabled={lang.code === i18n.resolvedLanguage}
+                                            onClick={() => i18n.changeLanguage(lang.code)}
+                                        >
+                                            {`${lang.flagEmoji} ${lang.native}`}
+                                        </NavDropdown.Item>
+                                    )
+                                })
                         }
                     </NavDropdown>
                 </Navbar.Collapse>
@@ -107,60 +120,60 @@ function NewTabLink({ href, title }) {
     )
 }
 
-function FooterContent() {
+function FooterContent({ t }) {
     return (
         <Container className="text-center text-md-left">
             <div className="row">
                 <div className="col-md-6 mt-md-0 mt-3">
-                    <h5 className="text-uppercase">About This App</h5>
-                    <p>This app is an open source project. Contributions are welcome.</p>
+                    <h5 className="text-uppercase">{t("footer.title")}</h5>
+                    <p>{t("footer.description")}</p>
                 </div>
 
                 <hr className="clearfix w-100 d-md-none pb-0" />
 
                 <div className="col-md-3 mb-md-0 mb-3">
-                    <h5 className="text-uppercase">Docs</h5>
+                    <h5 className="text-uppercase">{t("footer.docs.title")}</h5>
                     <ul className="list-unstyled">
                         <li>
                             <NewTabLink
                                 href="https://en.wikipedia.org/wiki/Purchasing_power_parity"
-                                title="What is PPP?"
+                                title={t("footer.docs.whatIsPPP")}
                             />
                         </li>
                         <li>
                             <NewTabLink
                                 href="https://documents.worldbank.org/en/publication/documents-reports/api"
-                                title="World Bank API"
+                                title={t("footer.docs.worldBankAPI")}
                             />
                         </li>
                     </ul>
                 </div>
 
                 <div className="col-md-3 mb-md-0 mb-3">
-                    <h5 className="text-uppercase">Project</h5>
+                    <h5 className="text-uppercase">{t("footer.project.title")}</h5>
                     <ul className="list-unstyled">
                         <li>
                             <NewTabLink
                                 href="https://github.com/AlexandruIstrate/SalaryCalculator"
-                                title="Project Homepage"
+                                title={t("footer.project.homepage")}
                             />
                         </li>
                         <li>
                             <NewTabLink
                                 href="https://github.com/AlexandruIstrate/SalaryCalculator/blob/master/README.md"
-                                title="Docs"
+                                title={t("footer.project.docs")}
                             />
                         </li>
                         <li>
                             <NewTabLink
                                 href="https://github.com/AlexandruIstrate/SalaryCalculator/issues"
-                                title="Report an Issue"
+                                title={t("footer.project.reportIssue")}
                             />
                         </li>
                         <li>
                             <NewTabLink
                                 href="https://github.com/AlexandruIstrate/SalaryCalculator/releases"
-                                title="Previous Releases"
+                                title={t("footer.project.previousReleases")}
                             />
                         </li>
                     </ul>
@@ -559,11 +572,7 @@ function App() {
             {/* Development Build Banner */}
             {process.env.NODE_ENV === "development" ? (
                 <div className="banner-dev-env text-center bg-warning p-2">
-                    <b>
-                        <Trans key="banner">
-                            Development Build
-                        </Trans>
-                    </b>
+                    <b>{t("banner", "Development Build")}</b>
                 </div>
             ) : (
                 null

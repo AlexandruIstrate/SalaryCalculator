@@ -1,3 +1,42 @@
 {
-    
+    "banner": "Versiune de dezvoltare",
+    "nav": {
+        "title": "Convertor salarial"
+    },
+    "jumbotron": {
+        "title": "Calculați-vă salariul",
+        "subtitle": "Folosiți acest convertor pentru a afla de câți bani aveți nevoie într-o anumită țară ca sa trăiți la fel de bine ca în alta. Începeți prin a selecta țara sursă și țara de destinație, apoi introduceți valoarea salariului în moneda țării sursă."
+    },
+    "calculator": {
+        "source": "Țară Sursă",
+        "salary": "Salariu în moneda țării {{country}}",
+        "destination": "Țară Destinație",
+        "output": "Rezultat",
+        "disclaimer": "Bazat pe cele mai recente date de la Banca Mondiala din anul {{year}}.",
+        "buttons": {
+            "reverse": "Inversați țările"
+        }
+    },
+    "history": {
+        "title": "Conversii Recente",
+        "item": "Din {{source}} către {{dest}}",
+        "-tip": "<1>Notă: </1>Puteți vedea o conversie din nou, dând click pe ea."
+    },
+    "footer": {
+        "title": "Despre această aplicație",
+        "description": "Această aplicație este parte a unui proiect open-source. Contribuțiile sunt binevenite.",
+        "docs": {
+            "title": "Documentație",
+            "whatIsPPP": "Ce este indicele PPP?",
+            "worldBankAPI": "API Banca Mondială"
+        },
+        "project": {
+            "title": "Proiect",
+            "homepage": "Pagina proiectului",
+            "docs": "Documentație",
+            "reportIssue": "Semnalați o problemă",
+            "previousReleases": "Versiuni anterioare"
+        },
+        "copyright": "© {{year}} Drept de autor:"
+    }
 }
