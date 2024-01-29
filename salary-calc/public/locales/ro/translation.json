@@ -20,7 +20,7 @@
     "history": {
         "title": "Conversii Recente",
         "item": "Din {{source}} către {{dest}}",
-        "-tip": "<1>Notă: </1>Puteți vedea o conversie din nou, dând click pe ea."
+        "tip": "<1>Notă: </1>Puteți vedea o conversie din nou, dând click pe ea."
     },
     "footer": {
         "title": "Despre această aplicație",

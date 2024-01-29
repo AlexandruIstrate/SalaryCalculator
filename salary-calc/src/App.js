@@ -17,7 +17,7 @@ import Select from "react-select";
 import { countries, languages } from "countries-list";
 import { isEqual } from "lodash";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useTranslation, withTranslation } from "react-i18next";
+import { useTranslation, withTranslation, Trans } from "react-i18next";
 
 import { WorldBankAPI } from "src/api/WorldBankAPI";
 import { LocalStorage } from "src/utils/LocalStorage";
@@ -360,7 +360,7 @@ function App() {
                                     className="mb-3"
                                     controlId="formSourceCountry"
                                 >
-                                    <Form.Label>Source Country</Form.Label>
+                                    <Form.Label>{t("calculator.source")}</Form.Label>
                                     <CountrySelect
                                         country={sourceCountry}
                                         pppData={pppData}
@@ -371,7 +371,9 @@ function App() {
                                 </Form.Group>
 
                                 {/* Input Salary */}
-                                <Form.Label>Salary in {pppData[sourceCountry].countryName}'s local currency</Form.Label>
+                                <Form.Label>
+                                    {t("calculator.salary", { country: pppData[sourceCountry].countryName })}
+                                </Form.Label>
                                 <InputGroup className="mb-3">
                                     <Form.Control
                                         type="number"
@@ -390,7 +392,7 @@ function App() {
                                     className="mb-3"
                                     controlId="formDestinationCountry"
                                 >
-                                    <Form.Label>Destination Country</Form.Label>
+                                    <Form.Label>{t("calculator.destination")}</Form.Label>
                                     <CountrySelect
                                         country={destinationCountry}
                                         pppData={pppData}
@@ -401,7 +403,7 @@ function App() {
                                 </Form.Group>
 
                                 {/* Output Salary */}
-                                <Form.Label>Output</Form.Label>
+                                <Form.Label>{t("calculator.output")}</Form.Label>
                                 <InputGroup>
                                     <Form.Control
                                         type="number"
@@ -418,7 +420,7 @@ function App() {
                                 {/* Data Source Info */}
                                 <div className="mb-3">
                                     <Form.Text muted>
-                                        Based on the latest data provided by The World Bank which is from the year {pppData[destinationCountry].date}.
+                                        {t("calculator.disclaimer", { year: pppData[destinationCountry].date })}
                                     </Form.Text>
                                 </div>
 
@@ -429,7 +431,7 @@ function App() {
                                     onClick={handleReverseCountries}
                                     disabled={isLoading}
                                 >
-                                    Reverse Countries
+                                    {t("calculator.buttons.reverse")}
                                 </Button>
                             </Form>
                         </Col>
@@ -437,7 +439,7 @@ function App() {
                         {/* History Column */}
                         <Col xs={12} md={4} lg={3}>
                             <Card>
-                                <Card.Header>Recent Conversions</Card.Header>
+                                <Card.Header>{t("history.title")}</Card.Header>
                                 <ListGroup variant="flush">
                                     <HistoryContent
                                         historyItems={history.historyItems}
@@ -449,7 +451,9 @@ function App() {
                             {/* Additional History Info */}
                             <div className="mb-3">
                                 <Form.Text muted>
-                                    <strong>TIP: </strong>You can view a conversion again by clicking on it.
+                                    <Trans key="history.tip">
+                                        <strong>TIP: </strong>You can view a conversion again by clicking on it.
+                                    </Trans>
                                 </Form.Text>
                             </div>
                         </Col>

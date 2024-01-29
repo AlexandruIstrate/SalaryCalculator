@@ -20,7 +20,7 @@
     "history": {
         "title": "Recent Conversions",
         "item": "{{source}} to {{dest}}",
-        "-tip": "<strong>TIP: </strong>You can view a conversion again by clicking on it."
+        "tip": "<strong>TIP: </strong>You can view a conversion again by clicking on it."
     },
     "footer": {
         "title": "About This App",
