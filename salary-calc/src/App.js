@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useReducer } from "react";
 
-import Navbar from "react-bootstrap/Navbar"
-import NavDropdown from "react-bootstrap/NavDropdown";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -14,14 +12,17 @@ import Spinner from "react-bootstrap/Spinner";
 
 import Select from "react-select";
 
-import { countries, languages } from "countries-list";
+import { countries } from "countries-list";
 import { isEqual } from "lodash";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useTranslation, withTranslation, Trans } from "react-i18next";
 
+import NewTabLink from "src/components/NewTabLink";
+import NavbarContent from "src/components/NavbarContent";
+import FooterContent from "src/components/FooterContent";
+
 import { WorldBankAPI } from "src/api/WorldBankAPI";
 import { LocalStorage } from "src/utils/LocalStorage";
-import { supportedLngs } from "src/i18n";
 
 import "./App.css";
 
@@ -69,118 +70,6 @@ function HistoryContent({ historyItems, onClick }) {
             </ListGroup.Item>
         );
     }
-}
-
-function NavbarContent({ t, i18n }) {
-    return (
-        <Navbar className="bg-body-tertiary">
-            <Container>
-                <Navbar.Brand href="#!">
-                    {t("nav.title")}
-                </Navbar.Brand>
-                <Navbar.Collapse className="justify-content-end">
-                    <NavDropdown title={languages[i18n.resolvedLanguage].native}>
-                        {
-                            Object.entries(supportedLngs)
-                                .map(([code, language]) => {
-                                    return {
-                                        code: code,
-                                        flagEmoji: countries[language.flagCountryCode].emoji,
-                                        ...languages[code]
-                                    }
-                                })
-                                .map((lang, index) => {
-                                    return (
-                                        <NavDropdown.Item
-                                            key={index}
-                                            disabled={lang.code === i18n.resolvedLanguage}
-                                            onClick={() => i18n.changeLanguage(lang.code)}
-                                        >
-                                            {`${lang.flagEmoji} ${lang.native}`}
-                                        </NavDropdown.Item>
-                                    )
-                                })
-                        }
-                    </NavDropdown>
-                </Navbar.Collapse>
-            </Container>
-        </Navbar>
-    )
-}
-
-function NewTabLink({ href, title }) {
-    return (
-        <a
-            href={href}
-            target="_blank"
-            rel="noreferrer noopener"
-        >
-            {title}
-        </a>
-    )
-}
-
-function FooterContent({ t }) {
-    return (
-        <Container className="text-center text-md-left">
-            <div className="row">
-                <div className="col-md-6 mt-md-0 mt-3">
-                    <h5 className="text-uppercase">{t("footer.title")}</h5>
-                    <p>{t("footer.description")}</p>
-                </div>
-
-                <hr className="clearfix w-100 d-md-none pb-0" />
-
-                <div className="col-md-3 mb-md-0 mb-3">
-                    <h5 className="text-uppercase">{t("footer.docs.title")}</h5>
-                    <ul className="list-unstyled">
-                        <li>
-                            <NewTabLink
-                                href="https://en.wikipedia.org/wiki/Purchasing_power_parity"
-                                title={t("footer.docs.whatIsPPP")}
-                            />
-                        </li>
-                        <li>
-                            <NewTabLink
-                                href="https://documents.worldbank.org/en/publication/documents-reports/api"
-                                title={t("footer.docs.worldBankAPI")}
-                            />
-                        </li>
-                    </ul>
-                </div>
-
-                <div className="col-md-3 mb-md-0 mb-3">
-                    <h5 className="text-uppercase">{t("footer.project.title")}</h5>
-                    <ul className="list-unstyled">
-                        <li>
-                            <NewTabLink
-                                href="https://github.com/AlexandruIstrate/SalaryCalculator"
-                                title={t("footer.project.homepage")}
-                            />
-                        </li>
-                        <li>
-                            <NewTabLink
-                                href="https://github.com/AlexandruIstrate/SalaryCalculator/blob/master/README.md"
-                                title={t("footer.project.docs")}
-                            />
-                        </li>
-                        <li>
-                            <NewTabLink
-                                href="https://github.com/AlexandruIstrate/SalaryCalculator/issues"
-                                title={t("footer.project.reportIssue")}
-                            />
-                        </li>
-                        <li>
-                            <NewTabLink
-                                href="https://github.com/AlexandruIstrate/SalaryCalculator/releases"
-                                title={t("footer.project.previousReleases")}
-                            />
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </Container>
-    )
 }
 
 function App() {
