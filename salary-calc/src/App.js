@@ -265,6 +265,7 @@ function App() {
                                 >
                                     <Form.Label>{t("calculator.source")}</Form.Label>
                                     <CountrySelectWrapped
+                                        id="destSource"
                                         country={sourceCountry}
                                         pppData={pppData}
                                         onChange={handleChangeSource}
@@ -279,6 +280,7 @@ function App() {
                                 </Form.Label>
                                 <InputGroup className="mb-3">
                                     <Form.Control
+                                        id="salaryInput"
                                         type="number"
                                         inputMode="decimal"
                                         value={salary}
@@ -297,6 +299,7 @@ function App() {
                                 >
                                     <Form.Label>{t("calculator.destination")}</Form.Label>
                                     <CountrySelectWrapped
+                                        id="destSelect"
                                         country={destinationCountry}
                                         pppData={pppData}
                                         onChange={handleChangeDestination}
@@ -309,6 +312,7 @@ function App() {
                                 <Form.Label>{t("calculator.output.label")}</Form.Label>
                                 <InputGroup>
                                     <Form.Control
+                                        id="salaryResult"
                                         type="number"
                                         inputMode="decimal"
                                         value={calculateSalary().toFixed(2)}
