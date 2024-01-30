@@ -13,6 +13,7 @@ import Spinner from "react-bootstrap/Spinner";
 import Select from "react-select";
 
 import { countries } from "countries-list";
+import { registerLocale, getName as getLocalCountryName } from "i18n-iso-countries";
 import { isEqual } from "lodash";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useTranslation, withTranslation, Trans } from "react-i18next";
@@ -23,6 +24,8 @@ import FooterContent from "src/components/FooterContent";
 
 import { WorldBankAPI } from "src/api/WorldBankAPI";
 import { LocalStorage } from "src/utils/LocalStorage";
+
+import { supportedLngs } from "src/i18n";
 
 import "./App.css";
 
@@ -37,7 +40,7 @@ function Jumbotron({ title, subtitle }) {
     )
 }
 
-function CountrySelect({ country, pppData, onChange, isLoading = false, dontShowOption = null }) {
+function CountrySelect({ i18n, country, pppData, onChange, isLoading = false, dontShowOption = null }) {
     return (
         <Select
             options={Object.values(pppData)}
@@ -45,7 +48,7 @@ function CountrySelect({ country, pppData, onChange, isLoading = false, dontShow
             onChange={onChange}
             isLoading={isLoading}
             getOptionValue={op => op.countryCode}
-            getOptionLabel={op => `${op.emoji} ${op.countryName}`}
+            getOptionLabel={op => `${op.emoji} ${getLocalCountryName(op.countryCode, i18n.resolvedLanguage)}`}
             isOptionDisabled={op => op.countryCode === dontShowOption}
         />
     );
@@ -98,6 +101,7 @@ function App() {
     // Translated components
     const NavbarContentWrapped = withTranslation()(NavbarContent);
     const FooterContentWrapped = withTranslation()(FooterContent);
+    const CountrySelectWrapped = withTranslation()(CountrySelect);
     const HistoryContentWrapped = withTranslation()(HistoryContent);
 
     // History Reducer
@@ -260,7 +264,7 @@ function App() {
                                     controlId="formSourceCountry"
                                 >
                                     <Form.Label>{t("calculator.source")}</Form.Label>
-                                    <CountrySelect
+                                    <CountrySelectWrapped
                                         country={sourceCountry}
                                         pppData={pppData}
                                         onChange={handleChangeSource}
@@ -292,7 +296,7 @@ function App() {
                                     controlId="formDestinationCountry"
                                 >
                                     <Form.Label>{t("calculator.destination")}</Form.Label>
-                                    <CountrySelect
+                                    <CountrySelectWrapped
                                         country={destinationCountry}
                                         pppData={pppData}
                                         onChange={handleChangeDestination}
@@ -468,6 +472,17 @@ function App() {
         // Update URL without refreshing the page
         navigate(`?${queryParams.toString()}`);
     }
+
+    const loadCountryNameTranslations = () => {
+        // Go through each supported country
+        for (const langCode of Object.keys(supportedLngs)) {
+            // Load the required file with country names
+            registerLocale(require(`i18n-iso-countries/langs/${langCode}.json`))
+        }
+    }
+
+    // Load country name translation files based on the supported languages
+    loadCountryNameTranslations();
 
     return (
         <div className="app">
