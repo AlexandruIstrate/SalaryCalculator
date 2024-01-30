@@ -25,7 +25,7 @@
     },
     "history": {
         "title": "Recent Conversions",
-        "item": "{{source}} to {{dest}}",
+        "item": "<0>{{source}}</0> to <1>{{dest}}</1>",
         "tip": "<0>TIP: </0>You can view a conversion again by clicking on it."
     },
     "footer": {
@@ -43,6 +43,6 @@
             "reportIssue": "Report an Issue",
             "previousReleases": "Previous Releases"
         },
-        "copyright": "© {{year}} Copyright: <0 />"
+        "copyright": "© {{year}} Copyright: </0>"
     }
 }

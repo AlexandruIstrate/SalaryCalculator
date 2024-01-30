@@ -17,8 +17,10 @@ import { registerLocale, getName as getLocalCountryName } from "i18n-iso-countri
 import { isEqual } from "lodash";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useTranslation, withTranslation, Trans } from "react-i18next";
+import { polyfillCountryFlagEmojis } from "country-flag-emoji-polyfill";
 
 import NewTabLink from "src/components/NewTabLink";
+import FlagDisplay from "src/components/FlagDisplay";
 import NavbarContent from "src/components/NavbarContent";
 import FooterContent from "src/components/FooterContent";
 
@@ -28,6 +30,9 @@ import { LocalStorage } from "src/utils/LocalStorage";
 import { supportedLngs } from "src/i18n";
 
 import "./App.css";
+
+// Load country flag emojis to fix missing flags on certain platforms
+polyfillCountryFlagEmojis();
 
 function Jumbotron({ title, subtitle }) {
     return (
@@ -75,6 +80,16 @@ function HistoryContent({ t, historyItems, onClick }) {
                         dest: `${destination.emoji} ${destination.currency.split(",")[0]}`
                     })
                 }
+                {/* <Trans
+                    i18nKey="history.item"
+                    values={{
+                        source: source.currency.split(",")[0],
+                        dest: destination.currency.split(",")[0]
+                    }}
+                    components={[
+                        <FlagDisplay countryCode={source}
+                    ]}
+                /> */}
             </ListGroup.Item>
         );
     }

@@ -2,27 +2,29 @@ import Navbar from "react-bootstrap/Navbar"
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Container from "react-bootstrap/Container";
 
-import { countries, languages } from "countries-list";
+import { languages } from "countries-list";
 
+import FlagDisplay from "src/components/FlagDisplay";
 import { supportedLngs } from "src/i18n";
 
 function NavbarContent({ t, i18n }) {
     // Create a list of display languages
     const displayLanguages = Object.entries(supportedLngs)
         .map(([code, language]) => ({
-            code: code,
-            flagEmoji: countries[language.flagCountryCode].emoji,
-            ...languages[code]
+            langCode: code,
+            countryCode: language.flagCountryCode,
+            native: languages[code].native
         }));
 
     // Get the selected language
-    const selectedLanguage = displayLanguages
-        .filter(lang => lang.code === i18n.resolvedLanguage)[0];
+    const selLang = displayLanguages
+        .filter(lang => lang.langCode === i18n.resolvedLanguage)[0];
 
-    // Rendering functions
-    const renderLanguage = (nativeName, flagEmoji) => {
-        return `${flagEmoji} ${nativeName}`;
-    }
+    // Create a HTML element to display the selected language
+    const selLangDisplay = <FlagDisplay
+        countryCode={selLang.countryCode}
+        text={selLang.native}
+    />;
 
     // Return the body of the component
     return (
@@ -32,17 +34,20 @@ function NavbarContent({ t, i18n }) {
                     {t("nav.title")}
                 </Navbar.Brand>
                 <Navbar.Collapse className="justify-content-end">
-                    <NavDropdown title={renderLanguage(selectedLanguage.native, selectedLanguage.flagEmoji)}>
+                    <NavDropdown title={selLangDisplay}>
                         {
                             displayLanguages
                                 .map((lang, index) => {
                                     return (
                                         <NavDropdown.Item
                                             key={index}
-                                            disabled={lang.code === i18n.resolvedLanguage}
-                                            onClick={() => i18n.changeLanguage(lang.code)}
+                                            disabled={lang.langCode === i18n.resolvedLanguage}
+                                            onClick={() => i18n.changeLanguage(lang.langCode)}
                                         >
-                                            {renderLanguage(lang.native, lang.flagEmoji)}
+                                            <FlagDisplay
+                                                countryCode={lang.countryCode}
+                                                text={lang.native}
+                                            />
                                         </NavDropdown.Item>
                                     )
                                 })
