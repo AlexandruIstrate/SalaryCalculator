@@ -1,0 +1,48 @@
+{
+    "banner": "Entwicklungsversion",
+    "nav": {
+        "title": "Gehaltsumrechner"
+    },
+    "jumbotron": {
+        "title": "Berechnen Sie Ihr Gehalt",
+        "subtitle": "Mit diesem Umrechner können Sie prüfen, wie viel Geld Sie in einem bestimmten Land benötigen, um genauso gut leben zu können wie in einem anderen. Wählen Sie zunächst das Herkunfts- und das Zielland aus und geben Sie dann den Gehaltsbetrag in der Quellwährung ein."
+    },
+    "calculator": {
+        "source": "Quellland",
+        "salary": {
+            "label": "Gehalt in der Währung des Herkunftslandes",
+            "placeholder": "Gehalt eingeben"
+        },
+        "destination": "Zielland",
+        "output": {
+            "label": "Berechnungsergebnis",
+            "placeholder": "Resultierendes Gehalt"
+        },
+        "disclaimer": "Basierend auf den neuesten Daten der Weltbank aus dem Jahr {{year}}.",
+        "buttons": {
+            "reverse": "Umgekehrte Länder"
+        }
+    },
+    "history": {
+        "title": "Aktuelle Konvertierungen",
+        "item": "Von der {{source}} zu {{dest}}",
+        "tip": "<0>TIPP: </0>Sie können eine Konvertierung erneut ansehen, indem Sie darauf klicken."
+    },
+    "footer": {
+        "title": "Über diese App",
+        "description": "Diese App ist ein Open-Source-Projekt. Beiträge sind willkommen.",
+        "docs": {
+            "title": "Dokumentation",
+            "whatIsPPP": "Was ist PPP?",
+            "worldBankAPI": "Weltbank-API"
+        },
+        "project": {
+            "title": "Projekt",
+            "homepage": "Projekt-Homepage",
+            "docs": "Dokumentation",
+            "reportIssue": "Ein Problem melden",
+            "previousReleases": "Vorherige Versionen"
+        },
+        "copyright": "Urheberrechte © {{year}}: <0 />"
+    }
+}

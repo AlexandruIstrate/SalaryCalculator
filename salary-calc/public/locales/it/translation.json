@@ -1,0 +1,48 @@
+{
+    "banner": "Versione di sviluppo",
+    "nav": {
+        "title": "Convertitore di stipendio"
+    },
+    "jumbotron": {
+        "title": "Calcola il tuo stipendio",
+        "subtitle": "Utilizza questo convertitore per verificare quanti soldi ti servono in un determinato paese per poter vivere come faresti in un altro. Inizia selezionando i paesi di origine e di destinazione, quindi inserisci l'importo dello stipendio nella valuta di origine."
+    },
+    "calculator": {
+        "source": "Paese di origine",
+        "salary": {
+            "label": "Stipendio nella valuta locale del paese di origine",
+            "placeholder": "Inserisci lo stipendio"
+        },
+        "destination": "Paese di destinazione",
+        "output": {
+            "label": "Risultato",
+            "placeholder": "Stipendio risultante"
+        },
+        "disclaimer": "Sulla base degli ultimi dati forniti dalla Banca Mondiale che risalgono all'anno {{year}}.",
+        "buttons": {
+            "reverse": "Paesi inversi"
+        }
+    },
+    "history": {
+        "title": "Conversioni recenti",
+        "item": "Dalle {{source}} agli {{dest}}",
+        "tip": "<0>PUNTA: </0>Puoi visualizzare nuovamente una conversione facendo clic su di essa."
+    },
+    "footer": {
+        "title": "Informazioni su questa app",
+        "description": "Questa app è un progetto open source. I contributi sono benvenuti.",
+        "docs": {
+            "title": "Documentazione",
+            "whatIsPPP": "Cos'è il PPP?",
+            "worldBankAPI": "API della Banca Mondiale"
+        },
+        "project": {
+            "title": "Progetto",
+            "homepage": "Home page del progetto",
+            "docs": "Documentazione",
+            "reportIssue": "Segnala un problema",
+            "previousReleases": "Versioni precedenti"
+        },
+        "copyright": "© {{year}} Diritto d'autore: <0 />"
+    }
+}

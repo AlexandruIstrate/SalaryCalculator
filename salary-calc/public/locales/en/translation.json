@@ -13,7 +13,7 @@
             "label": "Salary in {{country}}'s local currency",
             "placeholder": "Enter salary"
         },
-        "destination": "Pais de destino",
+        "destination": "Destination Country",
         "output": {
             "label": "Output",
             "placeholder": "Resulting salary"

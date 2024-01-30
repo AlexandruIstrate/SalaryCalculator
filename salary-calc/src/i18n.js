@@ -7,11 +7,23 @@ import { initReactI18next } from "react-i18next";
 export const supportedLngs = {
     en: {
         code: "en",
-        flagCountryCode: "US"
+        flagCountryCode: "GB"
+    },
+    fr: {
+        code: "en",
+        flagCountryCode: "FR"
+    },
+    de: {
+        code: "de",
+        flagCountryCode: "DE"
     },
     es: {
         code: "es",
         flagCountryCode: "ES"
+    },
+    it: {
+        code: "it",
+        flagCountryCode: "IT"
     },
     ro: {
         code: "ro",

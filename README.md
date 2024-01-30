@@ -10,5 +10,8 @@ This app is currently available in the following languages:
 | Language | Variant       | ISO 639-1 Code |
 |----------|---------------|----------------|
 | English  | International | en             |
+| French   | France        | fr             |
+| German   | Germany       | de             |
 | Spanish  | International | es             |
+| Italian  | Italy         | it             |
 | Romanian | Romania       | ro             |

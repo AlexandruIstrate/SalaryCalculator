@@ -1,0 +1,48 @@
+{
+    "banner": "Version de développement",
+    "nav": {
+        "title": "Convertisseur de salaire"
+    },
+    "jumbotron": {
+        "title": "Calculez votre salaire",
+        "subtitle": "Utilisez ce convertisseur pour vérifier de combien d’argent vous avez besoin dans un certain pays afin de pouvoir vivre aussi bien que vous le feriez dans un autre. Commencez par sélectionner les pays source et de destination, puis saisissez le montant du salaire dans la devise source."
+    },
+    "calculator": {
+        "source": "Pays d'origine",
+        "salary": {
+            "label": "Salaire dans la monnaie locale du pays d'origine",
+            "placeholder": "Entrez le salaire"
+        },
+        "destination": "Pays de destination",
+        "output": {
+            "label": "Résultat du calcul",
+            "placeholder": "Salaire résultant"
+        },
+        "disclaimer": "Basé sur les dernières données fournies par la Banque mondiale qui datent de {{year}}.",
+        "buttons": {
+            "reverse": "Pays inversés"
+        }
+    },
+    "history": {
+        "title": "Conversions récentes",
+        "item": "De la {{source}} à {{dest}}",
+        "tip": "<0>AVIS: </0>Vous pouvez visualiser à nouveau une conversion en cliquant dessus."
+    },
+    "footer": {
+        "title": "À propos de cette application",
+        "description": "Cette application est un projet open source. Les contributions sont les bienvenues.",
+        "docs": {
+            "title": "Documentation",
+            "whatIsPPP": "Qu’est-ce que le PPP?",
+            "worldBankAPI": "API de la Banque mondiale"
+        },
+        "project": {
+            "title": "Projet",
+            "homepage": "Page d'accueil du projet",
+            "docs": "Documentation",
+            "reportIssue": "Signaler un problème",
+            "previousReleases": "Versions précédentes"
+        },
+        "copyright": "© {{year}} droits d'auteur: <0 />"
+    }
+}
