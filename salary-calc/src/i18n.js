@@ -9,6 +9,10 @@ export const supportedLngs = {
         code: "en",
         flagCountryCode: "US"
     },
+    es: {
+        code: "es",
+        flagCountryCode: "ES"
+    },
     ro: {
         code: "ro",
         flagCountryCode: "RO"
@@ -28,7 +32,6 @@ i18n
         debug: (process.env.NODE_ENV === "development"),
         fallbackLng: "en",
         supportedLngs: Object.keys(supportedLngs),
-        load: "languageOnly",   // Only load one default language for all countries speaking a certain language - we should change this in the future
         interpolation: {
             escapeValue: false // Not needed for react as it escapes by default
         },

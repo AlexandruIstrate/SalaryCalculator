@@ -505,7 +505,17 @@ function App() {
 
                 {/* Copyright */}
                 <div className="footer-copyright text-center py-3">
-                    © {new Date().getFullYear()} Copyright: <NewTabLink href="https://github.com/AlexandruIstrate" title="Alex Istrate" />
+                    {/* © {new Date().getFullYear()} Copyright: <NewTabLink href="https://github.com/AlexandruIstrate" title="Alex Istrate" /> */}
+                    <Trans
+                        i18nKey="footer.copyright"
+                        values={ { year: new Date().getFullYear() } }
+                        components={[
+                            <NewTabLink
+                                href="https://github.com/AlexandruIstrate"
+                                title="Alex Istrate"
+                            />
+                        ]}
+                    />
                 </div>
             </footer>
         </div>

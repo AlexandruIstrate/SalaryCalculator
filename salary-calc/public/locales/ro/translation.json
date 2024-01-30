@@ -40,6 +40,6 @@
             "reportIssue": "Semnalați o problemă",
             "previousReleases": "Versiuni anterioare"
         },
-        "copyright": "© {{year}} Drept de autor:"
+        "copyright": "© {{year}} Drept de autor: <0 />"
     }
 }
