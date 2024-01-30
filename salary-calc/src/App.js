@@ -51,7 +51,7 @@ function CountrySelect({ country, pppData, onChange, isLoading = false, dontShow
     );
 }
 
-function HistoryContent({ historyItems, onClick }) {
+function HistoryContent({ t, historyItems, onClick }) {
     // Check if we have no data
     if (!historyItems || historyItems.length === 0) {
         // Return a no-data message
@@ -66,7 +66,12 @@ function HistoryContent({ historyItems, onClick }) {
                 action={true}
                 onClick={() => onClick({ source, destination })}
             >
-                {`${source.emoji} ${source.currency.split(",")[0]}`} to {`${destination.emoji} ${destination.currency.split(",")[0]}`}
+                {
+                    t("history.item", {
+                        source: `${source.emoji} ${source.currency.split(",")[0]}`,
+                        dest: `${destination.emoji} ${destination.currency.split(",")[0]}`
+                    })
+                }
             </ListGroup.Item>
         );
     }
@@ -89,6 +94,11 @@ function App() {
 
     // Translation
     const { t } = useTranslation();
+
+    // Translated components
+    const NavbarContentWrapped = withTranslation()(NavbarContent);
+    const FooterContentWrapped = withTranslation()(FooterContent);
+    const HistoryContentWrapped = withTranslation()(HistoryContent);
 
     // History Reducer
     const historyReducer = (state, action) => {
@@ -261,7 +271,7 @@ function App() {
 
                                 {/* Input Salary */}
                                 <Form.Label>
-                                    {t("calculator.salary", { country: pppData[sourceCountry].countryName })}
+                                    {t("calculator.salary.label", { country: pppData[sourceCountry].countryName })}
                                 </Form.Label>
                                 <InputGroup className="mb-3">
                                     <Form.Control
@@ -269,7 +279,7 @@ function App() {
                                         inputMode="decimal"
                                         value={salary}
                                         min={0}
-                                        placeholder="Enter salary"
+                                        placeholder={t("calculator.salary.placeholder")}
                                         onChange={handleChangeSalary}
                                         disabled={isLoading}
                                     />
@@ -292,13 +302,13 @@ function App() {
                                 </Form.Group>
 
                                 {/* Output Salary */}
-                                <Form.Label>{t("calculator.output")}</Form.Label>
+                                <Form.Label>{t("calculator.output.label")}</Form.Label>
                                 <InputGroup>
                                     <Form.Control
                                         type="number"
                                         inputMode="decimal"
                                         value={calculateSalary().toFixed(2)}
-                                        placeholder="Resulting salary"
+                                        placeholder={t("calculator.output.placeholder")}
                                         readOnly={true}
                                     />
                                     <InputGroup.Text>
@@ -330,7 +340,7 @@ function App() {
                             <Card>
                                 <Card.Header>{t("history.title")}</Card.Header>
                                 <ListGroup variant="flush">
-                                    <HistoryContent
+                                    <HistoryContentWrapped
                                         historyItems={history.historyItems}
                                         onClick={handleHistoryItemClicked}
                                     />
@@ -340,9 +350,12 @@ function App() {
                             {/* Additional History Info */}
                             <div className="mb-3">
                                 <Form.Text muted>
-                                    <Trans key="history.tip">
-                                        <strong>TIP: </strong>You can view a conversion again by clicking on it.
-                                    </Trans>
+                                    <Trans
+                                        i18nKey="history.tip"
+                                        components={[
+                                            <strong />
+                                        ]}
+                                    />
                                 </Form.Text>
                             </div>
                         </Col>
@@ -455,10 +468,6 @@ function App() {
         // Update URL without refreshing the page
         navigate(`?${queryParams.toString()}`);
     }
-
-    // Translated components
-    const NavbarContentWrapped = withTranslation()(NavbarContent);
-    const FooterContentWrapped = withTranslation()(FooterContent);
 
     return (
         <div className="app">

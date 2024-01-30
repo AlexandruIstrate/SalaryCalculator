@@ -9,7 +9,10 @@
     },
     "calculator": {
         "source": "Țară Sursă",
-        "salary": "Salariu în moneda țării {{country}}",
+        "salary": {
+            "label": "Salariu în moneda țării sursă",
+            "placeholder": "Introduceți salariul"
+        },
         "destination": "Țară Destinație",
         "output": "Rezultat",
         "disclaimer": "Bazat pe cele mai recente date de la Banca Mondiala din anul {{year}}.",
@@ -19,8 +22,8 @@
     },
     "history": {
         "title": "Conversii Recente",
-        "item": "Din {{source}} către {{dest}}",
-        "tip": "<1>Notă: </1>Puteți vedea o conversie din nou, dând click pe ea."
+        "item": "Din {{source}} în {{dest}}",
+        "tip": "<0>Notă: </0>Puteți vedea o conversie din nou, făcând click pe ea."
     },
     "footer": {
         "title": "Despre această aplicație",

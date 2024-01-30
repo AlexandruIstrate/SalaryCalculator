@@ -9,9 +9,15 @@
     },
     "calculator": {
         "source": "Source Country",
-        "salary": "Salary in {{country}}'s local currency",
+        "salary": {
+            "label": "Salary in {{country}}'s local currency",
+            "placeholder": "Enter salary"
+        },
         "destination": "Destination Country",
-        "output": "Output",
+        "output": {
+            "label": "Output",
+            "placeholder": "Resulting salary"
+        },
         "disclaimer": "Based on the latest data provided by The World Bank which is from the year {{year}}.",
         "buttons": {
             "reverse": "Reverse Countries"
@@ -20,7 +26,7 @@
     "history": {
         "title": "Recent Conversions",
         "item": "{{source}} to {{dest}}",
-        "tip": "<strong>TIP: </strong>You can view a conversion again by clicking on it."
+        "tip": "<0>TIP: </0>You can view a conversion again by clicking on it."
     },
     "footer": {
         "title": "About This App",
