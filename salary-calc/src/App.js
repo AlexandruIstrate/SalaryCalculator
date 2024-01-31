@@ -46,6 +46,48 @@ function Jumbotron({ title, subtitle }) {
 }
 
 function CountrySelect({ i18n, country, pppData, onChange, isLoading = false, dontShowOption = null }) {
+    // A function to handle the creation of individual country items
+    const createSelectItem = (countryCode) =>{
+        return (
+            <FlagDisplay
+                countryCode={countryCode}
+                text={getLocalCountryName(countryCode, i18n.resolvedLanguage)}
+            />
+        );
+    }
+
+    // A function to handle searching for values
+    const searchFunc = (option, searchText) => {
+        // Check that we actually got a search string
+        if (!searchText || searchText.length === 0) {
+            // No search string means accept any option
+            return true;
+        }
+
+        // Get the country
+        const country = option.data;
+
+        // Get the English name of the country and the native language name
+        const enName = country.countryName;
+        const nativeName = getLocalCountryName(country.countryCode, i18n.resolvedLanguage);
+
+        // Get a localized, lowercase version of the search term
+        const locSearch = searchText.toLocaleLowerCase(i18n.resolvedLanguage);
+
+        // Check whether the search text matches any of the two names
+        const enMatch = enName
+            .toLowerCase()
+            .startsWith(locSearch);
+
+        const nativeMatch = nativeName
+            .toLocaleLowerCase(i18n.resolvedLanguage)
+            .startsWith(locSearch);
+
+        // Check either condition
+        return enMatch || nativeMatch;
+    }
+
+    // Return the component
     return (
         <Select
             options={Object.values(pppData)}
@@ -53,7 +95,8 @@ function CountrySelect({ i18n, country, pppData, onChange, isLoading = false, do
             onChange={onChange}
             isLoading={isLoading}
             getOptionValue={op => op.countryCode}
-            getOptionLabel={op => `${op.emoji} ${getLocalCountryName(op.countryCode, i18n.resolvedLanguage)}`}
+            formatOptionLabel={op => createSelectItem(op.countryCode)}
+            filterOption={searchFunc}
             isOptionDisabled={op => op.countryCode === dontShowOption}
         />
     );
