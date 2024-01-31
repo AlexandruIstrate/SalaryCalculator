@@ -25,7 +25,7 @@
     },
     "history": {
         "title": "Conversii Recente",
-        "item": "Din {{source}} în {{dest}}",
+        "item": "Din <0/> în <1/>",
         "tip": "<0>NOTĂ: </0>Puteți vedea o conversie din nou, făcând click pe ea."
     },
     "footer": {

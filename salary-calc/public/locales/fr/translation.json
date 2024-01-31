@@ -25,7 +25,7 @@
     },
     "history": {
         "title": "Conversions récentes",
-        "item": "De la {{source}} à {{dest}}",
+        "item": "<0/> à <1/>",
         "tip": "<0>AVIS: </0>Vous pouvez visualiser à nouveau une conversion en cliquant dessus."
     },
     "footer": {

@@ -74,22 +74,19 @@ function HistoryContent({ t, historyItems, onClick }) {
                 action={true}
                 onClick={() => onClick({ source, destination })}
             >
-                {
-                    t("history.item", {
-                        source: `${source.emoji} ${source.currency.split(",")[0]}`,
-                        dest: `${destination.emoji} ${destination.currency.split(",")[0]}`
-                    })
-                }
-                {/* <Trans
+                <Trans
                     i18nKey="history.item"
-                    values={{
-                        source: source.currency.split(",")[0],
-                        dest: destination.currency.split(",")[0]
-                    }}
                     components={[
-                        <FlagDisplay countryCode={source}
+                        <FlagDisplay
+                            countryCode={source.countryCode}
+                            text={source.currency}
+                        />,
+                        <FlagDisplay
+                            countryCode={destination.countryCode}
+                            text={destination.currency}
+                        />
                     ]}
-                /> */}
+                />
             </ListGroup.Item>
         );
     }
@@ -187,7 +184,7 @@ function App() {
                         return {
                             countryCode: x.country.id,
                             countryName: country?.name ?? x.country.value,
-                            currency: country?.currency,
+                            currency: country?.currency?.split(",")[0],
                             emoji: country?.emoji,
                             date: x.date,
                             ppp: x.value
