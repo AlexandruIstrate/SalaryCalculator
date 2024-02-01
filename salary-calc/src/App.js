@@ -9,6 +9,9 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
+import ButtonGroup from "react-bootstrap/ButtonGroup";
+import Dropdown from "react-bootstrap/Dropdown";
+import DropdownButton from "react-bootstrap/DropdownButton";
 
 import Select from "react-select";
 
@@ -392,6 +395,18 @@ function App() {
                                 >
                                     {t("calculator.buttons.reverse")}
                                 </Button>
+
+                                {/* Sharing Options Button */}
+                                <DropdownButton
+                                    as={ButtonGroup}
+                                    id="dropdownShare"
+                                    variant="success"
+                                    title="Share"
+                                >
+                                    <Dropdown.Item eventKey="1">Copy Link</Dropdown.Item>
+                                    <Dropdown.Item eventKey="2">X</Dropdown.Item>
+                                    <Dropdown.Item eventKey="3">Instagram</Dropdown.Item>
+                                </DropdownButton>
                             </Form>
                         </Col>
 

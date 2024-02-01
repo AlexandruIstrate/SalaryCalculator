@@ -13,12 +13,6 @@ code {
 }
 
 .flag-emoji {
-  font-family: -apple-system, BlinkMacSystemFont, "Twemoji Country Flags";
+  font-family: "Twemoji Country Flags";
   font-size: larger;
-  margin-right: 0.4rem;
-  vertical-align: middle;
-}
-
-.flag-add-text {
-  vertical-align: text-top;
 }

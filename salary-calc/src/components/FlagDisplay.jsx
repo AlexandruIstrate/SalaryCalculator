@@ -6,13 +6,13 @@ function FlagDisplay({ countryCode, text = null }) {
 
     // Return the HTML code
     return (
-        <span>
+        <>
             {/* Display the flag emoji */}
             <span className="flag-emoji">{flagEmoji}</span>
 
             {/* Only display the additional text if we have it */}
-            { text ? <span className="flag-add-text">{text}</span> : null }
-        </span>
+            { text ? <span className="flag-add-text">&nbsp;{text}</span> : null }
+        </>
     );
 }
 
