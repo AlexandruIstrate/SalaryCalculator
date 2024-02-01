@@ -387,16 +387,12 @@ function App() {
                                     </Form.Text>
                                 </div>
 
-                                <Stack
-                                    direction="horizontal"
-                                    gap={2}
-                                >
                                     {/* Reverse Countries Button */}
                                     <Button
                                         variant="secondary"
-                                        className="mb-3"
                                         onClick={handleReverseCountries}
                                         disabled={isLoading}
+                                        className="me-2"
                                     >
                                         {t("calculator.buttons.reverse")}
                                     </Button>
@@ -407,6 +403,7 @@ function App() {
                                         id="dropdownShare"
                                         variant="success"
                                         title={t("calculator.buttons.share.title")}
+                                        className="me-2"
                                     >
                                         <Dropdown.Item
                                             eventKey="1"
@@ -415,7 +412,6 @@ function App() {
                                             {t("calculator.buttons.share.copyLink")}
                                         </Dropdown.Item>
                                     </DropdownButton>
-                                </Stack>
                             </Form>
                         </Col>
 
