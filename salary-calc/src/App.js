@@ -390,7 +390,6 @@ function App() {
                                 <Stack
                                     direction="horizontal"
                                     gap={2}
-                                    className="d-flex align-items-center"
                                 >
                                     {/* Reverse Countries Button */}
                                     <Button
@@ -407,13 +406,13 @@ function App() {
                                         as={ButtonGroup}
                                         id="dropdownShare"
                                         variant="success"
-                                        title="Share..."
+                                        title={t("calculator.buttons.share.title")}
                                     >
                                         <Dropdown.Item
                                             eventKey="1"
                                             onClick={handleCopyLink}
                                         >
-                                            Copy Link
+                                            {t("calculator.buttons.share.copyLink")}
                                         </Dropdown.Item>
                                     </DropdownButton>
                                 </Stack>

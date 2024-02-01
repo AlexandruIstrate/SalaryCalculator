@@ -20,7 +20,11 @@
         },
         "disclaimer": "Basierend auf den neuesten Daten der Weltbank aus dem Jahr {{year}}.",
         "buttons": {
-            "reverse": "Umgekehrte Länder"
+            "reverse": "Umgekehrte Länder",
+            "share": {
+                "title": "Teilen...",
+                "copyLink": "Link Kopieren"
+            }
         }
     },
     "history": {

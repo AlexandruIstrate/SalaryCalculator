@@ -20,7 +20,11 @@
         },
         "disclaimer": "Bazat pe cele mai recente date de la Banca Mondiala din anul {{year}}.",
         "buttons": {
-            "reverse": "Inversați țările"
+            "reverse": "Inversați țările",
+            "share": {
+                "title": "Partajare...",
+                "copyLink": "Copiați link-ul"
+            }
         }
     },
     "history": {

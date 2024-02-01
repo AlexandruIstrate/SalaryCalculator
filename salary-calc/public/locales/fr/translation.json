@@ -20,7 +20,11 @@
         },
         "disclaimer": "Basé sur les dernières données fournies par la Banque mondiale qui datent de {{year}}.",
         "buttons": {
-            "reverse": "Pays inversés"
+            "reverse": "Pays inversés",
+            "share": {
+                "title": "Partager...",
+                "copyLink": "Copiez le lien"
+            }
         }
     },
     "history": {
