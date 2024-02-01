@@ -12,6 +12,7 @@ import Spinner from "react-bootstrap/Spinner";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
+import Stack from "react-bootstrap/Stack";
 
 import Select from "react-select";
 
@@ -50,7 +51,7 @@ function Jumbotron({ title, subtitle }) {
 
 function CountrySelect({ i18n, country, pppData, onChange, isLoading = false }) {
     // A function to handle the creation of individual country items
-    const createSelectItem = (countryCode) =>{
+    const createSelectItem = (countryCode) => {
         return (
             <FlagDisplay
                 countryCode={countryCode}
@@ -386,27 +387,36 @@ function App() {
                                     </Form.Text>
                                 </div>
 
-                                {/* Reverse Countries Button */}
-                                <Button
-                                    variant="outline-primary"
-                                    className="mb-3"
-                                    onClick={handleReverseCountries}
-                                    disabled={isLoading}
+                                <Stack
+                                    direction="horizontal"
+                                    gap={2}
+                                    className="d-flex align-items-center"
                                 >
-                                    {t("calculator.buttons.reverse")}
-                                </Button>
+                                    {/* Reverse Countries Button */}
+                                    <Button
+                                        variant="secondary"
+                                        className="mb-3"
+                                        onClick={handleReverseCountries}
+                                        disabled={isLoading}
+                                    >
+                                        {t("calculator.buttons.reverse")}
+                                    </Button>
 
-                                {/* Sharing Options Button */}
-                                <DropdownButton
-                                    as={ButtonGroup}
-                                    id="dropdownShare"
-                                    variant="success"
-                                    title="Share"
-                                >
-                                    <Dropdown.Item eventKey="1">Copy Link</Dropdown.Item>
-                                    <Dropdown.Item eventKey="2">X</Dropdown.Item>
-                                    <Dropdown.Item eventKey="3">Instagram</Dropdown.Item>
-                                </DropdownButton>
+                                    {/* Sharing Options Button */}
+                                    <DropdownButton
+                                        as={ButtonGroup}
+                                        id="dropdownShare"
+                                        variant="success"
+                                        title="Share..."
+                                    >
+                                        <Dropdown.Item
+                                            eventKey="1"
+                                            onClick={handleCopyLink}
+                                        >
+                                            Copy Link
+                                        </Dropdown.Item>
+                                    </DropdownButton>
+                                </Stack>
                             </Form>
                         </Col>
 
@@ -485,6 +495,14 @@ function App() {
 
         // Update the URL
         updateURLFromState(destinationCountry, sourceCountry, salary);
+    }
+
+    const handleCopyLink = () => {
+        // Make sure that the link is up to date with the newest values
+        updateURLFromState();
+
+        // Copy the URL to the clipboard
+        navigator.clipboard.writeText(window.location.href);
     }
 
     const handleHistoryItemClicked = (e) => {
@@ -594,7 +612,7 @@ function App() {
                     {/* © {new Date().getFullYear()} Copyright: <NewTabLink href="https://github.com/AlexandruIstrate" title="Alex Istrate" /> */}
                     <Trans
                         i18nKey="footer.copyright"
-                        values={ { year: new Date().getFullYear() } }
+                        values={{ year: new Date().getFullYear() }}
                         components={[
                             <NewTabLink
                                 href="https://github.com/AlexandruIstrate"
