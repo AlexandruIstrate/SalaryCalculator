@@ -45,7 +45,7 @@ function Jumbotron({ title, subtitle }) {
     )
 }
 
-function CountrySelect({ i18n, country, pppData, onChange, isLoading = false, dontShowOption = null }) {
+function CountrySelect({ i18n, country, pppData, onChange, isLoading = false }) {
     // A function to handle the creation of individual country items
     const createSelectItem = (countryCode) =>{
         return (
@@ -97,7 +97,6 @@ function CountrySelect({ i18n, country, pppData, onChange, isLoading = false, do
             getOptionValue={op => op.countryCode}
             formatOptionLabel={op => createSelectItem(op.countryCode)}
             filterOption={searchFunc}
-            isOptionDisabled={op => op.countryCode === dontShowOption}
         />
     );
 }
@@ -325,7 +324,6 @@ function App() {
                                         pppData={pppData}
                                         onChange={handleChangeSource}
                                         isLoading={isLoading}
-                                        dontShowOption={destinationCountry}
                                     />
                                 </Form.Group>
 
@@ -359,7 +357,6 @@ function App() {
                                         pppData={pppData}
                                         onChange={handleChangeDestination}
                                         isLoading={isLoading}
-                                        dontShowOption={sourceCountry}
                                     />
                                 </Form.Group>
 
