@@ -401,31 +401,31 @@ function App() {
                                     </Form.Text>
                                 </div>
 
-                                    {/* Reverse Countries Button */}
-                                    <Button
-                                        variant="secondary"
-                                        onClick={handleReverseCountries}
-                                        disabled={isLoading}
-                                        className="me-2"
-                                    >
-                                        {t("calculator.buttons.reverse")}
-                                    </Button>
+                                {/* Reverse Countries Button */}
+                                <Button
+                                    variant="secondary"
+                                    onClick={handleReverseCountries}
+                                    disabled={isLoading}
+                                    className="me-2"
+                                >
+                                    {t("calculator.buttons.reverse")}
+                                </Button>
 
-                                    {/* Sharing Options Button */}
-                                    <DropdownButton
-                                        as={ButtonGroup}
-                                        id="dropdownShare"
-                                        variant="success"
-                                        title={t("calculator.buttons.share.title")}
-                                        className="me-2"
+                                {/* Sharing Options Button */}
+                                <DropdownButton
+                                    as={ButtonGroup}
+                                    id="dropdownShare"
+                                    variant="success"
+                                    title={t("calculator.buttons.share.title")}
+                                    className="me-2"
+                                >
+                                    <Dropdown.Item
+                                        eventKey="1"
+                                        onClick={handleCopyLink}
                                     >
-                                        <Dropdown.Item
-                                            eventKey="1"
-                                            onClick={handleCopyLink}
-                                        >
-                                            {t("calculator.buttons.share.copyLink")}
-                                        </Dropdown.Item>
-                                    </DropdownButton>
+                                        {t("calculator.buttons.share.copyLink")}
+                                    </Dropdown.Item>
+                                </DropdownButton>
                             </Form>
                         </Col>
 
@@ -474,10 +474,22 @@ function App() {
 
     const handleChangeSource = (e) => {
         // Get the new value
-        const newValue = e.countryCode;
+        var newValue = e.countryCode;
 
-        // Set the new value
-        setSourceCountry(newValue);
+        // Make sure the user can't set the same source and destination
+        if (newValue === destinationCountry) {
+            // Set the old value back
+            setSourceCountry(newValue);
+
+            // Make sure to modify the temp value
+            newValue = sourceCountry;
+
+            // Swap the two countries
+            swapCountries();
+        } else {
+            // Set the new value
+            setSourceCountry(newValue);
+        }
 
         // Update the URL
         updateURLFromState(newValue, destinationCountry, salary);
@@ -485,22 +497,30 @@ function App() {
 
     const handleChangeDestination = (e) => {
         // Get the new value
-        const newValue = e.countryCode;
+        var newValue = e.countryCode;
 
-        // Set the new value
-        setDestinationCountry(newValue);
+        // Make sure the user can't set the same source and destination
+        if (newValue === sourceCountry) {
+            // Set the old value back
+            setDestinationCountry(newValue);
+
+            // Make sure to modify the temp value
+            newValue = destinationCountry;
+
+            // Swap the two countries
+            swapCountries();
+        } else {
+            // Set the new value
+            setDestinationCountry(newValue);
+        }
 
         // Update the URL
         updateURLFromState(sourceCountry, newValue, salary);
     }
 
-    const handleReverseCountries = (e) => {
-        // Get the new value
-        const temp = destinationCountry;
-
-        // Swap the values
-        setDestinationCountry(sourceCountry);
-        setSourceCountry(temp);
+    const handleReverseCountries = () => {
+        // Call the utility function
+        swapCountries();
 
         // Update the URL
         updateURLFromState(destinationCountry, sourceCountry, salary);
@@ -535,6 +555,15 @@ function App() {
 
         // Return the resulting value
         return targetAmount;
+    }
+
+    const swapCountries = () => {
+        // Get the new value
+        const temp = destinationCountry;
+
+        // Swap the values
+        setDestinationCountry(sourceCountry);
+        setSourceCountry(temp);
     }
 
     const updateStateAndURL = () => {
