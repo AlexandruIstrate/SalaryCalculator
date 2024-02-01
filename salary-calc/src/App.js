@@ -12,7 +12,6 @@ import Spinner from "react-bootstrap/Spinner";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
-import Stack from "react-bootstrap/Stack";
 
 import Select from "react-select";
 
@@ -154,7 +153,7 @@ function App() {
     const navigate = useNavigate();
 
     // Translation
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
 
     // Translated components
     const NavbarContentWrapped = withTranslation()(NavbarContent);
@@ -291,7 +290,22 @@ function App() {
         LocalStorage.destinationCountry = destinationCountry;
         LocalStorage.salary = salary;
         LocalStorage.history = history;
-    }, [sourceCountry, destinationCountry, salary, history])
+    }, [sourceCountry, destinationCountry, salary, history]);
+
+    // Set the page language and reading direction on language change
+    useEffect(() => {
+        // Make sure that we have a valid language
+        if (i18n.resolvedLanguage) {
+            // Set the lang attribute on the HTML
+            document.documentElement.lang = i18n.resolvedLanguage;
+
+            // Set the direction attribute on the HTML
+            document.documentElement.dir = i18n.dir(i18n.resolvedLanguage);
+        }
+
+        // Localize the document title
+        document.title = t("page.title");
+    }, [i18n, i18n.resolvedLanguage, t])
 
     // UI Rendering Functions
 

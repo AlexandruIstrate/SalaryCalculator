@@ -1,4 +1,7 @@
 {
+    "page": {
+        "title": "Salary Converter"
+    },
     "banner": "Development Build",
     "nav": {
         "title": "Salary Converter"
