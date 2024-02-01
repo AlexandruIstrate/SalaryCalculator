@@ -8,7 +8,7 @@
     },
     "jumbotron": {
         "title": "Calcula tu salario",
-        "subtitle": "Utiliza este convertidor para comprobar cuánto dinero necesitas en un determinado país para poder vivir tan bien como lo harías en otro. Comience seleccionando los países de origen y destino y luego ingrese el monto del salario en la moneda de origen."
+        "subtitle": "Utiliza este convertidor para comprobar cuánto dinero necesitas en un determinado país para poder vivir tan bien como lo harías en otro. Comience seleccionando los países de origen y destino, y luego ingrese el monto del salario en la moneda de origen."
     },
     "calculator": {
         "source": "País de origen",
