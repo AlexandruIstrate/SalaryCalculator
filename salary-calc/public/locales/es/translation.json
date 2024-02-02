@@ -35,6 +35,10 @@
         "item": "<0/> a <1/>",
         "tip": "<0>CONSEJO: </0>Puede ver una conversión nuevamente haciendo clic en ella."
     },
+    "toast": {
+        "title": "Enlace copiado",
+        "body": "¡Enlace copiado al portapapeles!"
+    },
     "footer": {
         "title": "Acerca de esta aplicación",
         "description": "Esta aplicación es un proyecto de código abierto. Las contribuciones son bienvenidas.",

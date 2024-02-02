@@ -35,6 +35,10 @@
         "item": "<0/> to <1/>",
         "tip": "<0>TIP: </0>You can view a conversion again by clicking on it."
     },
+    "toast": {
+        "title": "Link Copied",
+        "body": "Link copied to clipboard!"
+    },
     "footer": {
         "title": "About This App",
         "description": "This app is an open source project. Contributions are welcome.",

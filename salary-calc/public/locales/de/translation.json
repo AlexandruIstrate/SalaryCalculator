@@ -30,6 +30,10 @@
             }
         }
     },
+    "toast": {
+        "title": "Link Kopiert",
+        "body": "Link in die Zwischenablage kopiert!"
+    },
     "history": {
         "title": "Aktuelle Konvertierungen",
         "item": "Von der <0/> zu <1/>",

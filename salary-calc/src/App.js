@@ -12,6 +12,8 @@ import Spinner from "react-bootstrap/Spinner";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
+import Toast from "react-bootstrap/Toast";
+import ToastContainer from "react-bootstrap/ToastContainer";
 
 import Select from "react-select";
 
@@ -147,6 +149,8 @@ function App() {
 
     const [isLoading, setIsLoading] = useState(true);
     const [pppData, setPPPData] = useState(null);
+
+    const [showToast, setShowToast] = useState(false);
 
     // Navigation
     const location = useLocation();
@@ -401,31 +405,33 @@ function App() {
                                     </Form.Text>
                                 </div>
 
-                                {/* Reverse Countries Button */}
-                                <Button
-                                    variant="secondary"
-                                    onClick={handleReverseCountries}
-                                    disabled={isLoading}
-                                    className="me-2"
-                                >
-                                    {t("calculator.buttons.reverse")}
-                                </Button>
-
-                                {/* Sharing Options Button */}
-                                <DropdownButton
-                                    as={ButtonGroup}
-                                    id="dropdownShare"
-                                    variant="success"
-                                    title={t("calculator.buttons.share.title")}
-                                    className="me-2"
-                                >
-                                    <Dropdown.Item
-                                        eventKey="1"
-                                        onClick={handleCopyLink}
+                                <div className="mb-3">
+                                    {/* Reverse Countries Button */}
+                                    <Button
+                                        variant="secondary"
+                                        onClick={handleReverseCountries}
+                                        disabled={isLoading}
+                                        className="me-2"
                                     >
-                                        {t("calculator.buttons.share.copyLink")}
-                                    </Dropdown.Item>
-                                </DropdownButton>
+                                        {t("calculator.buttons.reverse")}
+                                    </Button>
+
+                                    {/* Sharing Options Button */}
+                                    <DropdownButton
+                                        as={ButtonGroup}
+                                        id="dropdownShare"
+                                        variant="success"
+                                        title={t("calculator.buttons.share.title")}
+                                        className="me-2"
+                                    >
+                                        <Dropdown.Item
+                                            eventKey="1"
+                                            onClick={handleCopyLink}
+                                        >
+                                            {t("calculator.buttons.share.copyLink")}
+                                        </Dropdown.Item>
+                                    </DropdownButton>
+                                </div>
                             </Form>
                         </Col>
 
@@ -532,6 +538,9 @@ function App() {
 
         // Copy the URL to the clipboard
         navigator.clipboard.writeText(window.location.href);
+
+        // Show the toast indicatinf that the action was successful
+        setShowToast(true);
     }
 
     const handleHistoryItemClicked = (e) => {
@@ -640,6 +649,31 @@ function App() {
                 </Container>
             </main>
 
+            {/* Toast Messages Area */}
+            <div
+                aria-live="polite"
+                aria-atomic={true}
+                className="bg-transparent position-relative"
+            >
+                <ToastContainer
+                    className="p-3"
+                    position="bottom-end"
+                    style={{ zIndex: 1 }}
+                >
+                    <Toast
+                        show={showToast}
+                        onClose={() => setShowToast(!showToast)}
+                        autohide={true}
+                        delay={5000}
+                    >
+                        <Toast.Header closeButton={true}>
+                            <strong className="me-auto">{t("toast.title")}</strong>
+                        </Toast.Header>
+                        <Toast.Body>{t("toast.body")}</Toast.Body>
+                    </Toast>
+                </ToastContainer>
+            </div>
+
             {/* Footer */}
             <footer className="footer font-small blue bg-light pt-4">
                 {/* Footer Content */}
@@ -647,7 +681,6 @@ function App() {
 
                 {/* Copyright */}
                 <div className="footer-copyright text-center py-3">
-                    {/* © {new Date().getFullYear()} Copyright: <NewTabLink href="https://github.com/AlexandruIstrate" title="Alex Istrate" /> */}
                     <Trans
                         i18nKey="footer.copyright"
                         values={{ year: new Date().getFullYear() }}

@@ -37,16 +37,16 @@ function NavbarContent({ t, i18n }) {
                     <NavDropdown title={selLangDisplay}>
                         {
                             displayLanguages
-                                .map((lang, index) => {
+                                .map(({ langCode, countryCode, native }) => {
                                     return (
                                         <NavDropdown.Item
-                                            key={index}
-                                            disabled={lang.langCode === i18n.resolvedLanguage}
-                                            onClick={() => i18n.changeLanguage(lang.langCode)}
+                                            key={langCode}
+                                            disabled={langCode === i18n.resolvedLanguage}
+                                            onClick={() => i18n.changeLanguage(langCode)}
                                         >
                                             <FlagDisplay
-                                                countryCode={lang.countryCode}
-                                                text={lang.native}
+                                                countryCode={countryCode}
+                                                text={native}
                                             />
                                         </NavDropdown.Item>
                                     )

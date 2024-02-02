@@ -35,6 +35,10 @@
         "item": "<0/> à <1/>",
         "tip": "<0>AVIS: </0>Vous pouvez visualiser à nouveau une conversion en cliquant dessus."
     },
+    "toast": {
+        "title": "Lien copié",
+        "body": "Lien copié dans le presse-papier !"
+    },
     "footer": {
         "title": "À propos de cette application",
         "description": "Cette application est un projet open source. Les contributions sont les bienvenues.",

@@ -35,6 +35,10 @@
         "item": "Din <0/> în <1/>",
         "tip": "<0>NOTĂ: </0>Puteți vedea o conversie din nou, făcând click pe ea."
     },
+    "toast": {
+        "title": "Link copiat",
+        "body": "Link-ul a fost copiat în clipboard!"
+    },
     "footer": {
         "title": "Despre această aplicație",
         "description": "Această aplicație este parte a unui proiect open-source. Contribuțiile sunt binevenite.",

@@ -35,6 +35,10 @@
         "item": "Dalle <0/> agli <1/>",
         "tip": "<0>PUNTA: </0>Puoi visualizzare nuovamente una conversione facendo clic su di essa."
     },
+    "toast": {
+        "title": "Collegamento copiato",
+        "body": "Link copiato negli appunti!"
+    },
     "footer": {
         "title": "Informazioni su questa app",
         "description": "Questa app è un progetto open source. I contributi sono benvenuti.",
