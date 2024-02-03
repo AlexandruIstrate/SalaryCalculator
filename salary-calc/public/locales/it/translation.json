@@ -20,14 +20,15 @@
         "output": {
             "label": "Risultato",
             "placeholder": "Stipendio risultante",
-            "friendlyDescription": "Hai bisogno di uno stipendio di {{destSalary}} {{destCurrency}} in {{destCountry}} per vivere una qualità di vita simile a quella che avresti con uno stipendio di {{sourceSalary}} {{sourceCurrency}} in {{sourceCountry}}."
+            "friendlyDescription": "Hai bisogno di uno stipendio di {{sourceSalary, number}} {{destCurrency}} in {{destCountry}} per vivere una qualità di vita simile a quella che avresti con uno stipendio di {{destSalary, number}} {{sourceCurrency}} in {{sourceCountry}}."
         },
         "disclaimer": "Sulla base degli ultimi dati forniti dalla Banca Mondiale che risalgono all'anno {{year}}.",
         "buttons": {
             "reverse": "Paesi inversi",
             "share": {
                 "title": "Condividi...",
-                "copyLink": "Copia il collegamento"
+                "copyLink": "Copia il collegamento",
+                "postOnX": "Publicar en X"
             }
         }
     },

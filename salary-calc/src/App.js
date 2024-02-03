@@ -387,9 +387,11 @@ function App() {
                                 <InputGroup>
                                     <Form.Control
                                         id="salaryResult"
-                                        type="number"
-                                        inputMode="decimal"
-                                        value={calculateSalary().toFixed(2)}
+                                        type="text"
+                                        value={Math.round(calculateSalary()).toLocaleString(i18n.resolvedLanguage, {
+                                            minimumFractionDigits: 1,
+                                            maximumFractionDigits: 1
+                                        })}
                                         placeholder={t("calculator.output.placeholder")}
                                         readOnly={true}
                                     />
@@ -638,10 +640,10 @@ function App() {
         const friendlyText = t("calculator.output.friendlyDescription", {
             destSalary: salary,
             destCurrency: dest.currency,
-            destCountry: dest.countryName,
-            sourceSalary: calculateSalary().toFixed(0),
+            destCountry: getLocalCountryName(destinationCountry, i18n.resolvedLanguage),
+            sourceSalary: Math.round(calculateSalary()),
             sourceCurrency: source.currency,
-            sourceCountry: source.countryName
+            sourceCountry: getLocalCountryName(sourceCountry, i18n.resolvedLanguage)
         });
 
         // Get the URL

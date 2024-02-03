@@ -20,14 +20,15 @@
         "output": {
             "label": "Berechnungsergebnis",
             "placeholder": "Resultierendes Gehalt",
-            "friendlyDescription": "Sie benötigen ein Gehalt von {{destSalary}} {{destCurrency}} in {{destCountry}}, um eine ähnliche Lebensqualität zu haben wie mit einem Gehalt von {{sourceSalary}} {{sourceCurrency}} in {{sourceCountry}}."
+            "friendlyDescription": "Sie benötigen ein Gehalt von {{sourceSalary, number}} {{destCurrency}} in {{destCountry}}, um eine ähnliche Lebensqualität zu haben wie mit einem Gehalt von {{destSalary, number}} {{sourceCurrency}} in {{sourceCountry}}."
         },
         "disclaimer": "Basierend auf den neuesten Daten der Weltbank aus dem Jahr {{year}}.",
         "buttons": {
             "reverse": "Umgekehrte Länder",
             "share": {
                 "title": "Teilen...",
-                "copyLink": "Link Kopieren"
+                "copyLink": "Link Kopieren",
+                "postOnX": "Auf X Posten"
             }
         }
     },

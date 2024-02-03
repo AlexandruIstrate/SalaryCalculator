@@ -20,14 +20,15 @@
         "output": {
             "label": "Rezultat",
             "placeholder": "Salariu rezultat",
-            "friendlyDescription": "Aveți nevoie de un salariu de {{destSalary}} {{destCurrency}} în {{destCountry}} pentru a trăi o calitate similară a vieții ca și cu un salariu de {{sourceSalary}} {{sourceCurrency}} în {{sourceCountry}}."
+            "friendlyDescription": "Aveți nevoie de un salariu de {{sourceSalary, number}} {{destCurrency}} în {{destCountry}} pentru a trăi o calitate similară a vieții ca și cu un salariu de {{destSalary, number}} {{sourceCurrency}} în {{sourceCountry}}."
         },
         "disclaimer": "Bazat pe cele mai recente date de la Banca Mondiala din anul {{year}}.",
         "buttons": {
             "reverse": "Inversați țările",
             "share": {
                 "title": "Partajare...",
-                "copyLink": "Copiați link-ul"
+                "copyLink": "Copiați link-ul",
+                "postOnX": "Postează pe X"
             }
         }
     },
