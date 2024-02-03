@@ -19,7 +19,8 @@
         "destination": "Țară Destinație",
         "output": {
             "label": "Rezultat",
-            "placeholder": "Salariu rezultat"
+            "placeholder": "Salariu rezultat",
+            "friendlyDescription": "Aveți nevoie de un salariu de {{destSalary}} {{destCurrency}} în {{destCountry}} pentru a trăi o calitate similară a vieții ca și cu un salariu de {{sourceSalary}} {{sourceCurrency}} în {{sourceCountry}}."
         },
         "disclaimer": "Bazat pe cele mai recente date de la Banca Mondiala din anul {{year}}.",
         "buttons": {

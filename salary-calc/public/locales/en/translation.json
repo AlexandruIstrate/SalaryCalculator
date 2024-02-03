@@ -19,14 +19,16 @@
         "destination": "Destination Country",
         "output": {
             "label": "Output",
-            "placeholder": "Resulting salary"
+            "placeholder": "Resulting salary",
+            "friendlyDescription": "You need a salary of {{destSalary}} {{destCurrency}} in {{destCountry}} to live a similar quality of life as you would with a salary of {{sourceSalary}} {{sourceCurrency}} in {{sourceCountry}}."
         },
         "disclaimer": "Based on the latest data provided by The World Bank which is from the year {{year}}.",
         "buttons": {
             "reverse": "Reverse Countries",
             "share": {
                 "title": "Share...",
-                "copyLink": "Copy Link"
+                "copyLink": "Copy Link",
+                "postOnX": "Post on X"
             }
         }
     },

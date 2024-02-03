@@ -19,7 +19,8 @@
         "destination": "Pays de destination",
         "output": {
             "label": "Résultat du calcul",
-            "placeholder": "Salaire résultant"
+            "placeholder": "Salaire résultant",
+            "friendlyDescription": "Vous avez besoin d'un salaire de {{destSalary}} {{destCurrency}} en {{destCountry}} pour vivre une qualité de vie similaire à celle que vous obtiendriez avec un salaire de {{sourceSalary}} {{sourceCurrency}} en {{sourceCountry}}."
         },
         "disclaimer": "Basé sur les dernières données fournies par la Banque mondiale qui datent de {{year}}.",
         "buttons": {

@@ -19,7 +19,8 @@
         "destination": "Paese di destinazione",
         "output": {
             "label": "Risultato",
-            "placeholder": "Stipendio risultante"
+            "placeholder": "Stipendio risultante",
+            "friendlyDescription": "Hai bisogno di uno stipendio di {{destSalary}} {{destCurrency}} in {{destCountry}} per vivere una qualità di vita simile a quella che avresti con uno stipendio di {{sourceSalary}} {{sourceCurrency}} in {{sourceCountry}}."
         },
         "disclaimer": "Sulla base degli ultimi dati forniti dalla Banca Mondiale che risalgono all'anno {{year}}.",
         "buttons": {

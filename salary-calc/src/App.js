@@ -364,7 +364,7 @@ function App() {
                                         onChange={handleChangeSalary}
                                         disabled={isLoading}
                                     />
-                                    <InputGroup.Text>{pppData[sourceCountry].currency.split(",")[0]}</InputGroup.Text>
+                                    <InputGroup.Text>{pppData[sourceCountry].currency}</InputGroup.Text>
                                 </InputGroup>
 
                                 {/* Destination Country */}
@@ -394,7 +394,7 @@ function App() {
                                         readOnly={true}
                                     />
                                     <InputGroup.Text>
-                                        {pppData[destinationCountry].currency.split(",")[0]}
+                                        {pppData[destinationCountry].currency}
                                     </InputGroup.Text>
                                 </InputGroup>
 
@@ -429,6 +429,12 @@ function App() {
                                             onClick={handleCopyLink}
                                         >
                                             {t("calculator.buttons.share.copyLink")}
+                                        </Dropdown.Item>
+                                        <Dropdown.Item
+                                            eventKey="2"
+                                            onClick={handlePostOnX}
+                                        >
+                                            {t("calculator.buttons.share.postOnX")}
                                         </Dropdown.Item>
                                     </DropdownButton>
                                 </div>
@@ -543,6 +549,20 @@ function App() {
         setShowToast(true);
     }
 
+    const handlePostOnX = () => {
+        // Make sure that the link is up to date with the newest values
+        updateURLFromState();
+
+        // Get the text
+        const text = getSocialPostText();
+
+        // Create the URL with the text
+        const encodedURL = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
+
+        // Open the link
+        window.open(encodedURL, "_blank");
+    }
+
     const handleHistoryItemClicked = (e) => {
         // Set the source and destionation using the given data
         setSourceCountry(e.source.countryCode);
@@ -607,6 +627,30 @@ function App() {
 
         // Update URL without refreshing the page
         navigate(`?${queryParams.toString()}`);
+    }
+
+    const getSocialPostText = () => {
+        // Get the destination and source
+        const source = pppData[sourceCountry];
+        const dest = pppData[destinationCountry];
+
+        // Create the friendly text
+        const friendlyText = t("calculator.output.friendlyDescription", {
+            destSalary: salary,
+            destCurrency: dest.currency,
+            destCountry: dest.countryName,
+            sourceSalary: calculateSalary().toFixed(0),
+            sourceCurrency: source.currency,
+            sourceCountry: source.countryName
+        });
+
+        // Get the URL
+        const url = window.location.href;
+
+        // Create the final text
+        const text = friendlyText + "\n\n" + url;
+
+        return text;
     }
 
     const loadCountryNameTranslations = () => {

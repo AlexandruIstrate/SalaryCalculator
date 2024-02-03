@@ -19,7 +19,8 @@
         "destination": "Zielland",
         "output": {
             "label": "Berechnungsergebnis",
-            "placeholder": "Resultierendes Gehalt"
+            "placeholder": "Resultierendes Gehalt",
+            "friendlyDescription": "Sie benötigen ein Gehalt von {{destSalary}} {{destCurrency}} in {{destCountry}}, um eine ähnliche Lebensqualität zu haben wie mit einem Gehalt von {{sourceSalary}} {{sourceCurrency}} in {{sourceCountry}}."
         },
         "disclaimer": "Basierend auf den neuesten Daten der Weltbank aus dem Jahr {{year}}.",
         "buttons": {
