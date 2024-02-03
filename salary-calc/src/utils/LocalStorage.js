@@ -29,5 +29,13 @@ export const LocalStorage = {
     },
     set history(value) {
         window.localStorage.setItem("history", JSON.stringify(value));
+    },
+
+    // Theme
+    get theme() {
+        return window.localStorage.getItem("theme");
+    },
+    set theme(value) {
+        window.localStorage.setItem("theme", value);
     }
 }

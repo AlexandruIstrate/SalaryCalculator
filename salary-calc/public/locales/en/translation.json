@@ -2,6 +2,12 @@
     "page": {
         "title": "Salary Converter"
     },
+    "themes": {
+        "title": "Theme",
+        "light": "Light",
+        "dark": "Dark",
+        "auto": "Automatic"
+    },
     "banner": "Development Build",
     "nav": {
         "title": "Salary Converter"

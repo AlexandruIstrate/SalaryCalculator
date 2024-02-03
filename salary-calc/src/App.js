@@ -17,10 +17,11 @@ import ToastContainer from "react-bootstrap/ToastContainer";
 
 import Select from "react-select";
 
+import { useLocation, useNavigate } from "react-router-dom";
+import { useMediaQuery } from "react-responsive";
 import { countries } from "countries-list";
 import { registerLocale, getName as getLocalCountryName } from "i18n-iso-countries";
 import { isEqual } from "lodash";
-import { useLocation, useNavigate } from "react-router-dom";
 import { useTranslation, withTranslation, Trans } from "react-i18next";
 import { polyfillCountryFlagEmojis } from "country-flag-emoji-polyfill";
 
@@ -33,6 +34,7 @@ import { WorldBankAPI } from "src/api/WorldBankAPI";
 import { LocalStorage } from "src/utils/LocalStorage";
 
 import { supportedLngs } from "src/i18n";
+import { getThemes } from "src/themes";
 
 import "./App.css";
 
@@ -140,6 +142,9 @@ function HistoryContent({ t, historyItems, onClick }) {
 }
 
 function App() {
+    // Translation
+    const { t, i18n } = useTranslation();
+
     // App State
     const [salary, setSalary] = useState(LocalStorage.salary ?? 0);
     const [sourceCountry, setSourceCountry] = useState(
@@ -152,16 +157,13 @@ function App() {
 
     const [showToast, setShowToast] = useState(false);
 
+    const [activeTheme, setActiveTheme] = useState(getThemes(t)[LocalStorage.theme ?? "auto"]);
+
     // Navigation
     const location = useLocation();
     const navigate = useNavigate();
 
-    // Translation
-    const { t, i18n } = useTranslation();
-
     // Translated components
-    const NavbarContentWrapped = withTranslation()(NavbarContent);
-    const FooterContentWrapped = withTranslation()(FooterContent);
     const CountrySelectWrapped = withTranslation()(CountrySelect);
     const HistoryContentWrapped = withTranslation()(HistoryContent);
 
@@ -310,6 +312,32 @@ function App() {
         // Localize the document title
         document.title = t("page.title");
     }, [i18n, i18n.resolvedLanguage, t])
+
+    // Set a media query for when the user changes the system theme
+    const systemPrefersDark = useMediaQuery({
+        query: "(prefers-color-scheme: dark)"
+    });
+
+    // Set the page theme when it's changed
+    useEffect(() => {
+        // Store the result here
+        var theme = "light";
+
+        // Handle the special case when we don't have a theme set or it's set to auto
+        if (!activeTheme || activeTheme.id === "auto") {
+            // Set the theme based on user preference
+            theme = systemPrefersDark ? "dark" : 'light';
+        } else {
+            // Get the Bootstrap name of the theme and store it
+            theme = activeTheme.bsName;
+        }
+
+        // Set the theme on the document
+        document.documentElement.setAttribute("data-bs-theme", theme);
+
+        // Also persist the theme selection between sessions
+        LocalStorage.theme = theme;
+    }, [activeTheme, systemPrefersDark])
 
     // UI Rendering Functions
 
@@ -679,7 +707,10 @@ function App() {
 
             {/* App Header */}
             <header>
-                <NavbarContentWrapped />
+                <NavbarContent
+                    activeTheme={activeTheme}
+                    setActiveTheme={setActiveTheme}
+                />
             </header>
 
             {/* Main Content */}
@@ -723,7 +754,7 @@ function App() {
             {/* Footer */}
             <footer className="footer font-small blue bg-light pt-4">
                 {/* Footer Content */}
-                <FooterContentWrapped />
+                <FooterContent />
 
                 {/* Copyright */}
                 <div className="footer-copyright text-center py-3">

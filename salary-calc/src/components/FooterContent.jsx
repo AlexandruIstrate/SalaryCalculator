@@ -1,5 +1,7 @@
 import Container from "react-bootstrap/Container";
 
+import { withTranslation } from "react-i18next";
+
 import NewTabLink from "src/components/NewTabLink";
 
 function FooterContent({ t }) {
@@ -65,4 +67,4 @@ function FooterContent({ t }) {
     )
 }
 
-export default FooterContent;
+export default withTranslation()(FooterContent);
