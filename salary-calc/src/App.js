@@ -41,9 +41,9 @@ import "./App.css";
 // Load country flag emojis to fix missing flags on certain platforms
 polyfillCountryFlagEmojis();
 
-function Jumbotron({ title, subtitle }) {
+function Jumbotron({ title, subtitle, isDark = false }) {
     return (
-        <Container className="p-5 mb-4 bg-light rounded-3">
+        <Container className={`p-5 mb-4 ${isDark ? "bg-dark" : "bg-light"} rounded-3`}>
             <Container className="container-fluid py-5">
                 <h1 className="display-5 fw-bold">{title}</h1>
                 <p className="col-md-8 fs-4">{subtitle}</p>
@@ -52,7 +52,7 @@ function Jumbotron({ title, subtitle }) {
     )
 }
 
-function CountrySelect({ i18n, country, pppData, onChange, isLoading = false }) {
+function CountrySelect({ i18n, country, pppData, onChange, isLoading = false, isDark = false }) {
     // A function to handle the creation of individual country items
     const createSelectItem = (countryCode) => {
         return (
@@ -94,6 +94,28 @@ function CountrySelect({ i18n, country, pppData, onChange, isLoading = false }) 
         return enMatch || nativeMatch;
     }
 
+    // Create a dark mode style
+    const darkModeStyles = {
+        container: (provided) => ({
+            ...provided,
+            backgroundColor: '#212529', // Set the background color for the entire Select container
+        }),
+        control: (provided) => ({
+            ...provided,
+            backgroundColor: '#212529', // Set the background color for the control
+            borderColor: '#495057', // Set the border color
+        }),
+        singleValue: (provided) => ({
+            ...provided,
+            color: '#ffffff', // Set the text color for the selected value
+        }),
+        option: (provided, state) => ({
+            ...provided,
+            backgroundColor: state.isFocused ? '#2b3035' : '#212529', // Set the background color for each option
+            color: state.isSelected ? '#ffffff' : '#cccccc', // Set the text color for each option
+        })
+    };
+
     // Return the component
     return (
         <Select
@@ -104,6 +126,7 @@ function CountrySelect({ i18n, country, pppData, onChange, isLoading = false }) 
             getOptionValue={op => op.countryCode}
             formatOptionLabel={op => createSelectItem(op.countryCode)}
             filterOption={searchFunc}
+            styles={isDark ? darkModeStyles : {}}
         />
     );
 }
@@ -374,6 +397,7 @@ function App() {
                                         pppData={pppData}
                                         onChange={handleChangeSource}
                                         isLoading={isLoading}
+                                        isDark={activeTheme.id === "dark"}
                                     />
                                 </Form.Group>
 
@@ -407,6 +431,7 @@ function App() {
                                         pppData={pppData}
                                         onChange={handleChangeDestination}
                                         isLoading={isLoading}
+                                        isDark={activeTheme.id === "dark"}
                                     />
                                 </Form.Group>
 
@@ -698,7 +723,7 @@ function App() {
         <div className="app">
             {/* Development Build Banner */}
             {process.env.NODE_ENV === "development" ? (
-                <div className="banner-dev-env text-center bg-warning p-2">
+                <div className="banner-dev-env text-center bg-warning text-dark p-2">
                     <b>{t("banner", "Development Build")}</b>
                 </div>
             ) : (
@@ -719,6 +744,7 @@ function App() {
                     <Jumbotron
                         title={t("jumbotron.title")}
                         subtitle={t("jumbotron.subtitle")}
+                        isDark={activeTheme.id === "dark"}
                     />
                     <Container className="mb-5">
                         {renderCalculatorArea()}
@@ -752,7 +778,7 @@ function App() {
             </div>
 
             {/* Footer */}
-            <footer className="footer font-small blue bg-light pt-4">
+            <footer className={`footer font-small blue ${activeTheme.id === "dark" ? "bg-dark" : "bg-light"} pt-4`}>
                 {/* Footer Content */}
                 <FooterContent />
 
