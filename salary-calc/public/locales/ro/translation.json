@@ -2,6 +2,12 @@
     "page": {
         "title": "Convertor salarial"
     },
+    "themes": {
+        "title": "Temă",
+        "light": "Luminos",
+        "dark": "Întunecat",
+        "auto": "Automat"
+    },
     "banner": "Versiune de dezvoltare",
     "nav": {
         "title": "Convertor salarial"

@@ -2,6 +2,12 @@
     "page": {
         "title": "Convertidor de salario"
     },
+    "themes": {
+        "title": "Tema",
+        "light": "Claro",
+        "dark": "Oscuro",
+        "auto": "Automático"
+    },
     "banner": "Versión de desarrollo",
     "nav": {
         "title": "Convertidor de salario"

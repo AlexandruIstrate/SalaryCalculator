@@ -2,6 +2,12 @@
     "page": {
         "title": "Gehaltsumrechner"
     },
+    "themes": {
+        "title": "Thema",
+        "light": "Helles",
+        "dark": "Dunkles",
+        "auto": "Automatisch"
+    },
     "banner": "Entwicklungsversion",
     "nav": {
         "title": "Gehaltsumrechner"
