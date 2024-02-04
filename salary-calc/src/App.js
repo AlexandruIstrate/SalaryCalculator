@@ -8,7 +8,6 @@ import ListGroup from "react-bootstrap/ListGroup";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
-import Spinner from "react-bootstrap/Spinner";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
@@ -123,6 +122,7 @@ function CountrySelect({ i18n, country, pppData, onChange, isLoading = false, is
             value={pppData[country]}
             onChange={onChange}
             isLoading={isLoading}
+            isDisabled={isLoading}
             getOptionValue={op => op.countryCode}
             formatOptionLabel={op => createSelectItem(op.countryCode)}
             filterOption={searchFunc}
@@ -362,170 +362,6 @@ function App() {
         LocalStorage.theme = theme;
     }, [activeTheme, systemPrefersDark])
 
-    // UI Rendering Functions
-
-    const renderCalculatorArea = () => {
-        // Check if we are in the loading state
-        if (isLoading) {
-            return (
-                <Container className="text-center p-5">
-                    <Spinner
-                        animation="grow"
-                        variant="primary"
-                        role="status"
-                    >
-                        <span className="visually-hidden">Loading...</span>
-                    </Spinner>
-                </Container>
-            );
-        } else {
-            return (
-                <Container>
-                    <Row>
-                        {/* Calculator Column */}
-                        <Col xs={12} md={8} lg={9}>
-                            <Form>
-                                {/* Source Country */}
-                                <Form.Group
-                                    className="mb-3"
-                                    controlId="formSourceCountry"
-                                >
-                                    <Form.Label>{t("calculator.source")}</Form.Label>
-                                    <CountrySelectWrapped
-                                        id="destSource"
-                                        country={sourceCountry}
-                                        pppData={pppData}
-                                        onChange={handleChangeSource}
-                                        isLoading={isLoading}
-                                        isDark={activeTheme.id === "dark"}
-                                    />
-                                </Form.Group>
-
-                                {/* Input Salary */}
-                                <Form.Label>
-                                    {t("calculator.salary.label", { country: pppData[sourceCountry].countryName })}
-                                </Form.Label>
-                                <InputGroup className="mb-3">
-                                    <Form.Control
-                                        id="salaryInput"
-                                        type="number"
-                                        inputMode="decimal"
-                                        value={salary}
-                                        min={0}
-                                        placeholder={t("calculator.salary.placeholder")}
-                                        onChange={handleChangeSalary}
-                                        disabled={isLoading}
-                                    />
-                                    <InputGroup.Text>{pppData[sourceCountry].currency}</InputGroup.Text>
-                                </InputGroup>
-
-                                {/* Destination Country */}
-                                <Form.Group
-                                    className="mb-3"
-                                    controlId="formDestinationCountry"
-                                >
-                                    <Form.Label>{t("calculator.destination")}</Form.Label>
-                                    <CountrySelectWrapped
-                                        id="destSelect"
-                                        country={destinationCountry}
-                                        pppData={pppData}
-                                        onChange={handleChangeDestination}
-                                        isLoading={isLoading}
-                                        isDark={activeTheme.id === "dark"}
-                                    />
-                                </Form.Group>
-
-                                {/* Output Salary */}
-                                <Form.Label>{t("calculator.output.label")}</Form.Label>
-                                <InputGroup>
-                                    <Form.Control
-                                        id="salaryResult"
-                                        type="text"
-                                        value={Math.round(calculateSalary()).toLocaleString(i18n.resolvedLanguage, {
-                                            minimumFractionDigits: 1,
-                                            maximumFractionDigits: 1
-                                        })}
-                                        placeholder={t("calculator.output.placeholder")}
-                                        readOnly={true}
-                                    />
-                                    <InputGroup.Text>
-                                        {pppData[destinationCountry].currency}
-                                    </InputGroup.Text>
-                                </InputGroup>
-
-                                {/* Data Source Info */}
-                                <div className="mb-3">
-                                    <Form.Text muted>
-                                        {t("calculator.disclaimer", { year: pppData[destinationCountry].date })}
-                                    </Form.Text>
-                                </div>
-
-                                <div className="mb-3">
-                                    {/* Reverse Countries Button */}
-                                    <Button
-                                        variant="secondary"
-                                        onClick={handleReverseCountries}
-                                        disabled={isLoading}
-                                        className="me-2"
-                                    >
-                                        {t("calculator.buttons.reverse")}
-                                    </Button>
-
-                                    {/* Sharing Options Button */}
-                                    <DropdownButton
-                                        as={ButtonGroup}
-                                        id="dropdownShare"
-                                        variant="success"
-                                        title={t("calculator.buttons.share.title")}
-                                        className="me-2"
-                                    >
-                                        <Dropdown.Item
-                                            eventKey="1"
-                                            onClick={handleCopyLink}
-                                        >
-                                            {t("calculator.buttons.share.copyLink")}
-                                        </Dropdown.Item>
-                                        <Dropdown.Item
-                                            eventKey="2"
-                                            onClick={handlePostOnX}
-                                        >
-                                            {t("calculator.buttons.share.postOnX")}
-                                        </Dropdown.Item>
-                                    </DropdownButton>
-                                </div>
-                            </Form>
-                        </Col>
-
-                        {/* History Column */}
-                        <Col xs={12} md={4} lg={3}>
-                            <Card>
-                                <Card.Header>{t("history.title")}</Card.Header>
-                                <ListGroup variant="flush">
-                                    <HistoryContentWrapped
-                                        historyItems={history.historyItems}
-                                        onClick={handleHistoryItemClicked}
-                                    />
-                                </ListGroup>
-                            </Card>
-
-                            {/* Additional History Info */}
-                            <div className="mb-3">
-                                <Form.Text muted>
-                                    <Trans
-                                        i18nKey="history.tip"
-                                        components={[
-                                            <strong />
-                                        ]}
-                                    />
-                                </Form.Text>
-                            </div>
-                        </Col>
-                    </Row>
-                </Container>
-            )
-        }
-    }
-
     // Event Handlers
 
     const handleChangeSalary = (e) => {
@@ -747,7 +583,147 @@ function App() {
                         isDark={activeTheme.id === "dark"}
                     />
                     <Container className="mb-5">
-                        {renderCalculatorArea()}
+                        {/* {renderCalculatorArea()} */}
+                        <Row>
+                            {/* Calculator Column */}
+                            <Col xs={12} md={8} lg={9}>
+                                <Form>
+                                    {/* Source Country */}
+                                    <Form.Group
+                                        className="mb-3"
+                                        controlId="formSourceCountry"
+                                    >
+                                        <Form.Label>{t("calculator.source")}</Form.Label>
+                                        <CountrySelectWrapped
+                                            id="destSource"
+                                            country={sourceCountry}
+                                            pppData={isLoading ? [] : pppData}
+                                            onChange={handleChangeSource}
+                                            isLoading={isLoading}
+                                            isDark={activeTheme.id === "dark"}
+                                        />
+                                    </Form.Group>
+
+                                    {/* Input Salary */}
+                                    <Form.Label>
+                                        {t("calculator.salary.label", { country: isLoading ? "Source" : pppData[sourceCountry].countryName })}
+                                    </Form.Label>
+                                    <InputGroup className="mb-3">
+                                        <Form.Control
+                                            id="salaryInput"
+                                            type="number"
+                                            inputMode="decimal"
+                                            value={salary}
+                                            min={0}
+                                            placeholder={t("calculator.salary.placeholder")}
+                                            onChange={handleChangeSalary}
+                                            disabled={isLoading}
+                                        />
+                                        <InputGroup.Text>{isLoading ? "USD" : pppData[sourceCountry].currency}</InputGroup.Text>
+                                    </InputGroup>
+
+                                    {/* Destination Country */}
+                                    <Form.Group
+                                        className="mb-3"
+                                        controlId="formDestinationCountry"
+                                    >
+                                        <Form.Label>{t("calculator.destination")}</Form.Label>
+                                        <CountrySelectWrapped
+                                            id="destSelect"
+                                            country={destinationCountry}
+                                            pppData={isLoading ? [] : pppData}
+                                            onChange={handleChangeDestination}
+                                            isLoading={isLoading}
+                                            isDark={activeTheme.id === "dark"}
+                                        />
+                                    </Form.Group>
+
+                                    {/* Output Salary */}
+                                    <Form.Label>{t("calculator.output.label")}</Form.Label>
+                                    <InputGroup>
+                                        <Form.Control
+                                            id="salaryResult"
+                                            type="text"
+                                            value={isLoading ? 0 : Math.round(calculateSalary()).toLocaleString(i18n.resolvedLanguage, {
+                                                minimumFractionDigits: 1,
+                                                maximumFractionDigits: 1
+                                            })}
+                                            placeholder={t("calculator.output.placeholder")}
+                                            readOnly={true}
+                                        />
+                                        <InputGroup.Text>
+                                            {isLoading ? "USD" : pppData[destinationCountry].currency}
+                                        </InputGroup.Text>
+                                    </InputGroup>
+
+                                    {/* Data Source Info */}
+                                    <div className="mb-3">
+                                        <Form.Text muted>
+                                            {isLoading ?? t("calculator.disclaimer", { year: pppData[destinationCountry].date })}
+                                        </Form.Text>
+                                    </div>
+
+                                    <div className="mb-3">
+                                        {/* Reverse Countries Button */}
+                                        <Button
+                                            variant="secondary"
+                                            onClick={handleReverseCountries}
+                                            disabled={isLoading}
+                                            className="me-2"
+                                        >
+                                            {t("calculator.buttons.reverse")}
+                                        </Button>
+
+                                        {/* Sharing Options Button */}
+                                        <DropdownButton
+                                            as={ButtonGroup}
+                                            id="dropdownShare"
+                                            variant="success"
+                                            title={t("calculator.buttons.share.title")}
+                                            className="me-2"
+                                        >
+                                            <Dropdown.Item
+                                                eventKey="1"
+                                                onClick={handleCopyLink}
+                                            >
+                                                {t("calculator.buttons.share.copyLink")}
+                                            </Dropdown.Item>
+                                            <Dropdown.Item
+                                                eventKey="2"
+                                                onClick={handlePostOnX}
+                                            >
+                                                {t("calculator.buttons.share.postOnX")}
+                                            </Dropdown.Item>
+                                        </DropdownButton>
+                                    </div>
+                                </Form>
+                            </Col>
+
+                            {/* History Column */}
+                            <Col xs={12} md={4} lg={3}>
+                                <Card>
+                                    <Card.Header>{t("history.title")}</Card.Header>
+                                    <ListGroup variant="flush">
+                                        <HistoryContentWrapped
+                                            historyItems={history.historyItems}
+                                            onClick={handleHistoryItemClicked}
+                                        />
+                                    </ListGroup>
+                                </Card>
+
+                                {/* Additional History Info */}
+                                <div className="mb-3">
+                                    <Form.Text muted>
+                                        <Trans
+                                            i18nKey="history.tip"
+                                            components={[
+                                                <strong />
+                                            ]}
+                                        />
+                                    </Form.Text>
+                                </div>
+                            </Col>
+                        </Row>
                     </Container>
                 </Container>
             </main>
