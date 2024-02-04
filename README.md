@@ -62,6 +62,9 @@ git clone https://github.com/AlexandruIstrate/SalaryCalculator
 # Navigate to the project folder
 cd SalaryCalculator/salary-calc
 
+# Create a copy of the .env file
+cp .env.example .env
+
 # Install the dependencies
 npm install
 
