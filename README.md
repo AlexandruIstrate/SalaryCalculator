@@ -76,10 +76,11 @@ npm start
 One of the main goals of this project is to provide translations for as many languages as possible. If you would like to contribute a translation, please follow these steps:
 1. Fork the repository
 2. Create a new branch
-3. Add a new JSON file in the `src/locales` folder with the name of the language code (e.g. `fr.json` for French)
-4. Add the translations for each key found in the `en.json` file
-5. Add the language to the `src/i18n.js` file, in the `supportedLngs` object. Make sure to use the ISO 639-1 code for the language and to set the proper `flagCountryCode`
-6. Create a pull request
+3. Create a new folder in the `public/locales` folder with the ISO 639-1 code for the language (e.g. `fr` for French)
+4. Add a new JSON file in the folder named `translation.json`
+5. Add the translations for each key found in the `public/locales/translation.json` file
+6. Add the language to the `src/i18n.js` file, in the `supportedLngs` object. Make sure to use the ISO 639-1 code for the language and to set the proper `flagCountryCode`
+7. Create a pull request
 
 As many of these languages aren't spoken by the maintainers, we can't guarantee the quality of the translations. If you see any mistakes, please feel free to open an issue or a pull request.
 
