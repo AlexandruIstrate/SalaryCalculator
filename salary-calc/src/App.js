@@ -357,16 +357,19 @@ function App() {
         if (!activeTheme || activeTheme.id === "auto") {
             // Set the theme based on user preference
             theme = systemPrefersDark ? "dark" : 'light';
+
+            // Persist the theme selection between sessions as "auto"
+            LocalStorage.theme = "auto";
         } else {
             // Get the Bootstrap name of the theme and store it
             theme = activeTheme.bsName;
+
+            // Persist the theme selection between sessions
+            LocalStorage.theme = theme;
         }
 
         // Set the theme on the document
         document.documentElement.setAttribute("data-bs-theme", theme);
-
-        // Also persist the theme selection between sessions
-        LocalStorage.theme = theme;
     }, [activeTheme, systemPrefersDark])
 
     // Event Handlers
