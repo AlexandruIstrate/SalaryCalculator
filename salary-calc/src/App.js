@@ -669,7 +669,7 @@ function App() {
                                             variant="secondary"
                                             onClick={handleReverseCountries}
                                             disabled={isLoading}
-                                            className="me-2"
+                                            className="me-2 mb-2"
                                         >
                                             {t("calculator.buttons.reverse")}
                                         </Button>
@@ -680,7 +680,7 @@ function App() {
                                             id="dropdownShare"
                                             variant="success"
                                             title={t("calculator.buttons.share.title")}
-                                            className="me-2"
+                                            className="me-2 mb-2"
                                         >
                                             <Dropdown.Item
                                                 eventKey="1"
