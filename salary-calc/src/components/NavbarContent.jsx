@@ -8,9 +8,9 @@ import { languages } from "countries-list";
 
 import FlagDisplay from "src/components/FlagDisplay";
 import { supportedLngs } from "src/i18n";
-import { getThemes } from "src/themes";
+import { getThemeOptions } from "src/themes/themes";
 
-function NavbarContent({ t, i18n, activeTheme, setActiveTheme }) {
+function NavbarContent({ t, i18n, themePref, setThemePref }) {
     // Create a HTML element to display the currently selectd theme
     const themeDisplay = <>
         <span style={{
@@ -65,13 +65,13 @@ function NavbarContent({ t, i18n, activeTheme, setActiveTheme }) {
                         {/* Themes Dropdown */}
                         <NavDropdown title={themeDisplay}>
                             {
-                                Object.values(getThemes(t)).map((theme) => (
+                                Object.values(getThemeOptions(t)).map((themeOption) => (
                                     <NavDropdown.Item
-                                        key={theme.id}
-                                        disabled={theme.id === activeTheme.id}
-                                        onClick={() => setActiveTheme(theme)}
+                                        key={themeOption.id}
+                                        disabled={themeOption.id === themePref}
+                                        onClick={() => setThemePref(themeOption.id)}
                                     >
-                                        {theme.displayName}
+                                        {themeOption.displayName}
                                     </NavDropdown.Item>
                                 ))
                             }

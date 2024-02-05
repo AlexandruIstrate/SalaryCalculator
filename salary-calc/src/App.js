@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer } from "react";
+import React, { useState, useEffect, useReducer, useContext } from "react";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -33,16 +33,17 @@ import { WorldBankAPI } from "src/api/WorldBankAPI";
 import { LocalStorage } from "src/utils/LocalStorage";
 
 import { supportedLngs } from "src/i18n";
-import { getThemes } from "src/themes";
+import { ThemeContext, } from 'src/themes/ThemeContext';
+import { lightTheme, darkTheme } from 'src/themes/themes'; 
 
 import "./App.css";
 
 // Load country flag emojis to fix missing flags on certain platforms
 polyfillCountryFlagEmojis();
 
-function Jumbotron({ title, subtitle, isDark = false }) {
+function Jumbotron({ title, subtitle, theme = null }) {
     return (
-        <Container className={`p-5 mb-4 ${isDark ? "bg-dark" : "bg-light"} rounded-3`}>
+        <Container className={`p-5 mb-4 rounded-3 ${theme.bsBackground}`}>
             <Container className="container-fluid py-5">
                 <h1 className="display-5 fw-bold">{title}</h1>
                 <p className="col-md-8 fs-4">{subtitle}</p>
@@ -51,7 +52,7 @@ function Jumbotron({ title, subtitle, isDark = false }) {
     )
 }
 
-function CountrySelect({ i18n, country, pppData, onChange, isLoading = false, isDark = false }) {
+function CountrySelect({ i18n, country, pppData, onChange, theme = null, isLoading = false }) {
     // A function to handle the creation of individual country items
     const createSelectItem = (countryCode) => {
         return (
@@ -93,35 +94,6 @@ function CountrySelect({ i18n, country, pppData, onChange, isLoading = false, is
         return enMatch || nativeMatch;
     }
 
-    // Create a dark mode style
-    const darkModeStyles = {
-        container: (provided) => ({
-            ...provided,
-            backgroundColor: "#212529", // Set the background color for the entire Select container
-        }),
-        control: (provided) => ({
-            ...provided,
-            backgroundColor: "#212529", // Set the background color for the control
-            borderColor: "#495057", // Set the border color
-        }),
-        singleValue: (provided) => ({
-            ...provided,
-            color: "#ffffff", // Set the text color for the selected value
-        }),
-        option: (provided, state) => ({
-            ...provided,
-            backgroundColor: state.isSelected ? "#0d6efd" : (state.isFocused ? "#2b3035" : "#212529"), // Set the background color for each option
-            color: state.isSelected ? "#ffffff" : "#cccccc", // Set the text color for each option
-        }),
-        // Set the border of the open menu as a white gradient
-        menu: (provided) => ({
-            ...provided,
-            border: "1px solid transparent",
-            boxShadow: "0 5px 30px rgba(0, 0, 0, 1)",
-            backgroundColor: "#212529"
-        }),
-    };
-
     // Return the component
     return (
         <Select
@@ -133,7 +105,7 @@ function CountrySelect({ i18n, country, pppData, onChange, isLoading = false, is
             getOptionValue={op => op.countryCode}
             formatOptionLabel={op => createSelectItem(op.countryCode)}
             filterOption={searchFunc}
-            styles={isDark ? darkModeStyles : {}}
+            styles={theme?.countrySelStyle ?? {}}
         />
     );
 }
@@ -187,7 +159,8 @@ function App() {
 
     const [showToast, setShowToast] = useState(false);
 
-    const [activeTheme, setActiveTheme] = useState(getThemes(t)[LocalStorage.theme ?? "auto"]);
+    const [themePref, setThemePref] = useState(LocalStorage.theme ?? "auto");
+    const { theme, setTheme } = useContext(ThemeContext);
 
     // Navigation
     const location = useLocation();
@@ -348,29 +321,29 @@ function App() {
         query: "(prefers-color-scheme: dark)"
     });
 
-    // Set the page theme when it's changed
+    // Detect when the theme preference is changed by either the system or the user
     useEffect(() => {
-        // Store the result here
-        var theme = "light";
+        // Store the theme here
+        var selectedTheme = "light";
 
-        // Handle the special case when we don't have a theme set or it's set to auto
-        if (!activeTheme || activeTheme.id === "auto") {
-            // Set the theme based on user preference
-            theme = systemPrefersDark ? "dark" : 'light';
-
-            // Persist the theme selection between sessions as "auto"
-            LocalStorage.theme = "auto";
+        // Check if we have the preference set to auto
+        if (themePref === "auto") {
+            // Set the theme based on what the user prefers
+            selectedTheme = systemPrefersDark ? "dark" : "light";
         } else {
-            // Get the Bootstrap name of the theme and store it
-            theme = activeTheme.bsName;
-
-            // Persist the theme selection between sessions
-            LocalStorage.theme = theme;
+            // Set the theme from the manual user preference
+            selectedTheme = themePref;
         }
 
-        // Set the theme on the document
-        document.documentElement.setAttribute("data-bs-theme", theme);
-    }, [activeTheme, systemPrefersDark])
+        // Set the theme state variable
+        setTheme(selectedTheme === "light" ? lightTheme : darkTheme);
+    }, [systemPrefersDark, themePref, setTheme])
+
+    // Set the actual theme whenever the theme preference changes
+    useEffect(() => {
+        // Set the theme attribute on the HTML element
+        document.documentElement.setAttribute("data-bs-theme", theme.bsTheme);
+    }, [theme]);
 
     // Event Handlers
 
@@ -579,8 +552,8 @@ function App() {
             {/* App Header */}
             <header>
                 <NavbarContent
-                    activeTheme={activeTheme}
-                    setActiveTheme={setActiveTheme}
+                    themePref={themePref}
+                    setThemePref={setThemePref}
                 />
             </header>
 
@@ -590,7 +563,7 @@ function App() {
                     <Jumbotron
                         title={t("jumbotron.title")}
                         subtitle={t("jumbotron.subtitle")}
-                        isDark={activeTheme.id === "dark"}
+                        theme={theme}
                     />
                     <Container className="mb-5">
                         {/* {renderCalculatorArea()} */}
@@ -609,8 +582,8 @@ function App() {
                                             country={sourceCountry}
                                             pppData={isLoading ? [] : pppData}
                                             onChange={handleChangeSource}
+                                            theme={theme}
                                             isLoading={isLoading}
-                                            isDark={activeTheme.id === "dark"}
                                         />
                                     </Form.Group>
 
@@ -643,8 +616,8 @@ function App() {
                                             country={destinationCountry}
                                             pppData={isLoading ? [] : pppData}
                                             onChange={handleChangeDestination}
+                                            theme={theme}
                                             isLoading={isLoading}
-                                            isDark={activeTheme.id === "dark"}
                                         />
                                     </Form.Group>
 
@@ -764,7 +737,7 @@ function App() {
             </div>
 
             {/* Footer */}
-            <footer className={`footer font-small blue ${activeTheme.id === "dark" ? "bg-dark" : "bg-light"} pt-4`}>
+            <footer className={`footer font-small blue ${theme.bsBackground} pt-4`}>
                 {/* Footer Content */}
                 <FooterContent />
 

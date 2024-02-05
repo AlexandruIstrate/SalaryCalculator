@@ -1,23 +1,28 @@
+// Library imports
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
-import App from "./App";
-import reportWebVitals from "./reportWebVitals";
-
 import { HashRouter } from "react-router-dom";
 
 // Add Bootstrap to the app
 import "bootstrap/dist/css/bootstrap.min.css";
 
+// Local imports
+import "src/index.css";
+import App from "src/App";
+import reportWebVitals from "src/reportWebVitals";
+import { ThemeProvider } from "src/themes/ThemeContext";
+
 // Add i18n to the app
-import "./i18n";
+import "src/i18n";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
     <React.StrictMode>
         <React.Suspense>
             <HashRouter>
-                <App />
+                <ThemeProvider>
+                    <App />
+                </ThemeProvider>
             </HashRouter>
         </React.Suspense>
     </React.StrictMode>
