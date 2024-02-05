@@ -19,12 +19,14 @@ function FooterContent({ t }) {
                     <h5 className="text-uppercase">{t("footer.docs.title")}</h5>
                     <ul className="list-unstyled">
                         <li>
+                            <i className="bi bi-question-circle me-1" />&nbsp;
                             <NewTabLink
                                 href="https://en.wikipedia.org/wiki/Purchasing_power_parity"
                                 title={t("footer.docs.whatIsPPP")}
                             />
                         </li>
                         <li>
+                            <i className="bi bi-puzzle me-1" />&nbsp;
                             <NewTabLink
                                 href="https://documents.worldbank.org/en/publication/documents-reports/api"
                                 title={t("footer.docs.worldBankAPI")}
@@ -37,24 +39,28 @@ function FooterContent({ t }) {
                     <h5 className="text-uppercase">{t("footer.project.title")}</h5>
                     <ul className="list-unstyled">
                         <li>
+                            <i className="bi bi-github me-1" />&nbsp;
                             <NewTabLink
                                 href="https://github.com/AlexandruIstrate/SalaryCalculator"
                                 title={t("footer.project.homepage")}
                             />
                         </li>
                         <li>
+                            <i className="bi bi-book me-1" />&nbsp;
                             <NewTabLink
                                 href="https://github.com/AlexandruIstrate/SalaryCalculator/blob/master/README.md"
                                 title={t("footer.project.docs")}
                             />
                         </li>
                         <li>
+                            <i className="bi bi-flag me-1" />&nbsp;
                             <NewTabLink
                                 href="https://github.com/AlexandruIstrate/SalaryCalculator/issues"
                                 title={t("footer.project.reportIssue")}
                             />
                         </li>
                         <li>
+                            <i className="bi bi-box-seam me-1" />&nbsp;
                             <NewTabLink
                                 href="https://github.com/AlexandruIstrate/SalaryCalculator/releases"
                                 title={t("footer.project.previousReleases")}
