@@ -1,13 +1,17 @@
 // Define the themes
 export const lightTheme = {
     bsTheme: "light",
-    bkg: "bg-light",
+    bgPrimary: null,
+    bgSecondary: null,
+    bgTertiary: "bg-light",
     countrySelStyle: {}
 };
 
 export const darkTheme = {
     bsTheme: "dark",
-    bkg: "bg-tertiary-dark",
+    bgPrimary: null,
+    bgSecondary: null,
+    bgTertiary: "bg-tertiary-dark",
     countrySelStyle: {
         container: (provided) => ({
             ...provided,
@@ -37,6 +41,7 @@ export const darkTheme = {
     }
 };
 
+// Define user selectable options
 export const getThemeOptions = (t) => {
     return {
         light: {

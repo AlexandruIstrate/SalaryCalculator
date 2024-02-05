@@ -43,8 +43,8 @@ polyfillCountryFlagEmojis();
 
 function Jumbotron({ title, subtitle, theme = null }) {
     return (
-        <Container className={`p-5 mb-4 rounded-3 ${theme.bkg}`}>
-            <Container className="container-fluid py-5">
+        <Container className={`p-5 mb-4 rounded-3 ${theme.bgTertiary}`}>
+            <Container className="container-fluid py-2 py-md-5">
                 <h1 className="display-5 fw-bold">{title}</h1>
                 <p className="col-md-8 fs-4">{subtitle}</p>
             </Container>
@@ -740,7 +740,7 @@ function App() {
             </div>
 
             {/* Footer */}
-            <footer className={`footer font-small blue ${theme.bkg} pt-4`}>
+            <footer className={`footer font-small blue ${theme.bgTertiary} pt-4`}>
                 {/* Footer Content */}
                 <FooterContent />
 
