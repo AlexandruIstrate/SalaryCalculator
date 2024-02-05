@@ -34,7 +34,7 @@ import { LocalStorage } from "src/utils/LocalStorage";
 
 import { supportedLngs } from "src/i18n";
 import { ThemeContext, } from 'src/themes/ThemeContext';
-import { lightTheme, darkTheme } from 'src/themes/themes'; 
+import { lightTheme, darkTheme } from 'src/themes/Themes';
 
 import "./App.css";
 
@@ -110,7 +110,7 @@ function CountrySelect({ i18n, country, pppData, onChange, theme = null, isLoadi
     );
 }
 
-function HistoryContent({ t, historyItems, onClick }) {
+function HistoryContent({ historyItems, onClick }) {
     // Check if we have no data
     if (!historyItems || historyItems.length === 0) {
         // Return a no-data message
@@ -144,9 +144,6 @@ function HistoryContent({ t, historyItems, onClick }) {
 }
 
 function App() {
-    // Translation
-    const { t, i18n } = useTranslation();
-
     // App State
     const [salary, setSalary] = useState(LocalStorage.salary ?? 0);
     const [sourceCountry, setSourceCountry] = useState(
@@ -165,6 +162,9 @@ function App() {
     // Navigation
     const location = useLocation();
     const navigate = useNavigate();
+
+    // Translation
+    const { t, i18n } = useTranslation();
 
     // Translated components
     const CountrySelectWrapped = withTranslation()(CountrySelect);
@@ -430,11 +430,48 @@ function App() {
         // Make sure that the link is up to date with the newest values
         updateURLFromState();
 
+        // Get the URL
+        const url = window.location.href;
+
+        // Get the text with URL included
+        const text = getSocialPostText(url);
+
+        // Create the URL with the text
+        const encodedURL = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
+
+        // Open the link
+        window.open(encodedURL, "_blank");
+    }
+
+    const handleSendOnWhatsApp = () => {
+        // Make sure that the link is up to date with the newest values
+        updateURLFromState();
+
+        // Get the URL
+        const url = window.location.href;
+
+        // Get the text with the URL in it
+        const text = getSocialPostText(url);
+
+        // Create the URL with the text
+        const encodedURL = `https://wa.me/?text=${encodeURIComponent(text)}`;
+
+        // Open the link
+        window.open(encodedURL, "_blank");
+    }
+
+    const handleSendOnTelegram = () => {
+        // Make sure that the link is up to date with the newest values
+        updateURLFromState();
+
+        // Get the URL
+        const url = window.location.href;
+
         // Get the text
         const text = getSocialPostText();
 
         // Create the URL with the text
-        const encodedURL = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
+        const encodedURL = `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`;
 
         // Open the link
         window.open(encodedURL, "_blank");
@@ -506,7 +543,7 @@ function App() {
         navigate(`?${queryParams.toString()}`);
     }
 
-    const getSocialPostText = () => {
+    const getSocialPostText = (url = null) => {
         // Get the destination and source
         const source = pppData[sourceCountry];
         const dest = pppData[destinationCountry];
@@ -521,13 +558,14 @@ function App() {
             sourceCountry: getLocalCountryName(sourceCountry, i18n.resolvedLanguage)
         });
 
-        // Get the URL
-        const url = window.location.href;
-
-        // Create the final text
-        const text = friendlyText + "\n\n" + url;
-
-        return text;
+        // Return the final text
+        if (url) {
+            // Text and URL
+            return friendlyText + "\n\n" + url;
+        } else {
+            // Text only
+            return friendlyText;
+        }
     }
 
     const loadCountryNameTranslations = () => {
@@ -541,6 +579,31 @@ function App() {
     // Load country name translation files based on the supported languages
     loadCountryNameTranslations();
 
+    // Sharing options
+    const sharingOptions = [
+        {
+            iconName: "bi-link-45deg",
+            i18nKey: "calculator.buttons.share.copyLink",
+            handler: handleCopyLink
+        },
+        {
+            iconName: "bi-twitter-x",
+            i18nKey: "calculator.buttons.share.postX",
+            handler: handlePostOnX
+        },
+        {
+            iconName: "bi-whatsapp",
+            i18nKey: "calculator.buttons.share.sendWhatsApp",
+            handler: handleSendOnWhatsApp
+        },
+        {
+            iconName: "bi-telegram",
+            i18nKey: "calculator.buttons.share.sendTelegram",
+            handler: handleSendOnTelegram
+        }
+    ];
+
+    // Main HTML body rendering
     return (
         <div className="app">
             {/* Development Build Banner */}
@@ -645,7 +708,7 @@ function App() {
                                     {/* Data Source Info */}
                                     <div className="mb-3">
                                         <Form.Text muted>
-                                            {isLoading ?? t("calculator.disclaimer", { year: pppData[destinationCountry].date })}
+                                            {t("calculator.disclaimer", { year: isLoading ? new Date().getFullYear() : pppData[destinationCountry].date })}
                                         </Form.Text>
                                     </div>
 
@@ -657,6 +720,7 @@ function App() {
                                             disabled={isLoading}
                                             className="me-2 mb-2"
                                         >
+                                            <i className="bi bi-arrow-left-right me-1" />&nbsp;
                                             {t("calculator.buttons.reverse")}
                                         </Button>
 
@@ -665,21 +729,25 @@ function App() {
                                             as={ButtonGroup}
                                             id="dropdownShare"
                                             variant="success"
-                                            title={t("calculator.buttons.share.title")}
+                                            title={
+                                                <span>
+                                                    <i className="bi bi-share me-1" />&nbsp;
+                                                    {t("calculator.buttons.share.title")}
+                                                </span>}
                                             className="me-2 mb-2"
                                         >
-                                            <Dropdown.Item
-                                                eventKey="1"
-                                                onClick={handleCopyLink}
-                                            >
-                                                {t("calculator.buttons.share.copyLink")}
-                                            </Dropdown.Item>
-                                            <Dropdown.Item
-                                                eventKey="2"
-                                                onClick={handlePostOnX}
-                                            >
-                                                {t("calculator.buttons.share.postOnX")}
-                                            </Dropdown.Item>
+                                            {/* Display the sharing options from the list */}
+                                            {
+                                                sharingOptions.map(({ iconName, i18nKey, handler }, index) =>
+                                                    <Dropdown.Item
+                                                        key={index}
+                                                        onClick={handler}
+                                                    >
+                                                        <i className={`bi ${iconName} me-1`} />&nbsp;
+                                                        {t(i18nKey)}
+                                                    </Dropdown.Item>
+                                                )
+                                            }
                                         </DropdownButton>
                                     </div>
                                 </Form>

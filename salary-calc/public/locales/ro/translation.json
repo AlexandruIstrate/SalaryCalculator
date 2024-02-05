@@ -34,7 +34,9 @@
             "share": {
                 "title": "Partajare...",
                 "copyLink": "Copiați link-ul",
-                "postOnX": "Postează pe X"
+                "postX": "Postează pe X",
+                "sendWhatsApp": "Trimite pe WhatsApp",
+                "sendTelegram": "Trimite pe Telegram"
             }
         }
     },

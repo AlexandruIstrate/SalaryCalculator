@@ -34,7 +34,9 @@
             "share": {
                 "title": "Teilen...",
                 "copyLink": "Link Kopieren",
-                "postOnX": "Auf X Posten"
+                "postX": "Auf X.com Posten",
+                "sendWhatsApp": "Senden auf WhatsApp",
+                "sendTelegram": "Senden auf Telegram"
             }
         }
     },

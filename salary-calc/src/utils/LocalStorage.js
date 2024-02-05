@@ -1,3 +1,4 @@
+// Export the class that handles local storage
 export const LocalStorage = {
     // Salary
     get salary() {

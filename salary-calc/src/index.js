@@ -5,6 +5,7 @@ import { HashRouter } from "react-router-dom";
 
 // Add Bootstrap to the app
 import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap-icons/font/bootstrap-icons.min.css"
 
 // Local imports
 import "src/index.css";
