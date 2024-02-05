@@ -64,8 +64,8 @@ function FooterContent({ t }) {
 
                 {/* Dinamically render all the links */}
                 {
-                    Object.values(footerLinks.sections).map(({ i18nKey, links }) => (
-                        <div className="col-md-3 mb-md-0 mb-3">
+                    Object.values(footerLinks.sections).map(({ i18nKey, links }, secIndex) => (
+                        <div key={secIndex} className="col-md-3 mb-md-0 mb-3">
                             <h5 className="text-uppercase">{t(i18nKey)}</h5>
                             <ul className="list-unstyled">
                                 {
