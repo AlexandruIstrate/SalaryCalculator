@@ -43,7 +43,7 @@ polyfillCountryFlagEmojis();
 
 function Jumbotron({ title, subtitle, theme = null }) {
     return (
-        <Container className={`p-5 mb-4 rounded-3 ${theme.bsBackground}`}>
+        <Container className={`p-5 mb-4 rounded-3 ${theme.bkg}`}>
             <Container className="container-fluid py-5">
                 <h1 className="display-5 fw-bold">{title}</h1>
                 <p className="col-md-8 fs-4">{subtitle}</p>
@@ -323,6 +323,9 @@ function App() {
 
     // Detect when the theme preference is changed by either the system or the user
     useEffect(() => {
+        // First, make sure we remember this setting across sessions
+        LocalStorage.theme = themePref;
+
         // Store the theme here
         var selectedTheme = "light";
 
@@ -737,7 +740,7 @@ function App() {
             </div>
 
             {/* Footer */}
-            <footer className={`footer font-small blue ${theme.bsBackground} pt-4`}>
+            <footer className={`footer font-small blue ${theme.bkg} pt-4`}>
                 {/* Footer Content */}
                 <FooterContent />
 

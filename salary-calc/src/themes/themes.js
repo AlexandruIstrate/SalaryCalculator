@@ -1,13 +1,13 @@
 // Define the themes
 export const lightTheme = {
     bsTheme: "light",
-    bsBackground: "bg-light",
+    bkg: "bg-light",
     countrySelStyle: {}
 };
 
 export const darkTheme = {
     bsTheme: "dark",
-    bsBackground: "bg-dark",
+    bkg: "bg-tertiary-dark",
     countrySelStyle: {
         container: (provided) => ({
             ...provided,
