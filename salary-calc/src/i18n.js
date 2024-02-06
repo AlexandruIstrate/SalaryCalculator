@@ -9,10 +9,6 @@ export const supportedLngs = {
         code: "en",
         flagCountryCode: "GB"
     },
-    fr: {
-        code: "en",
-        flagCountryCode: "FR"
-    },
     de: {
         code: "de",
         flagCountryCode: "DE"
@@ -20,6 +16,10 @@ export const supportedLngs = {
     es: {
         code: "es",
         flagCountryCode: "ES"
+    },
+    fr: {
+        code: "fr",
+        flagCountryCode: "FR"
     },
     it: {
         code: "it",
