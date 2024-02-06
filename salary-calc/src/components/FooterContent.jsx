@@ -55,7 +55,7 @@ function FooterContent({ t }) {
     return (
         <Container className="text-center text-md-left">
             <div className="row">
-                <div className="col-md-6 mt-md-0 mt-3">
+                <div className="footer-about col-md-6 mt-md-0 mt-3">
                     <h5 className="text-uppercase">{t("footer.title")}</h5>
                     <p>{t("footer.description")}</p>
                 </div>
@@ -65,7 +65,7 @@ function FooterContent({ t }) {
                 {/* Dinamically render all the links */}
                 {
                     Object.values(footerLinks.sections).map(({ i18nKey, links }, secIndex) => (
-                        <div key={secIndex} className="col-md-3 mb-md-0 mb-3">
+                        <div key={secIndex} className="footer-section col-md-3 mb-md-0 mb-3">
                             <h5 className="text-uppercase">{t(i18nKey)}</h5>
                             <ul className="list-unstyled">
                                 {

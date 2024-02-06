@@ -43,7 +43,7 @@ polyfillCountryFlagEmojis();
 
 function Jumbotron({ title, subtitle, theme = null }) {
     return (
-        <Container className={`p-5 mb-4 rounded-3 ${theme.bgTertiary}`}>
+        <Container className={`jumbotron p-5 mb-4 rounded-3 ${theme.bgTertiary}`}>
             <Container className="container-fluid py-2 py-md-5">
                 <h1 className="display-5 fw-bold">{title}</h1>
                 <p className="col-md-8 fs-4">{subtitle}</p>
@@ -620,7 +620,7 @@ function App() {
             )}
 
             {/* App Header */}
-            <header>
+            <header id="app-header">
                 <NavbarContent
                     themePref={themePref}
                     setThemePref={setThemePref}
@@ -628,7 +628,7 @@ function App() {
             </header>
 
             {/* Main Content */}
-            <main>
+            <main id="app-main-content">
                 <Container className="content p-3">
                     <Jumbotron
                         title={t("jumbotron.title")}
@@ -762,7 +762,7 @@ function App() {
 
                             {/* History Column */}
                             <Col xs={12} md={4} lg={3}>
-                                <Card>
+                                <Card className="history-panel">
                                     <Card.Header>{t("history.title")}</Card.Header>
                                     <ListGroup variant="flush">
                                         <HistoryContentWrapped
@@ -793,6 +793,7 @@ function App() {
             <div
                 aria-live="polite"
                 aria-atomic={true}
+                id="app-toast-area"
                 className="bg-transparent position-relative"
             >
                 <ToastContainer
@@ -815,9 +816,12 @@ function App() {
             </div>
 
             {/* Footer */}
-            <footer className={`footer font-small blue ${theme.bgTertiary} pt-4`}>
+            <footer
+                id="app-footer"
+                className={`footer font-small blue ${theme.bgTertiary} pt-4`}
+            >
                 {/* Footer Content */}
-                <FooterContent />
+                <FooterContent id="footer-content" />
 
                 {/* Copyright */}
                 <div className="footer-copyright text-center py-3">
