@@ -1,0 +1,69 @@
+{
+    "page": {
+        "title": "薪资换算"
+    },
+    "themes": {
+        "title": "主题",
+        "light": "光",
+        "dark": "黑暗的",
+        "auto": "自动的"
+    },
+    "banner": "开发版",
+    "nav": {
+        "title": "薪资换算"
+    },
+    "jumbotron": {
+        "title": "计算你的薪水",
+        "subtitle": "使用此转换器可以检查您在某个国家/地区需要多少钱才能像在另一个国家/地区一样生活。 首先选择来源国家和目的地国家，然后输入以来源货币表示的工资金额。"
+    },
+    "calculator": {
+        "source": "来源国",
+        "salary": {
+            "label": "以来源国货币计算的工资",
+            "placeholder": "输入工资"
+        },
+        "destination": "目的地国家",
+        "output": {
+            "label": "计算结果",
+            "placeholder": "由此产生的工资",
+            "friendlyDescription": "您需要在 {{destCountry}} 获得 {{sourceSalary, number}} {{destCurrency}} 的薪水才能过上与在 {{destSalary, number}} {{sourceCurrency}} 的薪水类似的生活质量 {{sourceCountry}}。"
+        },
+        "disclaimer": "根据世界银行提供的 {{year}} 年最新数据。",
+        "buttons": {
+            "reverse": "反转国家",
+            "share": {
+                "title": "分享...",
+                "copyLink": "复制链接",
+                "postX": "在 X.com 上发帖",
+                "sendWhatsApp": "通过 WhatsApp 发送",
+                "sendTelegram": "通过 Telegram 发送"
+            }
+        }
+    },
+    "history": {
+        "title": "最近的转换",
+        "item": "<0/> 兑 <1/>",
+        "tip": "<0>提示：</0>您可以通过单击再次查看转换。"
+    },
+    "toast": {
+        "title": "链接已复制",
+        "body": "链接已复制到剪贴板！"
+    },
+    "footer": {
+        "title": "关于这个应用程序",
+        "description": "这个应用程序是一个开源项目。 欢迎贡献。",
+        "docs": {
+            "title": "文档",
+            "whatIsPPP": "什么是PPP？",
+            "worldBankAPI": "世界银行API"
+        },
+        "project": {
+            "title": "项目",
+            "homepage": "项目主页",
+            "docs": "文档",
+            "reportIssue": "报告问题",
+            "previousReleases": "以前的版本"
+        },
+        "copyright": "© {{year}} 版权: <0/>"
+    }
+}

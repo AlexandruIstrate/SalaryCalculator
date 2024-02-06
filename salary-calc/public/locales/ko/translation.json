@@ -1,0 +1,69 @@
+{
+    "page": {
+        "title": "급여 변환기"
+    },
+    "themes": {
+        "title": "테마",
+        "light": "밝은",
+        "dark": "어두운",
+        "auto": "자동적 인"
+    },
+    "banner": "개발 버전",
+    "nav": {
+        "title": "급여 변환기"
+    },
+    "jumbotron": {
+        "title": "급여 계산",
+        "subtitle": "이 변환기를 사용하여 특정 국가에서 다른 국가에서와 마찬가지로 생활하려면 얼마나 많은 돈이 필요한지 확인하세요. 먼저 소스 및 대상 국가를 선택한 다음 소스 통화로 급여 금액을 입력하세요."
+    },
+    "calculator": {
+        "source": "소스 국가",
+        "salary": {
+            "label": "출신 국가의 통화로 급여",
+            "placeholder": "급여를 입력하세요"
+        },
+        "destination": "대상 국가",
+        "output": {
+            "label": "결과",
+            "placeholder": "결과 급여",
+            "friendlyDescription": "{{sourceCountry}}에서 {{destSalary, number}} {{sourceCurrency}}의 급여와 비슷한 삶의 질을 누리려면 {{destCountry}}에서 {{sourceSalary, number}} {{destCurrency}}의 급여가 필요합니다."
+        },
+        "disclaimer": "세계은행이 제공한 {{year}}년 최신 데이터 기준.",
+        "buttons": {
+            "reverse": "반대 국가",
+            "share": {
+                "title": "공유하다...",
+                "copyLink": "링크 복사",
+                "postX": "X.com에 게시",
+                "sendWhatsApp": "WhatsApp으로 보내기",
+                "sendTelegram": "Telegram으로 보내기"
+            }
+        }
+    },
+    "history": {
+        "title": "최근 전환",
+        "item": "<0/> 에 <1/>",
+        "tip": "<0>팁: </0>전환을 클릭하면 전환을 다시 볼 수 있습니다."
+    },
+    "toast": {
+        "title": "링크가 복사되었습니다",
+        "body": "링크가 클립보드에 복사되었습니다!"
+    },
+    "footer": {
+        "title": "이 앱 정보",
+        "description": "이 앱은 오픈 소스 프로젝트입니다. 기여를 환영합니다.",
+        "docs": {
+            "title": "선적 서류 비치",
+            "whatIsPPP": "PPP란 무엇입니까?",
+            "worldBankAPI": "세계은행 API"
+        },
+        "project": {
+            "title": "프로젝트",
+            "homepage": "프로젝트 홈페이지",
+            "docs": "선적 서류 비치",
+            "reportIssue": "문제 신고",
+            "previousReleases": "이전 릴리스"
+        },
+        "copyright": "© {{year}} 저작권: <0/>"
+    }
+}

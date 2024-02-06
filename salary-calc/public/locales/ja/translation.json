@@ -1,0 +1,69 @@
+{
+    "page": {
+        "title": "給与コンバーター"
+    },
+    "themes": {
+        "title": "テーマ",
+        "light": "ライトテーマ",
+        "dark": "暗いテーマ",
+        "auto": "自動"
+    },
+    "banner": "開発版",
+    "nav": {
+        "title": "給与コンバーター"
+    },
+    "jumbotron": {
+        "title": "給与を計算する",
+        "subtitle": "このコンバータを使用して、特定の国で他の国と同じように生活するためにどれくらいのお金が必要かを確認します。 まず、送金元国と送金先国を選択し、送金元通貨で給与額を入力します。"
+    },
+    "calculator": {
+        "source": "供給元の国",
+        "salary": {
+            "label": "源泉国の通貨での給与",
+            "placeholder": "給与を入力してください"
+        },
+        "destination": "目的地の国",
+        "output": {
+            "label": "計算結果",
+            "placeholder": "結果として得られる給与",
+            "friendlyDescription": "{{destCountry}} の {{sourceSalary, number}} {{destCurrency}} の給与と同様の生活の質を得るには、{{destCountry}} の {{destSalary, number}} {{sourceCurrency}} の給与が必要です {{sourceCountry}}。"
+        },
+        "disclaimer": "世界銀行が提供する {{year}} 年の最新データに基づいています。",
+        "buttons": {
+            "reverse": "逆の国",
+            "share": {
+                "title": "共有...",
+                "copyLink": "リンクをコピーする",
+                "postX": "X.com に投稿する",
+                "sendWhatsApp": "WhatsApp で送信する",
+                "sendTelegram": "Telegram で送信する"
+            }
+        }
+    },
+    "history": {
+        "title": "最近のコンバージョン",
+        "item": "<0/> to <1/>",
+        "tip": "<0>ヒント： </0>変換をクリックすると、変換を再度表示できます。"
+    },
+    "toast": {
+        "title": "リンクがコピーされました",
+        "body": "リンクがクリップボードにコピーされました!"
+    },
+    "footer": {
+        "title": "このアプリについて",
+        "description": "このアプリはオープンソース プロジェクトです。 貢献は大歓迎です。",
+        "docs": {
+            "title": "ドキュメンテーション",
+            "whatIsPPP": "PPPとは何ですか?",
+            "worldBankAPI": "世界銀行API"
+        },
+        "project": {
+            "title": "プロジェクト",
+            "homepage": "プロジェクトのホームページ",
+            "docs": "ドキュメンテーション",
+            "reportIssue": "問題を報告する",
+            "previousReleases": "以前のリリース"
+        },
+        "copyright": "© {{year}} 著作権: <0/>"
+    }
+}
