@@ -1,0 +1,69 @@
+{
+    "page": {
+        "title": "ממיר שכר"
+    },
+    "themes": {
+        "title": "נושא",
+        "light": "אוֹר",
+        "dark": "אפל",
+        "auto": "אוֹטוֹמָטִי"
+    },
+    "banner": "גרסת פיתוח",
+    "nav": {
+        "title": "ממיר שכר"
+    },
+    "jumbotron": {
+        "title": "חשב את השכר שלך",
+        "subtitle": "השתמש בממיר זה כדי לבדוק כמה כסף אתה צריך במדינה מסוימת כדי שתוכל לחיות טוב כמו שהיית עושה במדינה אחרת. התחל בבחירת מדינות המקור והיעד ולאחר מכן הזן את סכום השכר במטבע המקור."
+    },
+    "calculator": {
+        "source": "ארץ מקור",
+        "salary": {
+            "label": "משכורת במטבע של מדינת המקור",
+            "placeholder": "הזן משכורת"
+        },
+        "destination": "מדינת היעד",
+        "output": {
+            "label": "תוצאת חישוב",
+            "placeholder": "שכר כתוצאה מכך",
+            "friendlyDescription": "אתה צריך משכורת של {{sourceSalary, number}} {{destCurrency}} ב-{{destCountry}} כדי לחיות באיכות חיים דומה לזה שהיית צריך עם משכורת של {{destSalary, number}} {{sourceCurrency}} ב {{sourceCountry}}."
+        },
+        "disclaimer": "מבוסס על הנתונים העדכניים ביותר שסופקו על ידי הבנק העולמי משנת {{year}}.",
+        "buttons": {
+            "reverse": "מדינות הפוכות",
+            "share": {
+                "title": "לַחֲלוֹק...",
+                "copyLink": "העתק קישור",
+                "postX": "פרסם ב-X.com",
+                "sendWhatsApp": "שלח בוואטסאפ",
+                "sendTelegram": "שלח בטלגרם"
+            }
+        }
+    },
+    "history": {
+        "title": "המרות אחרונות",
+        "item": "<0/> עד <1/>",
+        "tip": "<0>טיפ: </0>תוכל להציג המרה שוב על ידי לחיצה עליה."
+    },
+    "toast": {
+        "title": "הקישור הועתק",
+        "body": "הקישור הועתק ללוח!"
+    },
+    "footer": {
+        "title": "על אפליקציה זו",
+        "description": "אפליקציה זו היא פרויקט קוד פתוח. תרומות יתקבלו בברכה.",
+        "docs": {
+            "title": "תיעוד",
+            "whatIsPPP": "מה זה PPP?",
+            "worldBankAPI": "API של הבנק העולמי"
+        },
+        "project": {
+            "title": "פּרוֹיֶקט",
+            "homepage": "דף הבית של הפרויקט",
+            "docs": "תיעוד",
+            "reportIssue": "דווח על בעיה",
+            "previousReleases": "מהדורות קודמות"
+        },
+        "copyright": "© {{year}} זכויות יוצרים: <0/>"
+    }
+}

@@ -21,6 +21,10 @@ export const supportedLngs = {
         code: "fr",
         flagCountryCode: "FR"
     },
+    he: {
+        code: "he",
+        flagCountryCode: "IL"
+    },
     it: {
         code: "it",
         flagCountryCode: "IT"

@@ -25,18 +25,22 @@ This app is currently available in the following languages:
 | Language | Variant       | ISO 639-1 Code |
 |----------|---------------|----------------|
 | English  | International | en             |
-| French   | International | fr             |
 | German   | Germany       | de             |
 | Spanish  | International | es             |
+| French   | International | fr             |
+| Hebrew   | Israel        | he             |
 | Italian  | Italy         | it             |
+| Japanese | Japan         | ja             |
+| Korean   | South Korea   | ko             |
 | Romanian | Romania       | ro             |
+| Chinese  | China         | zh             |
 
 The next languages we are looking to add are:
-- Chinese (Simplified)
-- Chinese (Traditional)
-- Japanese
-- Korean
-- Hebrew
+- Dutch
+- Swedish
+- Norwegian
+- Danish
+- Finnish
 
 We are always looking to add more languages to the app. If you would like to contribute a translation, please see the [Contributing](#contributing) section.
 
