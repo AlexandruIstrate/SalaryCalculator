@@ -346,6 +346,10 @@ function App() {
     useEffect(() => {
         // Set the theme attribute on the HTML element
         document.documentElement.setAttribute("data-bs-theme", theme.bsTheme);
+
+        // Set the meta theme color for mobile devices
+        const metaThemeColor = document.querySelector("meta[name=theme-color]");
+        metaThemeColor.content = theme.metaThemeColor;
     }, [theme]);
 
     // Event Handlers

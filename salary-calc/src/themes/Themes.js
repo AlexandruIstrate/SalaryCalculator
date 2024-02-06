@@ -4,6 +4,7 @@ export const lightTheme = {
     bgPrimary: null,
     bgSecondary: null,
     bgTertiary: "bg-light",
+    metaThemeColor: "#ffffff",
     countrySelStyle: {}
 };
 
@@ -12,6 +13,7 @@ export const darkTheme = {
     bgPrimary: null,
     bgSecondary: null,
     bgTertiary: "bg-tertiary-dark",
+    metaThemeColor: "#212529",
     countrySelStyle: {
         container: (provided) => ({
             ...provided,
