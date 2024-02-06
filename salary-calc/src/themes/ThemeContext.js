@@ -1,5 +1,5 @@
 import { useState, createContext } from "react";
-import { lightTheme } from "src/themes/themes";
+import { lightTheme } from "src/themes/Themes";
 
 // Create a context for themes
 const ThemeContext = createContext();

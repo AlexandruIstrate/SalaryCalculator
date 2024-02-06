@@ -34,7 +34,7 @@ import { LocalStorage } from "src/utils/LocalStorage";
 
 import { supportedLngs } from "src/i18n";
 import { ThemeContext, } from 'src/themes/ThemeContext';
-import { lightTheme, darkTheme } from 'src/themes/themes';
+import { lightTheme, darkTheme } from 'src/themes/Themes';
 
 import "./App.css";
 

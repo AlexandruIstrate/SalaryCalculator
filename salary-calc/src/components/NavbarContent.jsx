@@ -8,7 +8,7 @@ import { languages } from "countries-list";
 
 import FlagDisplay from "src/components/FlagDisplay";
 import { supportedLngs } from "src/i18n";
-import { getThemeOptions } from "src/themes/themes";
+import { getThemeOptions } from "src/themes/Themes";
 
 function NavbarContent({ t, i18n, themePref, setThemePref }) {
     // Create a HTML element to display the currently selectd theme
