@@ -44,19 +44,17 @@ export const darkTheme = {
 };
 
 // Define user selectable options
-export const getThemeOptions = (t) => {
-    return {
-        light: {
-            id: "light",
-            displayName: t("themes.light")
-        },
-        dark: {
-            id: "dark",
-            displayName: t("themes.dark")
-        },
-        auto: {
-            id: "auto",
-            displayName: t("themes.auto")
-        }
-    };
-}
+export const themeOptions = {
+    light: {
+        id: "light",
+        i18nKey: "themes.light"
+    },
+    dark: {
+        id: "dark",
+        i18nKey: "themes.dark"
+    },
+    auto: {
+        id: "auto",
+        i18nKey: "themes.auto"
+    }
+};

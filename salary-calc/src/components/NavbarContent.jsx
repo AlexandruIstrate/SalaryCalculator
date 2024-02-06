@@ -8,7 +8,7 @@ import { languages } from "countries-list";
 
 import FlagDisplay from "src/components/FlagDisplay";
 import { supportedLngs } from "src/i18n";
-import { getThemeOptions } from "src/themes/Themes";
+import { themeOptions } from "src/themes/Themes";
 
 function NavbarContent({ t, i18n, themePref, setThemePref }) {
     // Create a HTML element to display the currently selectd theme
@@ -65,13 +65,13 @@ function NavbarContent({ t, i18n, themePref, setThemePref }) {
                         {/* Themes Dropdown */}
                         <NavDropdown title={themeDisplay}>
                             {
-                                Object.values(getThemeOptions(t)).map((themeOption) => (
+                                Object.values(themeOptions).map((themeOption) => (
                                     <NavDropdown.Item
                                         key={themeOption.id}
                                         disabled={themeOption.id === themePref}
                                         onClick={() => setThemePref(themeOption.id)}
                                     >
-                                        {themeOption.displayName}
+                                        {t(themeOption.i18nKey)}
                                     </NavDropdown.Item>
                                 ))
                             }
