@@ -731,6 +731,7 @@ function App() {
                                         {/* Sharing Options Button */}
                                         <DropdownButton
                                             as={ButtonGroup}
+                                            disabled={isLoading}
                                             id="dropdownShare"
                                             variant="success"
                                             title={
@@ -746,6 +747,8 @@ function App() {
                                                     <Dropdown.Item
                                                         key={index}
                                                         onClick={handler}
+                                                        // Make sure the menu item aligns properly when using RTL languages
+                                                        className={i18n.dir(i18n.resolvedLanguage) === "rtl" ? "text-end" : null}
                                                     >
                                                         <i className={`bi ${iconName} me-1`} />&nbsp;
                                                         {t(i18nKey)}
