@@ -47,8 +47,14 @@
         "tip": "<0>PUNTA: </0>Puoi visualizzare nuovamente una conversione facendo clic su di essa."
     },
     "toast": {
-        "title": "Collegamento copiato",
-        "body": "Link copiato negli appunti!"
+        "copyResult": {
+            "title": "Risultato copiato",
+            "body": "Il risultato è stato copiato negli appunti!"
+        },
+        "copyLink": {
+            "title": "Collegamento copiato",
+            "body": "Link copiato negli appunti!"
+        }
     },
     "footer": {
         "title": "Informazioni su questa app",

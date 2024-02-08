@@ -42,8 +42,14 @@
         }
     },
     "toast": {
-        "title": "Link Kopiert",
-        "body": "Link in die Zwischenablage kopiert!"
+        "copyResult": {
+            "title": "Ergebnis Kopiert",
+            "body": "Das Ergebnis wurde in die Zwischenablage kopiert!"
+        },
+        "copyLink": {
+            "title": "Link Kopiert",
+            "body": "Link in die Zwischenablage kopiert!"
+        }
     },
     "history": {
         "title": "Aktuelle Konvertierungen",

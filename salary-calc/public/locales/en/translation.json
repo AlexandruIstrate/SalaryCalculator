@@ -47,8 +47,14 @@
         "tip": "<0>TIP: </0>You can view a conversion again by clicking on it."
     },
     "toast": {
-        "title": "Link Copied",
-        "body": "Link copied to clipboard!"
+        "copyResult": {
+            "title": "Result Copied",
+            "body": "Result copied to clipboard!"
+        },
+        "copyLink": {
+            "title": "Link Copied",
+            "body": "Link copied to clipboard!"
+        }
     },
     "footer": {
         "title": "About This App",

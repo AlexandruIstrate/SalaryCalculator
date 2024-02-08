@@ -143,18 +143,36 @@ function HistoryContent({ historyItems, onClick }) {
     }
 }
 
+function ToastNotification({ i18n, title, body, show, onClose }) {
+    return (
+        <ToastContainer
+            className="p-3"
+            position={i18n.dir(i18n.resolvedLanguage) === "rtl" ? "bottom-start" : "bottom-end"}
+            style={{ zIndex: 1 }}
+        >
+            <Toast
+                show={show}
+                onClose={onClose}
+                autohide={true}
+                delay={5000}
+            >
+                <Toast.Header closeButton={true}>
+                    <strong className="me-auto">{title}</strong>
+                </Toast.Header>
+                <Toast.Body>{body}</Toast.Body>
+            </Toast>
+        </ToastContainer>
+    );
+}
+
 function App() {
     // App State
     const [salary, setSalary] = useState(LocalStorage.salary ?? 0);
-    const [sourceCountry, setSourceCountry] = useState(
-        LocalStorage.sourceCountry ?? process.env.REACT_APP_DEFAULT_SOURCE_COUNTRY_CODE);
-    const [destinationCountry, setDestinationCountry] = useState(
-        LocalStorage.destinationCountry ?? process.env.REACT_APP_DEFAULT_DESTINATION_COUNTRY_CODE);
+    const [sourceCountry, setSourceCountry] = useState(LocalStorage.sourceCountry ?? process.env.REACT_APP_DEFAULT_SOURCE_COUNTRY_CODE);
+    const [destinationCountry, setDestinationCountry] = useState(LocalStorage.destinationCountry ?? process.env.REACT_APP_DEFAULT_DESTINATION_COUNTRY_CODE);
 
     const [isLoading, setIsLoading] = useState(true);
     const [pppData, setPPPData] = useState(null);
-
-    const [showToast, setShowToast] = useState(false);
 
     const [themePref, setThemePref] = useState(LocalStorage.theme ?? "auto");
     const { theme, setTheme } = useContext(ThemeContext);
@@ -169,6 +187,7 @@ function App() {
     // Translated components
     const CountrySelectWrapped = withTranslation()(CountrySelect);
     const HistoryContentWrapped = withTranslation()(HistoryContent);
+    const ToastNotificationWrapped = withTranslation()(ToastNotification);
 
     // History Reducer
     const historyReducer = (state, action) => {
@@ -217,6 +236,35 @@ function App() {
     };
 
     const [history, historyDispatch] = useReducer(historyReducer, LocalStorage.history ?? { historyItems: [] });
+
+    // Popup reducer for toasts and modals
+    const popupReducer = (state, action) => {
+        // Get the relevant data
+        const showCopyResult = action.showCopyResult;
+        const showCopyLink = action.showCopyLink;
+
+        // Store the result here
+        var result = {
+            showCopyResult: false,
+            showCopyLink: false
+        };
+
+        // Check that we have to show the copy result
+        if (showCopyResult) {
+            // Activate the relevant property
+            result["showCopyResult"] = true;
+        }
+
+        // Check that we have to show the copy link
+        if (showCopyLink) {
+            // Activate the relevant property
+            result["showCopyLink"] = true;
+        }
+
+        return result;
+    };
+
+    const [popups, popupDispatcher] = useReducer(popupReducer, { showCopyResult: false, showCopyLink: false });
 
     // Load World Bank Data
     useEffect(() => {
@@ -423,6 +471,11 @@ function App() {
 
         // Copy the result to the clipboard
         navigator.clipboard.writeText(formattedResult);
+
+        // Show the toast indicating that the action was successful
+        popupDispatcher({
+            showCopyResult: true
+        });
     }
 
     const handleReverseCountries = () => {
@@ -440,8 +493,10 @@ function App() {
         // Copy the URL to the clipboard
         navigator.clipboard.writeText(window.location.href);
 
-        // Show the toast indicatinf that the action was successful
-        setShowToast(true);
+        // Show the toast indicating that the action was successful
+        popupDispatcher({
+            showCopyLink: true
+        });
     }
 
     const handlePostOnX = () => {
@@ -821,23 +876,21 @@ function App() {
                 id="app-toast-area"
                 className="bg-transparent position-relative"
             >
-                <ToastContainer
-                    className="p-3"
-                    position="bottom-end"
-                    style={{ zIndex: 1 }}
-                >
-                    <Toast
-                        show={showToast}
-                        onClose={() => setShowToast(!showToast)}
-                        autohide={true}
-                        delay={5000}
-                    >
-                        <Toast.Header closeButton={true}>
-                            <strong className="me-auto">{t("toast.title")}</strong>
-                        </Toast.Header>
-                        <Toast.Body>{t("toast.body")}</Toast.Body>
-                    </Toast>
-                </ToastContainer>
+                {/* Copy Link Toast */}
+                <ToastNotificationWrapped
+                    title={t("toast.copyLink.title")}
+                    body={t("toast.copyLink.body")}
+                    show={popups.showCopyLink}
+                    onClose={() => popupDispatcher({ showCopyLink: false })}
+                />
+
+                {/* Copy Result Toast */}
+                <ToastNotificationWrapped
+                    title={t("toast.copyResult.title")}
+                    body={t("toast.copyResult.body")}
+                    show={popups.showCopyResult}
+                    onClose={() => popupDispatcher({ showCopyResult: false })}
+                />
             </div>
 
             {/* Footer */}

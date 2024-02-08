@@ -47,8 +47,14 @@
         "tip": "<0>CONSEJO: </0>Puede ver una conversión nuevamente haciendo clic en ella."
     },
     "toast": {
-        "title": "Enlace copiado",
-        "body": "¡Enlace copiado al portapapeles!"
+        "copyResult": {
+            "title": "Resultado copiado",
+            "body": "¡Resultado copiado al portapapeles!"
+        },
+        "copyLink":{
+            "title": "Enlace copiado",
+            "body": "¡Enlace copiado al portapapeles!"
+        }
     },
     "footer": {
         "title": "Acerca de esta aplicación",
