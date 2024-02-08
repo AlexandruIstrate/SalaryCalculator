@@ -411,6 +411,20 @@ function App() {
         updateURLFromState(sourceCountry, newValue, salary);
     }
 
+    const handleCopyResult = () => {
+        // Calculate the result
+        const result = calculateSalary();
+
+        // Convert the result to a format that is easier to read and in the current locale
+        const formattedResult = Math.round(result).toLocaleString(i18n.resolvedLanguage, {
+            minimumFractionDigits: 1,
+            maximumFractionDigits: 1
+        });
+
+        // Copy the result to the clipboard
+        navigator.clipboard.writeText(formattedResult);
+    }
+
     const handleReverseCountries = () => {
         // Call the utility function
         swapCountries();
@@ -717,6 +731,17 @@ function App() {
                                     </div>
 
                                     <div className="mb-3">
+                                        {/* Copy Result Button */}
+                                        <Button
+                                            variant="secondary"
+                                            onClick={handleCopyResult}
+                                            disabled={isLoading}
+                                            className="me-2 mb-2"
+                                        >
+                                            <i className="bi bi-copy me-1" />&nbsp;
+                                            {t("calculator.buttons.copyResult")}
+                                        </Button>
+
                                         {/* Reverse Countries Button */}
                                         <Button
                                             variant="secondary"

@@ -30,6 +30,7 @@
         },
         "disclaimer": "Based on the latest data provided by The World Bank which is from the year {{year}}.",
         "buttons": {
+            "copyResult": "Copy Result",
             "reverse": "Reverse Countries",
             "share": {
                 "title": "Share...",

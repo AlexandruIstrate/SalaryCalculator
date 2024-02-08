@@ -30,6 +30,7 @@
         },
         "disclaimer": "세계은행이 제공한 {{year}}년 최신 데이터 기준.",
         "buttons": {
+            "copyResult": "결과 복사",
             "reverse": "반대 국가",
             "share": {
                 "title": "공유하다...",

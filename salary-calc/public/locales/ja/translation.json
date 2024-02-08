@@ -30,6 +30,7 @@
         },
         "disclaimer": "世界銀行が提供する {{year}} 年の最新データに基づいています。",
         "buttons": {
+            "copyResult": "結果をコピー",
             "reverse": "逆の国",
             "share": {
                 "title": "共有...",

@@ -30,6 +30,7 @@
         },
         "disclaimer": "Basierend auf den neuesten Daten der Weltbank aus dem Jahr {{year}}.",
         "buttons": {
+            "copyResult": "Ergebnis Kopieren",
             "reverse": "Umgekehrte Länder",
             "share": {
                 "title": "Teilen...",

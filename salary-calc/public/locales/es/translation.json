@@ -30,6 +30,7 @@
         },
         "disclaimer": "Basado en los últimos datos proporcionados por el Banco Mundial correspondientes al año {{year}}.",
         "buttons": {
+            "copyResult": "Copiar resultado",
             "reverse": "Países inversos",
             "share": {
                 "title": "Comparte...",

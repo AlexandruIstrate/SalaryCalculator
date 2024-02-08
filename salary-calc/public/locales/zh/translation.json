@@ -30,6 +30,7 @@
         },
         "disclaimer": "根据世界银行提供的 {{year}} 年最新数据。",
         "buttons": {
+            "copyResult": "复制结果",
             "reverse": "反转国家",
             "share": {
                 "title": "分享...",
